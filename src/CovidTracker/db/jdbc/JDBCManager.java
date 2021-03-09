@@ -2,6 +2,7 @@ package CovidTracker.db.jdbc;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.List;
 
 import CovidTracker.db.ifaces.DBManager;
@@ -15,22 +16,30 @@ public class JDBCManager implements DBManager {
 		try {
 			// Open database connection
 			Class.forName("org.sqlite.JDBC");
-			Connection c = DriverManager.getConnection("jdbc:sqlite:./db/company.db");
+			Connection c = DriverManager.getConnection("jdbc:sqlite:./SQLDB/covidTracker.SDLDB");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			System.out.println("Database connection opened.");
 			
-			// Here is where I do things with the database
-			
-		} catch (Exception e) {
+			this.create();
+		} 
+		catch(SQLException e) {
+			System.out.println("Error, database exception.");
+		}catch (Exception e) {
+			System.out.println("Error, couldn´t connect to data based.");
 			e.printStackTrace();
 		}
-		
 	}
 
 	@Override
 	public void disconnect() {
 		// TODO Auto-generated method stub
-
+		try {
+			c.close();
+			System.out.println("Database connection closed.");
+		} catch (Exception e) {
+			System.out.println("Error, database exception.");
+			e.printStackTrace();
+		}
 	}
 
 	@Override
