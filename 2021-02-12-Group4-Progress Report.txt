@@ -1,0 +1,20 @@
+This week we expected to be able to do...
+=========================================
+Decide the group composition and the project’s topic.
+
+Optional: Reasons why
+---------------------
+
+This week we did...
+===================
+We chose our group and the topic
+
+Optional: Reasons why
+---------------------
+
+Next weeks we will do...
+========================
+Define the project’s features and draw a UML use case diagram.
+
+Optional: Reasons why
+---------------------

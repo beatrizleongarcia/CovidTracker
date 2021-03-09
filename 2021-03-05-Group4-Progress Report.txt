@@ -1,0 +1,17 @@
+his week we expected to be able to do...
+=========================================
+Create database's tables of E-R diagram and create the DDL for our relational database
+Optional: Reasons why
+---------------------
+
+This week we did...
+===================
+We created our database's tables of E-R diagram and created the DDL for our relational database. Also we drafted our menu
+Optional: Reasons why
+---------------------
+
+Next weeks we will do...
+========================
+Continue with the menu
+Optional: Reasons why
+---------------------
