@@ -17,7 +17,7 @@ public class JDBCManager implements DBManager {
 		try {
 			// Open database connection
 			Class.forName("org.sqlite.JDBC");
-			Connection c = DriverManager.getConnection("jdbc:sqlite:./db/covidTracker.db");
+			Connection c = DriverManager.getConnection("jdbc:sqlite:./SQLDB/covidTracker.SDLDB");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			System.out.println("Database connection opened.");
 			
