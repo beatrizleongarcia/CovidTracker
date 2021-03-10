@@ -17,7 +17,7 @@ public class JDBCManager implements DBManager {
 		try {
 			// Open database connection
 			Class.forName("org.sqlite.JDBC");
-			Connection c = DriverManager.getConnection("jdbc:sqlite:./SQLDB/covidTracker.SDLDB");
+			Connection c = DriverManager.getConnection("jdbc:sqlite:./db/covidTracker.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			System.out.println("Database connection opened.");
 			
@@ -94,8 +94,11 @@ public class JDBCManager implements DBManager {
 	stmt6.executeUpdate(sql6);
 	stmt6.close();
 	System.out.println("Tables created.");
-	} catch (Exception e) {
-	e.printStackTrace();
+	} catch(SQLException e) {
+		System.out.println("Error, database exception.");
+	}catch (Exception e) {
+		System.out.println("Error, couldn´t connect to data based.");
+		e.printStackTrace();
 	}
 
 	}
