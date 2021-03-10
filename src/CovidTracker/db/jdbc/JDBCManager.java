@@ -26,7 +26,7 @@ public class JDBCManager implements DBManager {
 		catch(SQLException e) {
 			System.out.println("Error, database exception.");
 		}catch (Exception e) {
-			System.out.println("Error, couldn´t connect to data based.");
+			System.out.println("Error, couldnï¿½t connect to data based.");
 			e.printStackTrace();
 		}
 	}
