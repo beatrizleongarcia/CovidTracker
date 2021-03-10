@@ -5,19 +5,26 @@ import java.io.InputStreamReader;
 
 public class inputoutput {
 
-	public static void main(String[] args) {
-		BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	
+		private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 		
 		
 		public static String Welcome() {
-			System.out.println("Welcome: Log in:");
+			String user="";
+			try {
+			System.out.println("Welcome:");
 			System.out.println("Log in:");
 			System.out.println("-User:");
-			String user = in.readLine();
+			user = in.readLine();
 			System.out.println("-Password:");
 			String password = in.readLine();
+			}
+			catch(Exception e) {
+				e.printStackTrace();
+			}
+			return user;
 		}
 		
-	}
+	
 
 }
