@@ -5,6 +5,7 @@ import java.io.InputStreamReader;
 
 import CovidTracker.db.ifaces.DBManager;
 import CovidTracker.db.jdbc.JDBCManager;
+import utils.inputoutput;
 
 public class Menu {
 	BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
@@ -19,7 +20,8 @@ public class Menu {
 		DBManager man = new JDBCManager();
 		man.connect();
 		
-		
+		String user=inputoutput.User();
+		String password=inputoutput.Password();
 		
 	}
 }
