@@ -11,16 +11,18 @@ public class inputoutput {
 		
 		public static String Welcome() {
 			String user="";
+			String password="";
 			try {
 			System.out.println("Welcome:");
 			System.out.println("Log in:");
 			System.out.println("-User:");
 			user = in.readLine();
 			System.out.println("-Password:");
-			String password = in.readLine();
+			password = in.readLine();
 			}
 			catch(Exception e) {
 				e.printStackTrace();
+				
 			}
 			return user;
 		}
