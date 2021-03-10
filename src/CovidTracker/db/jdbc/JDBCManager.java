@@ -1,10 +1,12 @@
 package CovidTracker.db.jdbc;
 
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
+import java.util.Scanner;
 
 import CovidTracker.db.ifaces.DBManager;
 import db.pojos.Patient;
@@ -119,8 +121,32 @@ public class JDBCManager implements DBManager {
 
 	@Override
 	public void addPerson(Patient p) {
-		// TODO Auto-generated method stub
+		Scanner sc= new Scanner(System.in);
+		Patient pat= new Patient();
 		
+		System.out.println("Introduce a new patient");
+		System.out.println("Introduce the name");
+		String name=sc.nextLine();
+	    pat.setName(name);
+		System.out.println("Introduce the id of the patient");
+		String dni=sc.nextLine();
+	    pat.setDni(dni);
+		System.out.println("Introduce the job title");
+		String job=sc.nextLine();
+	    pat.setName(name);
+		System.out.println("Introduce the date of birth of the patient");
+		Date dob=crear_fecha();
+		pat.setDob(dob);
+		System.out.println("Introduce the days that the patient has been off");
+		Integer days_off=sc.nextInt();
+		
+		
+	
+	}
+
+	private Date crear_fecha() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@Override
