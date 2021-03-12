@@ -13,5 +13,6 @@ public interface DBManager {
 	public List<Patient> searchPatientByName(String name);
 	public void LookReplacement(String title);
 	public void ModifyPatient(Patient p);
+	Patient addPerson();
 
 }

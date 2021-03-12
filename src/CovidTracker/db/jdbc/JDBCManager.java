@@ -120,7 +120,7 @@ public class JDBCManager implements DBManager {
 	}
 
 	@Override
-	public void addPerson(Patient p) {
+	public Patient addPerson() {
 		Scanner sc= new Scanner(System.in);
 		Patient pat= new Patient();
 		
@@ -140,12 +140,13 @@ public class JDBCManager implements DBManager {
 		System.out.println("Introduce the days that the patient has been off");
 		Integer days_off=sc.nextInt();
 		
+		return pat;
 		
 	
 	}
 
 	private Date crear_fecha() {
-		// TODO Auto-generated method stub
+		
 		return null;
 	}
 
@@ -163,6 +164,12 @@ public class JDBCManager implements DBManager {
 
 	@Override
 	public void ModifyPatient(Patient p) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void addPerson(Patient p) {
 		// TODO Auto-generated method stub
 		
 	}
