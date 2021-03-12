@@ -12,7 +12,7 @@ public interface DBManager {
 	public Patient getPatient_id(int id);
 	public List<Patient> searchPatientByName(String name);
 	public void LookReplacement(String title);
-	public void ModifyPatient(Patient p);
+	public Patient ModifyPatient(Patient p);
 	Patient addPerson();
 
 }

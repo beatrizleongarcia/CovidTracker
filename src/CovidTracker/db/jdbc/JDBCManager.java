@@ -137,6 +137,25 @@ public class JDBCManager implements DBManager {
 
 	@Override
 	public Patient ModifyPatient(Patient p) {
+		System.out.println("What aspect of your patient do you want to change? \n (name/salary/job title/date of birth/days off work/doctor)");
+		String modification=inputoutput.get_String();
+	    p=getPatient();
+		if (modification!=null) {
+		if (modification== "name") {}
+		else if (modification=  "salary") {}
+		
+		
+		}
+		
+		return null;
+	}
+
+	private Patient getPatient(String name) {
+		String name_aux=inputoutput.get_String();
+		Patient patient= new Patient();
+		
+			
+		}
 		// TODO Auto-generated method stub
 		return null;
 	}

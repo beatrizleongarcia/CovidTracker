@@ -107,11 +107,8 @@ public class Patient implements Serializable {
 		this.tests = tests;
 	}
 	public Float getEconomic_impact() {
+		float economic_impact= getDays_off_work()*5;
 		return economic_impact;
-	}
-
-	public void setEconomic_impact(Float economic_impact) {
-		this.economic_impact = economic_impact;
 	}
 
 	@Override

@@ -74,10 +74,15 @@ public class inputoutput {
 			// TODO Auto-generated method stub
 			return null;
 		}
-		public static int conseguir_id() {
+		public static int get_int() {
 			Scanner sc= new Scanner(System.in);
 			int id= sc.nextInt();
 			return id;	
+		}
+		public static String get_String() {
+			Scanner sc= new Scanner(System.in);
+			String a= sc.nextLine();
+			return a;		
 		}
 		
 	
