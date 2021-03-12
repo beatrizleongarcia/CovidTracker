@@ -5,7 +5,7 @@ import java.io.InputStreamReader;
 
 import CovidTracker.db.ifaces.DBManager;
 import CovidTracker.db.jdbc.JDBCManager;
-import utils.inputoutput;
+import CovidTracker.db.jdbc.inputoutput;
 
 public class Menu {
 	BufferedReader in = new BufferedReader(new InputStreamReader(System.in));

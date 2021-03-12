@@ -1,8 +1,10 @@
 package CovidTracker.db.jdbc;
 
+import java.awt.font.FontRenderContext;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.List;
@@ -28,7 +30,7 @@ public class JDBCManager implements DBManager {
 		catch(SQLException e) {
 			System.out.println("Error, database exception.");
 		}catch (Exception e) {
-			System.out.println("Error, couldn´t connect to data based.");
+			System.out.println("Error, couldnï¿½t connect to data based.");
 			e.printStackTrace();
 		}
 	}
@@ -99,7 +101,7 @@ public class JDBCManager implements DBManager {
 	} catch(SQLException e) {
 		System.out.println("Error, database exception.");
 	}catch (Exception e) {
-		System.out.println("Error, couldn´t connect to data based.");
+		System.out.println("Error, couldnï¿½t connect to data based.");
 		e.printStackTrace();
 	}
 
@@ -122,40 +124,8 @@ public class JDBCManager implements DBManager {
 
 	}
 
-	@Override
-	public Patient addPerson() {
-		Scanner sc= new Scanner(System.in);
-		Patient pat= new Patient();
-		
-		System.out.println("Introduce a new patient");
-		System.out.println("Introduce the name");
-		String name=sc.nextLine();
-	    pat.setName(name);
-		System.out.println("Introduce the id of the patient");
-		String dni=sc.nextLine();
-	    pat.setDni(dni);
-		System.out.println("Introduce the job title");
-		String job=sc.nextLine();
-	    pat.setName(name);
-		System.out.println("Introduce the date of birth of the patient");
-		Date dob=crear_fecha();
-		pat.setDob(dob);
-		System.out.println("Introduce the days that the patient has been off");
-		Integer days_off=sc.nextInt();
-		
-		return pat;
-		
-	
-	}
-
 	private Date crear_fecha() {
 		
-		return null;
-	}
-
-	@Override
-	public Patient getPatient(int id) {
-		// TODO Auto-generated method stub
 		return null;
 	}
 
@@ -166,9 +136,9 @@ public class JDBCManager implements DBManager {
 	}
 
 	@Override
-	public void ModifyPatient(Patient p) {
+	public Patient ModifyPatient(Patient p) {
 		// TODO Auto-generated method stub
-		
+		return null;
 	}
 
 	@Override
