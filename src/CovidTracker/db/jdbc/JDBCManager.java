@@ -28,7 +28,7 @@ public class JDBCManager implements DBManager {
 		catch(SQLException e) {
 			System.out.println("Error, database exception.");
 		}catch (Exception e) {
-			System.out.println("Error, couldnï¿½t connect to data based.");
+			System.out.println("Error, couldn´t connect to data based.");
 			e.printStackTrace();
 		}
 	}
@@ -96,8 +96,11 @@ public class JDBCManager implements DBManager {
 	stmt6.executeUpdate(sql6);
 	stmt6.close();
 	System.out.println("Tables created.");
-	} catch (Exception e) {
-	e.printStackTrace();
+	} catch(SQLException e) {
+		System.out.println("Error, database exception.");
+	}catch (Exception e) {
+		System.out.println("Error, couldn´t connect to data based.");
+		e.printStackTrace();
 	}
 
 	}
