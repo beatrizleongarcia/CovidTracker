@@ -130,13 +130,13 @@ public class JDBCManager implements DBManager {
 	}
 
 	@Override
-	public List<Patient> searchPatientByName(String name) {
+	public Patient searchPatientByName(String name) {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
 	@Override
-	public Patient ModifyPatient(Patient p) {
+	public void ModifyPatient(Patient p) {
 		System.out.println("What aspect of your patient do you want to change? \n (name/salary/job title/date of birth/days off work/doctor)");
 		String modification=inputoutput.get_String();
 	    p=getPatient();
@@ -147,9 +147,10 @@ public class JDBCManager implements DBManager {
 		
 		}
 		
-		return null;
+	
 	}
 
+	//es public en la otra 
 	private Patient getPatient(String name) {
 		String name_aux=inputoutput.get_String();
 		Patient patient= new Patient();
@@ -161,9 +162,21 @@ public class JDBCManager implements DBManager {
 	}
 
 	@Override
-	public void addPerson(Patient p) {
+	public void newPerson(Patient p) {
 		// TODO Auto-generated method stub
 		
+	}
+
+	@Override
+	public Patient getPatient_id(int id) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public Patient addPerson() {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 }

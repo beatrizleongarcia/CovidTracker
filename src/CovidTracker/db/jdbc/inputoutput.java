@@ -1,48 +1,84 @@
 package CovidTracker.db.jdbc;
 
 import java.io.BufferedReader;
+
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.util.Scanner;
 
 import db.pojos.Patient;
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.util.List;
+
+import CovidTracker.db.ifaces.DBManager;
+import CovidTracker.db.jdbc.JDBCManager;
+import db.pojos.Patient;
+import jdk.jshell.execution.Util;
+
 
 public class inputoutput {
 
-	
-		private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-		
-		
-		public static String User() {
-			String user="";
-			String password="";
-			try {
-			System.out.println("Welcome:");
-			System.out.println("Log in:");
-			System.out.println("-User:");
-			user = in.readLine();
-			System.out.println("-Password:");
-			password = in.readLine();
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				
-			}
-			return user;
+		private  BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+		public  String User() {
+		String user="";
+		try {
+		System.out.println("Welcome:");
+		System.out.println("Log in:");
+		System.out.println("-User:");
+		user = in.readLine();
 		}
-		
-		public static String Password() {
-			String password="";
-			try {
-			System.out.println("-Password:");
-			password = in.readLine();
-			}
-			catch(Exception e) {
-				e.printStackTrace();
-				
-			}
-			return password;
+		catch(Exception e) {
+		e.printStackTrace();
 		}
+		return user;
+		}
+		public  String Password() {
+		String password="";
+		try {
+		System.out.println("-Password:");
+		password = in.readLine();
+		}
+		catch(Exception e) {
+		e.printStackTrace();
+		}
+		return password;
+		}
+		public  void MenuAdm() {
+		do {
+		       System.out.println("1.Look for a patient. ");
+		       System.out.println("2.View a patient. ");
+		       System.out.println("3.introduce a new a patient. ");
+		       System.out.println("0.EXIT. ");
+		       System.out.println("\nChoose an option : ");
+		       try {
+		        int opcion = Integer.parseInt(in.readLine());
+		        JDBCManager man = new JDBCManager();
+		        switch(opcion) {
+		        case 1:
+		        String name= in.readLine(); 
+		        Patient patient =man.searchPatientByName(name);
+		        break;
+		        case 2:
+		        int id = Integer.parseInt(in.readLine()); 
+		           patient = man.getPatient(id);
+		        break;
+		        case 3:
+		        patient = man.addPerson();
+		            
+		        break;
+		        case 0:
+		        System.exit(0);
+		       
+		        }
+		       }
+		}while(opcion=!0)
+		}
+
+		
+		
+		
+		
 		
 		
 		public Patient addPatient() {
