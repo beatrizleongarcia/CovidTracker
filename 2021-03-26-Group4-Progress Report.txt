@@ -1,0 +1,17 @@
+This week we expected to be able to do...
+=========================================
+Create the DML and draw a UML class diagram
+Optional: Reasons why
+---------------------
+
+This week we did...
+===================
+We started programming and finished preparing our presentation
+Optional: Reasons why
+---------------------
+
+Next weeks we will do...
+========================
+Present our project in class
+Optional: Reasons why
+---------------------
