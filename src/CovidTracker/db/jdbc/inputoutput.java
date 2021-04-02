@@ -145,34 +145,40 @@ public class inputoutput {
 	
 
 	public Patient addPatient() {
-		Scanner sc = new Scanner(System.in);
-		Patient pat = new Patient();
 
 		System.out.println("Introduce a new patient");
-		System.out.println("Introduce the name");
-		String name = sc.nextLine();
-		pat.setName(name);
-		System.out.println("Introduce the id of the patient");
-		String dni = sc.nextLine();
-		pat.setDni(dni);
-		System.out.println("Introduce the job title");
-		String job = sc.nextLine();
-		pat.setName(name);
-		System.out.println("Introduce the date of birth of the patient");
-		Date dob = crear_fecha();
-		pat.setDob(dob);
-		System.out.println("Introduce the days that the patient has been off");
-		Integer days_off = sc.nextInt();
+		//MIRAR LO DEL ID PARA QUE SE GENERE SOLO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		System.out.println("Name:");
+		String name =in.readLine();
+		System.out.println("Date of birth:");
+		Date dob;//MIRAR CLASE EN LA QUE LO EXPLICA !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		System.out.println("Job title");
+		String job_tittle = in.readLine();
+		System.out.println("Salary");
+		Float salary =Float.parseFloat(in.readLine());
+		System.out.println("Days that the patient has been off work");
+		Integer days_off =Integer.parseInt(in.readLine());
+		System.out.println("Economic impact: "); //// esto hay que calcularlo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
+		Float economic_impact =Float.parseFloat(in.readLine());´
+		
+		//para el doctor: hay que sacar la lista de doctores, y que se elija el suyo y se añada solo !!!!!!!!!!!!!!!1
+		//sintomas : crear metodo para pedir los sintomas dando opciones !!!!!!!!!!!!!!!111111111111111111111111!!!!!!!!!!!!!!!
+		//quarentena : lo mismo que sintomas !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-		return pat;
+		return 	new Patient(name, dob, job_tittle, salary, days_off_work,economic_impact, doctor_id,symptoms_id,quatentine_id);
 
 	}
 
+	//verse la clase en la que explica como meter la fecha !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	private Date crear_fecha() {
 		// TODO Auto-generated method stub
 		return null;
 	}
 
+	
+	
+	
+	//BORRAR ESTOS DOS METODOS DE ABAJO QUE HA HECHO BASILIO O QUE NOS ESPLIQUE PARA QUE SON !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public static int get_int() {
 		Scanner sc = new Scanner(System.in);
 		int id = sc.nextInt();

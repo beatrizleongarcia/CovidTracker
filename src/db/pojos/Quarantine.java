@@ -8,8 +8,7 @@ public class Quarantine implements Serializable{
 
 	private static final long serialVersionUID = 3509916136418043506L;
 
-
-
+	
 	private Integer id;
 	private Integer time;
 	private String reason;

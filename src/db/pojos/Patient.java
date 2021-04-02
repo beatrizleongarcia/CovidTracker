@@ -11,7 +11,6 @@ public class Patient implements Serializable {
 	
 	private Integer id;
 	private Float salary;
-	private String dni;
 	private String name;
 	private Date dob;
 	private String job_title;
@@ -36,12 +35,7 @@ public class Patient implements Serializable {
 	public void setSalary(Float salary) {
 		this.salary = salary;
 	}
-	public String getDni() {
-		return dni;
-	}
-	public void setDni(String dni) {
-		this.dni = dni;
-	}
+	
 	public String getName() {
 		return name;
 	}
@@ -138,7 +132,7 @@ public class Patient implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Patient [id=" + id + ", salary=" + salary + ", dni=" + dni + ", name=" + name + ", dob=" + dob
+		return "Patient [id=" + id + ", salary=" + salary + ", name=" + name + ", dob=" + dob
 				+ ", job_title=" + job_title + ", days_off_work=" + days_off_work + ", doctor=" + doctor + ", tests="
 				+ tests + ", synmptoms=" + synmptoms + ", quarantine=" + quarantine + "]";
 	}
