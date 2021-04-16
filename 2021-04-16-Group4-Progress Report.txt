@@ -1,0 +1,17 @@
+This week we expected to be able to do...
+=========================================
+Program our data base
+Optional: Reasons why
+---------------------
+
+This week we did...
+===================
+We sterted programing but we need to finish UML class diagram
+Optional: Reasons why
+---------------------
+
+Next weeks we will do...
+========================
+Expand our UML and program
+Optional: Reasons why
+---------------------
