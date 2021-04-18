@@ -1,5 +1,5 @@
 package CovidTracker.db.ifaces;
-import java.util.List;
+
 
 import db.pojos.*;
 
@@ -12,7 +12,7 @@ public interface DBManager {
 	public Patient getPatient(String name); //introduce name and return patient 
 	public Patient getPatient_id(int id); //introduce id and return patient 
 	public Patient searchPatientByName(String name); // search a patient by name 
-	public void LookReplacement(String title); //introduce job, return all patients with that job, select one patient and replace him 
+	public boolean LookReplacement(Patient p); //introduce job, return all patients with that job, select one patient and replace him 
 	public void ModifyPatient(Patient p); //introduce that name of a patient, show all his info. and modify it 
 	public Patient newPerson(); // create and return a new patient
 

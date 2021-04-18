@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
@@ -13,10 +14,13 @@ import java.util.List;
 import java.util.Scanner;
 
 import CovidTracker.db.ifaces.DBManager;
+import db.pojos.Doctor;
 import db.pojos.Patient;
 
 public class JDBCManager implements DBManager {
+	
 	public Connection c;
+	public Patient p;
 
 	@Override
 	public void connect() {
@@ -99,8 +103,13 @@ public class JDBCManager implements DBManager {
 	}
 
 	@Override
-	public void LookReplacement(String title) {
-		// TODO Auto-generated method stub
+	public boolean LookReplacement(Patient p) {
+		int days = p.getDays_off_work();
+		if (days > 10) {
+			return true;
+		} else {
+			return false;
+		}
 
 	}
 
@@ -111,21 +120,69 @@ public class JDBCManager implements DBManager {
 
 	@Override
 	public Patient searchPatientByName(String name) {
-		// TODO Auto-generated method stub
-		return null;
+		Patient pat = null;
+		String sql = "SELECT * FROM employees WHERE name LIKE ?";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setString(1, name);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String patient_name = rs.getString("name");
+				// LocalDate dob = rs.get("dob");
+				String job_title = rs.getString("job_title");
+				float salary = rs.getFloat("salary");
+				float economic_impact = rs.getFloat("economic_impact");
+				int days_off_work = rs.getInt("days_off_work");
+				Doctor doctor = (Doctor) rs.getObject("doctor");
+				// Falta hacer el get del arraylist q no se hacerlo
+				// List <Synmptoms> symptoms= rs.getArray("synmptoms");
+				pat = new Patient(id, patient_name, dob, job_title, salary, days_off_work, economic_impact, doctor);
+			}
+			rs.close();
+			prep.close();
+			System.out.println("Search finished");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return pat;
 	}
 
 	@Override
 	public void ModifyPatient(Patient p) {
-		System.out.println(
-				"What aspect of your patient do you want to change? \n (name/salary/job title/date of birth/days off work/doctor)");
-		String modification = inputoutput.get_String();
-		p = getPatient();
-		if (modification != null) {
-			if (modification == "name") {
-			} else if (modification = "salary") {
+		try {
+			System.out.println("Insert the name of the patient");
+			p = searchPatientByName(inputoutput.get_String());
+			System.out.println(
+					"What aspect of your patient do you want to change? \n (name/salary/job title/date of birth/days off work)");
+			String modification = inputoutput.get_String();
+
+			if (modification != null) {
+				if (modification == "name") {
+					System.out.println("Insert new name");
+					String new_name = inputoutput.get_String();
+					p.setName(new_name);
+				} else if (modification == "salary") {
+					System.out.println("Insert new salary");
+					float new_salary = inputoutput.get_float();
+					p.setSalary(new_salary);
+				} else if (modification == "job title") {
+					System.out.println("Insert new job title");
+					String new_job_title = inputoutput.get_String();
+					p.setJob_title(new_job_title);
+				} else if (modification == "date of birth") {
+					System.out.println("Insert date of birth: (yyyy-MM-dd)");
+					String dob = inputoutput.get_String();
+					p.setDob(inputoutput.crear_fecha(dob));
+				} else if (modification == "days off work") {
+					// aqui deberiamos hacer lo de hacer days off work variable y que vaya
+					// actualizandose automaticamente
+				}
+
 			}
 
+		} catch (Exception e) {
+			e.printStackTrace();
 		}
 
 	}

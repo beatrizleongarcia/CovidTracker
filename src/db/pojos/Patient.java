@@ -2,6 +2,7 @@ package db.pojos;
 
 import java.io.Serializable;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -12,7 +13,7 @@ public class Patient implements Serializable {
 	private Integer id;
 	private Float salary;
 	private String name;
-	private Date dob;
+	private LocalDate dob;
 	private String job_title;
 	private Float economic_impact;
 	private Integer days_off_work;
@@ -29,6 +30,19 @@ public class Patient implements Serializable {
 		this.tests= new ArrayList<Covid_Test>();		
 	}
 	
+	public Patient(int id, String name, LocalDate dob, String job_title, float salary, int days_off_work,float economic_impact, Doctor doctor) {
+        super();
+        this.id=id;
+        this.name=name;
+        this.dob=dob;
+        this.job_title=job_title;
+        this.salary=salary;
+        this.days_off_work=days_off_work;
+        this.economic_impact=economic_impact;
+        this.doctor=doctor;         
+}
+
+	
 	public Float getSalary() {
 		return salary;
 	}
@@ -42,10 +56,10 @@ public class Patient implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public Date getDob() {
+	public LocalDate getDob() {
 		return dob;
 	}
-	public void setDob(Date dob) {
+	public void setDob(LocalDate dob) {
 		this.dob = dob;
 	}
 	public String getJob_title() {

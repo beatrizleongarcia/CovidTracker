@@ -4,6 +4,7 @@ import java.io.BufferedReader;
 
 import java.io.InputStreamReader;
 import java.sql.Date;
+import java.time.LocalDate;
 import java.util.Scanner;
 
 import db.pojos.Patient;
@@ -170,10 +171,13 @@ public class inputoutput {
 	}
 
 	//verse la clase en la que explica como meter la fecha !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	private Date crear_fecha() {
-		// TODO Auto-generated method stub
-		return null;
-	}
+
+	public static LocalDate crear_fecha(String dob) {
+        LocalDate dobDate= LocalDate.parse(dob);
+        return dobDate;
+}
+
+
 
 	
 	
