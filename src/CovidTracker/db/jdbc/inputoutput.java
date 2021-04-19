@@ -7,9 +7,12 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Scanner;
 
+import db.pojos.Covid_Test;
+import db.pojos.Doctor;
 import db.pojos.Patient;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.List;
 
 import CovidTracker.db.ifaces.DBManager;
@@ -20,6 +23,7 @@ import jdk.jshell.execution.Util;
 public class inputoutput {
 
 	private BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	Patient patient;
 
 	public String User() {
 		String user = "";
@@ -146,6 +150,7 @@ public class inputoutput {
 	
 
 	public Patient addPatient() {
+		List <Covid_Test> tests= new ArrayList <Covid_Test>();
 
 		System.out.println("Introduce a new patient");
 		//MIRAR LO DEL ID PARA QUE SE GENERE SOLO !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
@@ -160,14 +165,54 @@ public class inputoutput {
 		System.out.println("Days that the patient has been off work");
 		Integer days_off =Integer.parseInt(in.readLine());
 		System.out.println("Economic impact: "); //// esto hay que calcularlo !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!1
-		Float economic_impact =Float.parseFloat(in.readLine());´
+		Float economic_impact =Float.parseFloat(in.readLine());
+		System.out.println("Doctor that has done the test");
+		Integer doctor_id = Integer.parseInt(in.readLine());
+		Doctor doc = searchDoctorbyId();
+		System.out.println("How many covid tests the patient has done?");
+		Integer test_number = Integer.parseInt(in.readLine());
+		for(int i=0; i<test_number; i++) {
+			Covid_Test test= addCovid_Test();
+			tests.add(test);
+		}
+		System.out.println("How many synmptoms the patient has done? (0 for no synmptoms)");
+		Integer number_symptoms= Integer.parseInt(in.readLine());
+		for(int j=0; j< number_symptoms)
+		
+		
 		
 		//para el doctor: hay que sacar la lista de doctores, y que se elija el suyo y se añada solo !!!!!!!!!!!!!!!1
 		//sintomas : crear metodo para pedir los sintomas dando opciones !!!!!!!!!!!!!!!111111111111111111111111!!!!!!!!!!!!!!!
 		//quarentena : lo mismo que sintomas !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
-		return 	new Patient(name, dob, job_tittle, salary, days_off_work,economic_impact, doctor_id,symptoms_id,quatentine_id);
+		return 	new Patient(name, dob, job_tittle, salary, days_off_work,economic_impact, doc,tests, symptoms_id,quatentine_id);
 
+	}
+	
+	public Covid_Test addCovid_Test() {
+		try {
+		System.out.println("Public or private test:");
+		String public_private= in.readLine();
+		System.out.println("Type of test:");
+		String type_test = in.readLine();
+		System.out.println("Date of the test:");
+		Date date_of_test;
+		System.out.println("Price of the test:");
+		Float price= Float.parseFloat(in.readLine());}
+		catch(Exception e){
+			e.printStackTrace();
+		}
+		return null;		
+	}
+	
+	public Symptoms addSynmptoms() {
+		try {
+		System.out.println("What is the symptom?");
+		String type= in.readLine();}
+		catch(Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	//verse la clase en la que explica como meter la fecha !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
