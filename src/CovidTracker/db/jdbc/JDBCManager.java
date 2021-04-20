@@ -164,7 +164,7 @@ public class JDBCManager implements DBManager {
 					p.setName(new_name);
 				} else if (modification == "salary") {
 					System.out.println("Insert new salary");
-					float new_salary = inputoutput.get_float();
+					float new_salary = inputoutput.get_Float();
 					p.setSalary(new_salary);
 				} else if (modification == "job title") {
 					System.out.println("Insert new job title");
@@ -209,8 +209,7 @@ public class JDBCManager implements DBManager {
 					stmt.executeUpdate(sql);
 					stmt.close();
 					System.out.println("Patient info processed");
-					System.out.println("Records inserted.");
-					
+					System.out.println("Records inserted.");			
 
 	}
 

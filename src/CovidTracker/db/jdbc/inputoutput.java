@@ -1,11 +1,12 @@
 package CovidTracker.db.jdbc;
 
 import java.io.BufferedReader;
-
+import java.io.IOException;
 import java.io.InputStreamReader;
 import java.sql.Date;
 import java.time.LocalDate;
 import java.util.Scanner;
+
 
 import db.pojos.Covid_Test;
 import db.pojos.Doctor;
@@ -22,134 +23,77 @@ import jdk.jshell.execution.Util;
 
 public class inputoutput {
 
-	private BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
+	private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 	Patient patient;
 
-	public String User() {
-		String user = "";
+	public static String getUserfromKeyboard() {
 		try {
-			System.out.println("Welcome:");
-			System.out.println("Log in:");
-			System.out.println("-User:");
-			user = in.readLine();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return user;
+            String user;
+            System.out.println("User:");
+            user = in.readLine();
+
+            return user;
+
+        } catch (IOException ex) {
+        	ex.printStackTrace();
+        }
+
+        return null;
+
 	}
 
-	public String Password() {
-		String password = "";
+	public static String getPasswordfromKeyboard() {
 		try {
-			System.out.println("-Password:");
-			password = in.readLine();
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		return password;
+            String password;
+            System.out.println("Password:");
+            password = in.readLine();
+
+            return password;
+
+        } catch (IOException ex) {
+        	ex.printStackTrace();
+        }
+
+        return null;
+
 	}
 
-	public  void MenuAdm() {
-		do {
-		       System.out.println("1.Look for a patient. ");
-		       System.out.println("2.View a patient. ");
-		       System.out.println("3.introduce a new a patient. ");
-		       System.out.println("0.EXIT. ");
-		       System.out.println("\nChoose an option : ");
-		       try {
-		        int opcion = Integer.parseInt(in.readLine());
-		        JDBCManager man = new JDBCManager();
-		        switch(opcion) {
-		        case 1:
-		        String name= in.readLine(); 
-		        Patient patient =man.searchPatientByName(name);
-		        break;
-		        case 2:
-		        int id = Integer.parseInt(in.readLine()); 
-		           patient = man.getPatient(id);
-		        break;
-		        case 3:
-		        patient = man.addPerson();
-		            
-		        break;
-		        case 0:
-		        System.exit(0);
-		       
-		        }
-		       }
-		}while(opcion=!0)
+
+	public static int getOptionfromKeyboard() {
+
+		try {
+			int a;
+
+			a = Integer.parseInt(in.readLine());
+
+			return a;
+
+		} catch (IOException ex) {
+			ex.printStackTrace();
 		}
 
-	public  void MenuCEO() {
-			do {
-			       System.out.println("1.View a patient. ");
-			       System.out.println("2.Search. ");
-			       System.out.println("0.EXIT. ");
-			       System.out.println("\nChoose an option : ");
-			       try {
-			        int opcion = Integer.parseInt(in.readLine());
-			        JDBCManager man = new JDBCManager();
-			        switch(opcion) {
-			        case 1:
-			        int id = Integer.parseInt(in.readLine()); 
-			           patient = man.getPatient(id);
-			        break;
-			        case 2:
-			        	
-			        break;
-			        case 0:
-			        System.exit(0);
-			       
-			        }
-			       }
-			}while(opcion=!0)
-			}
-
-	public  void MenuHHRR() {
-			do {
-			       System.out.println("1.Look replacement. ");
-			       System.out.println("2.Modify patient. ");
-			       System.out.println("0.EXIT. ");
-			       System.out.println("\nChoose an option : ");
-			       try {
-			        int opcion = Integer.parseInt(in.readLine());
-			        JDBCManager man = new JDBCManager();
-			        switch(opcion) {
-			        case 1:
-			        int id = Integer.parseInt(in.readLine()); 
-			           patient = man.getPatient(id);
-			        break;
-			        case 0:
-			        System.exit(0);
-			       
-			        }
-			       }
-			}while(opcion=!0)
-			}
+		return 0;
+	}
 	
-	public  void MenuDoc() {
-		do {
-		       System.out.println("1.Introduce new patient. ");
-		       System.out.println("0.EXIT. ");
-		       System.out.println("\nChoose an option : ");
-		       try {
-		        int opcion = Integer.parseInt(in.readLine());
-		        JDBCManager man = new JDBCManager();
-		        switch(opcion) {
-		        case 1:
-		        int id = Integer.parseInt(in.readLine()); 
-		           patient = man.getPatient(id);
-		        break;
-		        case 0:
-		        System.exit(0);
-		       
-		        }
-		       }
-		}while(opcion=!0)
-		}
-	
+    public static String getNamefromKeyboard() {
 
-	public Patient addPatient() {
+        try {
+            String name;
+            System.out.println("Introduce the name of the patient:");
+            name = in.readLine();
+
+            return name;
+
+        } catch (IOException ex) {
+        	ex.printStackTrace();
+        }
+
+        return null;
+
+    }
+
+	
+	public static Patient addPatient() {
 		List <Covid_Test> tests= new ArrayList <Covid_Test>();
 
 		System.out.println("Introduce a new patient");
@@ -188,46 +132,43 @@ public class inputoutput {
 		return 	new Patient(name, dob, job_tittle, salary, days_off_work,economic_impact, doc,tests, symptoms_id,quatentine_id);
 
 	}
-	
+
 	public Covid_Test addCovid_Test() {
 		try {
-		System.out.println("Public or private test:");
-		String public_private= in.readLine();
-		System.out.println("Type of test:");
-		String type_test = in.readLine();
-		System.out.println("Date of the test:");
-		Date date_of_test;
-		System.out.println("Price of the test:");
-		Float price= Float.parseFloat(in.readLine());}
-		catch(Exception e){
-			e.printStackTrace();
-		}
-		return null;		
-	}
-	
-	public Symptoms addSynmptoms() {
-		try {
-		System.out.println("What is the symptom?");
-		String type= in.readLine();}
-		catch(Exception e) {
+			System.out.println("Public or private test:");
+			String public_private = in.readLine();
+			System.out.println("Type of test:");
+			String type_test = in.readLine();
+			System.out.println("Date of the test:");
+			Date date_of_test;
+			System.out.println("Price of the test:");
+			Float price = Float.parseFloat(in.readLine());
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 		return null;
 	}
 
-	//verse la clase en la que explica como meter la fecha !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	public Symptoms addSynmptoms() {
+		try {
+			System.out.println("What is the symptom?");
+			String type = in.readLine();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	// verse la clase en la que explica como meter la fecha
+	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 
 	public static LocalDate crear_fecha(String dob) {
-        LocalDate dobDate= LocalDate.parse(dob);
-        return dobDate;
-}
+		LocalDate dobDate = LocalDate.parse(dob);
+		return dobDate;
+	}
 
-
-
-	
-	
-	
-	//BORRAR ESTOS DOS METODOS DE ABAJO QUE HA HECHO BASILIO O QUE NOS ESPLIQUE PARA QUE SON !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+	// BORRAR ESTOS DOS METODOS DE ABAJO QUE HA HECHO BASILIO O QUE NOS ESPLIQUE
+	// PARA QUE SON !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public static int get_int() {
 		Scanner sc = new Scanner(System.in);
 		int id = sc.nextInt();
