@@ -3,7 +3,6 @@ package CovidTracker.ui;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 
-import CovidTracker.db.ifaces.DBManager;
 import CovidTracker.db.jdbc.JDBCManager;
 import CovidTracker.db.jdbc.inputoutput;
 import db.pojos.Patient;
@@ -30,19 +29,18 @@ public class Menu {
 				break;
 			case 2:
 				man.disconnect();
+				System.exit(0);
 			}
 		}
 	}
 
 	public static void main(String[] args) {
-		man.connect();
-		man.disconnect();
-		//try {
-			//menu();
+		try {
+			menu();
 			//Falta acceder a cada menu según el nombre de ususario
-		//} catch (Exception e) {
-			//e.printStackTrace();
-		//}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
 	}
 
