@@ -13,7 +13,7 @@ public class Menu {
 	private static JDBCManager man = new JDBCManager();
 
 	public static void menu() throws Exception {
-
+        man.connect();
 		while (true) {
 			System.out.println("WELCOME! ");
 			System.out.println("1.Enter user and pasword ");
@@ -34,14 +34,15 @@ public class Menu {
 		}
 	}
 
-	public static void main() {
+	public static void main(String[] args) {
 		man.connect();
-		try {
-			menu();
+		man.disconnect();
+		//try {
+			//menu();
 			//Falta acceder a cada menu según el nombre de ususario
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+		//} catch (Exception e) {
+			//e.printStackTrace();
+		//}
 
 	}
 

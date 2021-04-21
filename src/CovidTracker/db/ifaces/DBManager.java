@@ -6,7 +6,6 @@ import db.pojos.*;
 public interface DBManager {
 
 	public void connect(); 
-	public void create();
 	public void disconnect();
 	public void addPerson(Patient p); //add a person  to the data base 
 	public Patient getPatient(String name); //introduce name and return patient 
