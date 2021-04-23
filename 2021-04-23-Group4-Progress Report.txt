@@ -1,0 +1,17 @@
+This week we expected to be able to do...
+=========================================
+Program our data base and do the UML class diagram
+Optional: Reasons why
+---------------------
+
+This week we did...
+===================
+We finish programming the SELECT and Instert of the patient
+Optional: Reasons why
+---------------------
+
+Next weeks we will do...
+========================
+Continue programming all the classes
+Optional: Reasons why
+---------------------
