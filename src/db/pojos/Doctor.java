@@ -20,6 +20,12 @@ public class Doctor implements Serializable {
 		this.tests= new ArrayList<Covid_Test>();
 	}
 
+	public Doctor(Integer id, String name, String hospital) {
+		this.id= id;
+		this.name = name;
+		this.hospital= hospital;	
+	}
+
 	public Integer getId() {
 		return id;
 	}

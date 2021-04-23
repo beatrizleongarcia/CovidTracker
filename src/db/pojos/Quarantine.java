@@ -12,11 +12,14 @@ public class Quarantine implements Serializable{
 	private Integer id;
 	private Integer time;
 	private String reason;
-	private List <Synmptoms> synmptoms;
 	private Patient patient;
 	
 	public Quarantine() {
 		super();
+	}
+	public Quarantine(String reason,Integer time) {
+		this.reason= reason;
+		this.time = time;
 	}
 
 	public Integer getId() {
@@ -43,13 +46,6 @@ public class Quarantine implements Serializable{
 		this.reason = reason;
 	}
 
-	public List<Synmptoms> getSynmptoms() {
-		return synmptoms;
-	}
-
-	public void setSynmptoms(List<Synmptoms> synmptoms) {
-		this.synmptoms = synmptoms;
-	}
 
 	public Patient getPatient() {
 		return patient;
@@ -86,8 +82,7 @@ public class Quarantine implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Quarantine [id=" + id + ", time=" + time + ", reason=" + reason + ", synmptoms=" + synmptoms
-				+ ", partient=" + patient + "]";
+		return "Quarantine [id=" + id + ", time=" + time + ", reason=" + reason + ", patient=" + patient + "]";
 	}
 	
 	

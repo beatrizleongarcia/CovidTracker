@@ -4,7 +4,7 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
-public class Synmptoms implements Serializable {
+public class Symptoms implements Serializable {
   
 
 	private static final long serialVersionUID = -1713530039308307123L;
@@ -13,11 +13,15 @@ public class Synmptoms implements Serializable {
 	private Integer id;
 	private String type;
 	private List <Patient> patients;
-	private Quarantine quarantine;
 	
-	public Synmptoms() {
+	public Symptoms() {
 		super();
 		this.patients= new ArrayList<Patient>();		
+	}
+
+	public Symptoms(String type2) {
+		
+		this.type = type2;
 	}
 
 	public String getType() {
@@ -36,13 +40,6 @@ public class Synmptoms implements Serializable {
 		this.patients = patients;
 	}
 
-	public Quarantine getQuarantine() {
-		return quarantine;
-	}
-
-	public void setQuarantine(Quarantine quarantine) {
-		this.quarantine = quarantine;
-	}
 
 	public Integer getId() {
 		return id;
@@ -68,7 +65,7 @@ public class Synmptoms implements Serializable {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Synmptoms other = (Synmptoms) obj;
+		Symptoms other = (Symptoms) obj;
 		if (id == null) {
 			if (other.id != null)
 				return false;
@@ -79,7 +76,7 @@ public class Synmptoms implements Serializable {
 
 	@Override
 	public String toString() {
-		return "Synmptoms [id=" + id + ", type=" + type + ", patients=" + patients + ", quarantine=" + quarantine + "]";
+		return "Synmptoms [id=" + id + ", type=" + type + ", patients=" + patients  + "]";
 	}
 	
 	

@@ -181,6 +181,27 @@ public class JDBCManager implements DBManager {
 		}
 
 	}
+	public Doctor searchDoctorbyName(String name) {
+		Doctor doc = null;
+		String sql = "SELECT * FROM doctor WHERE name LIKE ?";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setString(1, name);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				int id = rs.getInt("id");
+				String doctor_name= rs.getString("name");
+				String hospital= rs.getString("hospital");
+				doc= new Doctor(id, doctor_name,hospital);
+			}
+		rs.close();
+		prep.close();
+		System.out.println("Search finished");
+		}catch(Exception e) {
+		e.printStackTrace();
+		}
+		return doc;		
+	}
 
 	public Patient getPatient(String name) {
 		String name_aux = inputoutput.get_String();

@@ -22,6 +22,14 @@ public class Covid_Test implements Serializable {
 		super();
 	}
 
+	public Covid_Test(String public_private2, String type_test2, Date date_of_test2, Float price2) {
+		
+		this.date_of_test = date_of_test2;
+		this.price = price2;
+		this.public_private = public_private2;
+		this.type_test = type_test2;
+	}
+
 	public Integer getId() {
 		return id;
 	}

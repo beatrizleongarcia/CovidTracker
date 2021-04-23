@@ -19,27 +19,33 @@ public class Patient implements Serializable {
 	private Integer days_off_work;
 	private Doctor doctor;
 	private List <Covid_Test> tests;
-	private List <Synmptoms> synmptoms;
+	private List <Symptoms> symptoms;
 	private List <Quarantine> quarantine;
 
 	
 	public Patient() {
 		super();
+		this.economic_impact = this.func_economic();
+		this.days_off_work= this.func_daysoff();
 		this.quarantine= new ArrayList<Quarantine>();
-		this.synmptoms= new ArrayList<Synmptoms>();
+		this.symptoms= new ArrayList<Symptoms>();
 		this.tests= new ArrayList<Covid_Test>();		
 	}
 	
-	public Patient(int id, String name, LocalDate dob, String job_title, float salary, int days_off_work,float economic_impact, Doctor doctor) {
-        super();
+	public Patient(int id, String name, LocalDate dob, String job_title, float salary,
+			Doctor doctor, List<Covid_Test> tests, List<Symptoms>symptoms , List<Quarantine>quarantine) {
+     
         this.id=id;
         this.name=name;
         this.dob=dob;
         this.job_title=job_title;
         this.salary=salary;
-        this.days_off_work=days_off_work;
-        this.economic_impact=economic_impact;
-        this.doctor=doctor;         
+        this.days_off_work= this.func_daysoff();
+        this.economic_impact=this.func_economic();
+        this.doctor=doctor;   
+        this.quarantine= quarantine;
+		this.symptoms= symptoms ;
+		this.tests= tests;	
 }
 
 	
@@ -90,12 +96,12 @@ public class Patient implements Serializable {
 		this.doctor = doctor;
 	}
 
-	public List<Synmptoms> getSynmptoms() {
-		return synmptoms;
+	public List<Symptoms> getSymptoms() {
+		return symptoms;
 	}
 
-	public void setSynmptoms(List<Synmptoms> synmptoms) {
-		this.synmptoms = synmptoms;
+	public void setSymptoms(List<Symptoms> symptoms) {
+		this.symptoms = symptoms;
 	}
 
 	public List<Quarantine> getQuarantine() {
@@ -148,9 +154,19 @@ public class Patient implements Serializable {
 	public String toString() {
 		return "Patient [id=" + id + ", salary=" + salary + ", name=" + name + ", dob=" + dob
 				+ ", job_title=" + job_title + ", days_off_work=" + days_off_work + ", doctor=" + doctor + ", tests="
-				+ tests + ", synmptoms=" + synmptoms + ", quarantine=" + quarantine + "]";
+				+ tests + ", synmptoms=" + symptoms + ", quarantine=" + quarantine + "]";
+	}
+	
+	public Integer func_daysoff() {
+		
 	}
 
+	public Float func_economic() {
+		Float ec;
+		ec = this.days_off_work * (this.salary/30);
+		return ec;
+				
+	}
 	
     
 	
