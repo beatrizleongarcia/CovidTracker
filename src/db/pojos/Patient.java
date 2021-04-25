@@ -13,7 +13,7 @@ public class Patient implements Serializable {
 	private Integer id;
 	private Float salary;
 	private String name;
-	private LocalDate dob;
+	private Date dob;
 	private String job_title;
 	private Float economic_impact;
 	private Integer days_off_work;
@@ -26,16 +26,14 @@ public class Patient implements Serializable {
 	public Patient() {
 		super();
 		this.economic_impact = this.func_economic();
-		this.days_off_work= this.func_daysoff();
+		this.days_off_work= this.func_daysoff(, dob); //pregunta como coger la fecha de hoy y la del ultimo test para pasarselo a la funcion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 		this.quarantine= new ArrayList<Quarantine>();
 		this.symptoms= new ArrayList<Symptoms>();
 		this.tests= new ArrayList<Covid_Test>();		
 	}
 	
-	public Patient(int id, String name, LocalDate dob, String job_title, float salary,
-			Doctor doctor, List<Covid_Test> tests, List<Symptoms>symptoms , List<Quarantine>quarantine) {
-     
-        this.id=id;
+	public Patient( String name, Date dob, String job_title, float salary,
+			Doctor doctor, List<Covid_Test> tests, List<Symptoms>symptoms ,List<Quarantine>quarantine) {
         this.name=name;
         this.dob=dob;
         this.job_title=job_title;
@@ -49,6 +47,20 @@ public class Patient implements Serializable {
 }
 
 	
+	
+
+	public Patient(int id, String patient_name, Date dob, String job_title, float salary, int days_off_work,
+			float economic_impact, Doctor doctor) {
+		this.id = id;
+		this.name=patient_name;
+        this.dob=dob;
+        this.job_title=job_title;
+        this.salary=salary;
+        this.days_off_work= this.func_daysoff();
+        this.economic_impact=this.func_economic();
+        this.doctor=doctor;   
+	}
+
 	public Float getSalary() {
 		return salary;
 	}
@@ -62,10 +74,10 @@ public class Patient implements Serializable {
 	public void setName(String name) {
 		this.name = name;
 	}
-	public LocalDate getDob() {
+	public Date getDob() {
 		return dob;
 	}
-	public void setDob(LocalDate dob) {
+	public void setDob(Date dob) {
 		this.dob = dob;
 	}
 	public String getJob_title() {
@@ -157,8 +169,10 @@ public class Patient implements Serializable {
 				+ tests + ", synmptoms=" + symptoms + ", quarantine=" + quarantine + "]";
 	}
 	
-	public Integer func_daysoff() {
-		
+	public Integer func_daysoff(Date today,Date date2) {
+		long difference = today.getTime()-date2.getTime();
+		long days = difference/(1000*60*60*24); //time is in miliseconds
+		return (int) days; 
 	}
 
 	public Float func_economic() {
@@ -168,10 +182,4 @@ public class Patient implements Serializable {
 				
 	}
 	
-    
-	
-
-	
-	
-   
 }

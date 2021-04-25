@@ -28,6 +28,7 @@ public class inputoutput {
 
 	private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 	Patient patient;
+	private static JDBCManager man = new JDBCManager();
 
 	public static String getUserfromKeyboard() {
 		try {
@@ -98,7 +99,7 @@ public class inputoutput {
 		List<Covid_Test> tests = new ArrayList<Covid_Test>();
 		List<Symptoms> symptoms = new ArrayList<Symptoms>();
 		List<Quarantine> quarantines = new ArrayList<Quarantine>();
-
+        try {
 		System.out.println("Introduce a new patient");
 		System.out.println("Name:");
 		String name = in.readLine();
@@ -110,8 +111,8 @@ public class inputoutput {
 		System.out.println("Salary");
 		Float salary = Float.parseFloat(in.readLine());
 		System.out.println("Doctor that has done the test");
-		Integer doctor_id = Integer.parseInt(in.readLine());
-		Doctor doc = searchDoctorbyId();
+		String doctor_name = in.readLine();
+		Doctor doc = man.searchDoctorbyName(doctor_name);
 		System.out.println("How many covid tests the patient has done?");
 		Integer test_number = Integer.parseInt(in.readLine());
 		for (int i = 0; i < test_number; i++) {
@@ -130,15 +131,12 @@ public class inputoutput {
 			Quarantine qua = addQuarantine();
 			quarantines.add(qua);
 		}
-
-		// para el doctor: hay que sacar la lista de doctores, y que se elija el suyo y
-		// se añada solo !!!!!!!!!!!!!!!1
-		// sintomas : crear metodo para pedir los sintomas dando opciones
-		// !!!!!!!!!!!!!!!111111111111111111111111!!!!!!!!!!!!!!!
-		// quarentena : lo mismo que sintomas
-		// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-
 		return new Patient(name, Date.valueOf(date), job_tittle, salary, doc, tests, symptoms, quarantines);
+        }catch(Exception e) {
+			e.printStackTrace();
+		}
+
+		return null;
 
 	}
 
@@ -148,10 +146,10 @@ public class inputoutput {
 		Quarantine qua = null;
 		try {
 			System.out.println("Reason of quarantine:");
-			 reason = in.readLine();
+			reason = in.readLine();
 			System.out.println("How many days of quarantine?");
-			 time = Integer.parseInt(in.readLine());
-			 qua = new Quarantine(reason ,time);
+			time = Integer.parseInt(in.readLine());
+			qua = new Quarantine(reason, time);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -170,7 +168,7 @@ public class inputoutput {
 			LocalDate date = create_date(date_of_test);
 			System.out.println("Price of the test:");
 			Float price = Float.parseFloat(in.readLine());
-			tests = new Covid_Test(public_private, type_test, Date.valueOf(date),price);			
+			tests = new Covid_Test(public_private, type_test, Date.valueOf(date), price);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -178,29 +176,55 @@ public class inputoutput {
 	}
 
 	public static Symptoms addSymptoms() {
-		Symptoms symp = null;
 		try {
 			System.out.println("What is the symptom?");
-			String type = in.readLine();
-			symp = new Symptoms(type);
+			System.out.println("1.Fever");
+			System.out.println("2.Dry cough");
+			System.out.println("3.Tireness ");
+			System.out.println("4.Ache and pains");
+			System.out.println("5.Diarrhoea");
+			System.out.println("6.Loss taste and smell");
+			System.out.println("\nChoose an option : ");
+
+			int opcion;
+			opcion = inputoutput.getOptionfromKeyboard();
+
+			switch (opcion) {
+			case 1:
+				String type = "Fever";
+				return new Symptoms(type);
+			case 2:
+				type = "Dry cough";
+				return new Symptoms(type);
+			case 3:
+				type = "Tireness";
+				return new Symptoms(type);
+			case 4:
+				type = "Ache and pains";
+				return new Symptoms(type);
+			case 5:
+				type = "Diarrhoea";
+				return new Symptoms(type);
+			case 6:
+				type = "Loss taste and smell";
+				return new Symptoms(type);
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return symp;
+		return null;
 	}
 
-	// verse la clase en la que explica como meter la fecha
-	// !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+
 	public static LocalDate create_date(String dob) {
 		LocalDate dobDate = LocalDate.parse(dob, formatter);
 		return dobDate;
 	}
 
-	// BORRAR ESTOS DOS METODOS DE ABAJO QUE HA HECHO BASILIO O QUE NOS ESPLIQUE
-	// PARA QUE SON !!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
 	public static int get_int() {
-		
+
 		int id = 0;
 		try {
 			id = Integer.parseInt(in.readLine());
@@ -213,7 +237,7 @@ public class inputoutput {
 	}
 
 	public static String get_String() {
-		
+
 		String a = null;
 		try {
 			a = in.readLine();
@@ -222,10 +246,10 @@ public class inputoutput {
 		}
 		return a;
 	}
-	
+
 	public static Float get_Float() {
-		
-		Float f = null ;
+
+		Float f = null;
 		try {
 			f = Float.parseFloat(in.readLine());
 		} catch (NumberFormatException e) {

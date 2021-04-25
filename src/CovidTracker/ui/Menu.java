@@ -36,7 +36,7 @@ public class Menu {
 
 	public static void main(String[] args) {
 		try {
-			menu();
+			
 			//Falta acceder a cada menu según el nombre de ususario
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -62,7 +62,7 @@ public class Menu {
 				break;
 			case 2:
 				name = inputoutput.getNamefromKeyboard();
-				patient = man.getPatient(name);
+				patient = man.searchPatientByName(name);
 				break;
 			case 3:
 				man.addPerson(inputoutput.addPatient());
@@ -88,7 +88,7 @@ public class Menu {
 			switch (opcion) {
 			case 1:
 				String name = inputoutput.getNamefromKeyboard();
-				Patient patient = man.getPatient(name);
+				Patient patient = man.searchPatientByName(name);
 				break;
 			case 2:
 				name = inputoutput.getNamefromKeyboard();
