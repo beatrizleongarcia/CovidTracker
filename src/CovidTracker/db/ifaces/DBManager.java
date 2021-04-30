@@ -1,7 +1,7 @@
 package CovidTracker.db.ifaces;
 
 
-import db.pojos.*;
+import CovidTracker.db.pojos.*;
 
 public interface DBManager {
 

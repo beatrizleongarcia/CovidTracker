@@ -14,9 +14,9 @@ import java.util.List;
 import java.util.Scanner;
 
 import CovidTracker.db.ifaces.DBManager;
-import db.pojos.Doctor;
-import db.pojos.Patient;
-import db.pojos.Symptoms;
+import CovidTracker.db.pojos.Doctor;
+import CovidTracker.db.pojos.Patient;
+import CovidTracker.db.pojos.Symptoms;
 import jobseeker.db.pojos.Job;
 import jobseeker.db.pojos.Person;
 
@@ -143,7 +143,7 @@ public class JDBCManager implements DBManager {
 	@Override
 	public Patient searchPatientByName(String name) {
 		Patient pat = null;
-		String sql = "SELECT * FROM employees WHERE name LIKE ?";
+		String sql = "SELECT * FROM patient WHERE name LIKE ?";
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
 			prep.setString(1, name);

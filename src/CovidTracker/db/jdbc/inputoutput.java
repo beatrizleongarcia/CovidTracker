@@ -7,13 +7,6 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.Scanner;
-
-import db.pojos.Covid_Test;
-import db.pojos.Doctor;
-import db.pojos.Patient;
-import db.pojos.Quarantine;
-import db.pojos.Symptoms;
-
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.ArrayList;
@@ -21,7 +14,11 @@ import java.util.List;
 
 import CovidTracker.db.ifaces.DBManager;
 import CovidTracker.db.jdbc.JDBCManager;
-import db.pojos.Patient;
+import CovidTracker.db.pojos.Covid_Test;
+import CovidTracker.db.pojos.Doctor;
+import CovidTracker.db.pojos.Patient;
+import CovidTracker.db.pojos.Quarantine;
+import CovidTracker.db.pojos.Symptoms;
 import jdk.jshell.execution.Util;
 
 public class inputoutput {
