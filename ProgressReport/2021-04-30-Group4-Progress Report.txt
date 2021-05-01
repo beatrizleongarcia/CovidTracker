@@ -1,0 +1,18 @@
+This week we expected to be able to do...
+=========================================
+Define the XML subsystem's HTML interface
+
+Optional: Reasons why
+---------------------
+
+This week we did...
+===================
+We are finishing the users and roles and we are going to start the import and export of 2 entities
+Optional: Reasons why
+---------------------
+
+Next weeks we will do...
+========================
+Finish the import and export of 2 entities and the HTLM interface
+Optional: Reasons why
+---------------------
