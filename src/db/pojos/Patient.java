@@ -26,24 +26,24 @@ public class Patient implements Serializable {
 	public Patient() {
 		super();
 		this.economic_impact = this.func_economic();
-		this.days_off_work= this.func_daysoff(, dob); //pregunta como coger la fecha de hoy y la del ultimo test para pasarselo a la funcion!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+		this.days_off_work= this.func_daysoff(,); 
 		this.quarantine= new ArrayList<Quarantine>();
 		this.symptoms= new ArrayList<Symptoms>();
 		this.tests= new ArrayList<Covid_Test>();		
 	}
 	
 	public Patient( String name, Date dob, String job_title, float salary,
-			Doctor doctor, List<Covid_Test> tests, List<Symptoms>symptoms ,List<Quarantine>quarantine) {
+			Doctor doctor) {
         this.name=name;
         this.dob=dob;
         this.job_title=job_title;
         this.salary=salary;
-        this.days_off_work= this.func_daysoff();
-        this.economic_impact=this.func_economic();
+       /this.days_off_work= 0;
+        this.economic_impact=0;
         this.doctor=doctor;   
-        this.quarantine= quarantine;
+        /*this.quarantine= quarantine;
 		this.symptoms= symptoms ;
-		this.tests= tests;	
+		this.tests= tests;	*/
 }
 
 	
@@ -160,6 +160,10 @@ public class Patient implements Serializable {
 		} else if (!id.equals(other.id))
 			return false;
 		return true;
+	}
+	
+	public void addNewTest(Covid_Test test) {
+		tests.add(test);
 	}
 
 	@Override

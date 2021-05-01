@@ -14,6 +14,7 @@ import java.util.List;
 import java.util.Scanner;
 
 import CovidTracker.db.ifaces.DBManager;
+import db.pojos.Covid_Test;
 import db.pojos.Doctor;
 import db.pojos.Patient;
 import db.pojos.Symptoms;
@@ -143,7 +144,7 @@ public class JDBCManager implements DBManager {
 	@Override
 	public Patient searchPatientByName(String name) {
 		Patient pat = null;
-		String sql = "SELECT * FROM employees WHERE name LIKE ?";
+		String sql = "SELECT * FROM employees WHERE name LIKE ? ";//ORDER BY date_of_test DESC;
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
 			prep.setString(1, name);
@@ -275,10 +276,18 @@ public class JDBCManager implements DBManager {
 		Statement stmt;
 		try {
 			stmt = c.createStatement();
-			String sql = "INSERT INTO patient (id,name, dob, job_tittle, salary, day_off_work, economic_impact, doctor_id,symptoms_id,quarentine_id) "
-					+ "VALUES ('" + p.getId() + "', '" + p.getName() + "', '" + p.getDob() + "', '" + p.getJob_title()
+			String sql = "INSERT INTO patient (name, dob, job_tittle, salary, day_off_work, economic_impact, doctor_id) "
+					+ "VALUES ('" + p.getName() + "', '" + p.getDob() + "', '" + p.getJob_title()
 					+ "', '" + p.getSalary() + "', '" + p.getDays_off_work() + "', '" + p.getEconomic_impact() + ")";
 			stmt.executeUpdate(sql);
+			String sql2 = "SELECT last_insert_rowid()";
+			PreparedStatement prep = c.prepareStatement(sql2);
+			ResultSet rs = prep.executeQuery();
+			rs.next();
+			int id = rs.getInt(1);
+			prep.close();
+			rs.close();
+			p.setId(id);
 			stmt.close();
 			System.out.println("Patient info processed");
 			System.out.println("Records inserted.");
@@ -287,6 +296,40 @@ public class JDBCManager implements DBManager {
 		}
 
 	}
+	
+	@Override
+	public Patient test_patient() {
+		Covid_Test test = inputoutput.addCovid_Test();
+		System.out.println("Insert name");
+		String name = inputoutput.get_String();
+		Patient pat = searchPatientByName(name);
+		pat.addNewTest(test);
+		return pat;
+	}
+	
+	public void last_test(Patient pat) {
+		pat = test_patient();
+		int id = pat.getId();
+		String sql = "SELECT * FROM covid_test WHERE patient_id = '"+id+"' ORDER BY date_of_test DESC ";
+		PreparedStatement prep;
+		Date last_date = null;
+		try {
+			prep = c.prepareStatement(sql);
+			ResultSet rs = prep.executeQuery();
+			rs.next();
+			last_date = rs.getDate("date_of_test");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+		//Poner en el menu debajo de este metodo
+		Localdate date = 
+		pat.func_daysoff(Date.valueOf(), last_date);
+		pat.func_economic();
+		
+		
+	}
+	
+	
 
 	@Override
 	public void delete_patient(String name) {

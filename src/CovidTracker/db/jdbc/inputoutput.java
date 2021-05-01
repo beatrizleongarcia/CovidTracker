@@ -107,12 +107,19 @@ public class inputoutput {
 		String dob = in.readLine();
 		LocalDate date = create_date(dob);
 		System.out.println("Job title");
-		String job_tittle = in.readLine();
+		String job_title = in.readLine();
 		System.out.println("Salary");
 		Float salary = Float.parseFloat(in.readLine());
 		System.out.println("Doctor that has done the test");
 		String doctor_name = in.readLine();
 		Doctor doc = man.searchDoctorbyName(doctor_name);
+		Patient pat = new Patient(name, Date.valueOf(date), job_title,salary, doc);
+		man.addPerson(pat);
+		
+		
+		
+		
+		//DELETE
 		System.out.println("How many covid tests the patient has done?");
 		Integer test_number = Integer.parseInt(in.readLine());
 		for (int i = 0; i < test_number; i++) {
@@ -131,7 +138,7 @@ public class inputoutput {
 			Quarantine qua = addQuarantine();
 			quarantines.add(qua);
 		}
-		return new Patient(name, Date.valueOf(date), job_tittle, salary, doc, tests, symptoms, quarantines);
+		//return new Patient(name, Date.valueOf(date), job_title, salary, doc, tests, symptoms, quarantines);
         }catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -172,7 +179,7 @@ public class inputoutput {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return tests;
+		return tests;	
 	}
 
 	public static Symptoms addSymptoms() {
