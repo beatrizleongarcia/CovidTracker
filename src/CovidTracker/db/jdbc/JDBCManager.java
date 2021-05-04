@@ -14,18 +14,12 @@ import java.util.List;
 import java.util.Scanner;
 
 import CovidTracker.db.ifaces.DBManager;
-<<<<<<< HEAD
 import CovidTracker.db.pojos.Doctor;
 import CovidTracker.db.pojos.Patient;
 import CovidTracker.db.pojos.Symptoms;
-=======
-import db.pojos.Covid_Test;
-import db.pojos.Doctor;
-import db.pojos.Patient;
-import db.pojos.Symptoms;
->>>>>>> branch 'master' of https://github.com/beatrizleongarcia/CovidTracker
-import jobseeker.db.pojos.Job;
-import jobseeker.db.pojos.Person;
+import CovidTracker.ui.inputoutput;
+
+
 
 public class JDBCManager implements DBManager {
 
@@ -150,11 +144,7 @@ public class JDBCManager implements DBManager {
 	@Override
 	public Patient searchPatientByName(String name) {
 		Patient pat = null;
-<<<<<<< HEAD
 		String sql = "SELECT * FROM patient WHERE name LIKE ?";
-=======
-		String sql = "SELECT * FROM employees WHERE name LIKE ? ";//ORDER BY date_of_test DESC;
->>>>>>> branch 'master' of https://github.com/beatrizleongarcia/CovidTracker
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
 			prep.setString(1, name);
@@ -358,6 +348,12 @@ public class JDBCManager implements DBManager {
 	public Patient newPerson() {
 		// TODO Auto-generated method stub
 		return null;
+	}
+
+	@Override
+	public int test_patient(CovidTracker.db.pojos.Covid_Test test) {
+		// TODO Auto-generated method stub
+		return 0;
 	}
 
 }

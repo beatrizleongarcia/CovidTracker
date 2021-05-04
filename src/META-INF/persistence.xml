@@ -10,11 +10,8 @@
 		<provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
  
 		<!-- Entity Class -->
-		<class>sample.db.pojos.Covid_test</class>
-		<class>sample.db.pojos.Doctor</class>
-		<class>sample.db.pojos.Patient</class>
-		<class>sample.db.pojos.Quarantine</class>
-		<class>sample.db.pojos.Symptoms</class>
+		<class>CovidTracker.db.pojos.users.Role</class>
+		<class>CovidTracker.db.pojos.users.User</class>
  
 		<properties>	
 			<!-- Connection properties -->

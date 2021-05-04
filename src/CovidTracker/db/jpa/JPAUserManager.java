@@ -10,10 +10,10 @@ import javax.persistence.Persistence;
 import javax.persistence.Query;
 
 import CovidTracker.db.ifaces.UserManager;
-import CovidTracker.db.jdbc.inputoutput;
 import CovidTracker.db.pojos.users.Role;
 import CovidTracker.db.pojos.users.User;
-import sample.db.pojos.Department;
+import CovidTracker.ui.inputoutput;
+
 
 public class JPAUserManager implements UserManager {
 
@@ -26,7 +26,7 @@ public class JPAUserManager implements UserManager {
 		entman.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		entman.getTransaction().commit();
 		List<Role> existingRoles = this.getRoles();
-		if (existingRoles.size() < 2) {
+		if (existingRoles.size() < 4) {
 			this.newRole(new Role("administrator"));
 			this.newRole(new Role("CEO"));
 			this.newRole(new Role("HHRR"));

@@ -1,50 +1,96 @@
 package CovidTracker.ui;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 
+import java.security.MessageDigest;
 import CovidTracker.db.jdbc.JDBCManager;
-import CovidTracker.db.jdbc.inputoutput;
+import CovidTracker.db.jpa.JPAUserManager;
 import CovidTracker.db.pojos.Patient;
+import CovidTracker.db.pojos.users.Role;
+import CovidTracker.db.pojos.users.User;
+
 
 public class Menu {
-	private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-	private static JDBCManager man = new JDBCManager();
 
-	public static void menu() throws Exception {
-        man.connect();
+	private static JDBCManager dbman = new JDBCManager();
+	private static JPAUserManager paman = new JPAUserManager();
+
+	public static void main(String[] args) throws Exception {
+		dbman.connect();
+        paman.connect();
 		while (true) {
 			System.out.println("WELCOME! ");
-			System.out.println("1.Enter user and pasword ");
-			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
+			System.out.println("1.Register ");
+			System.out.println("2.Log in");
+			System.out.println("0.EXIT. ");
 
-			int opcion;
-			opcion = inputoutput.getOptionfromKeyboard();
+			int opcion = inputoutput.get_int();
 
 			switch (opcion) {
 			case 1:
-				inputoutput.getUserfromKeyboard();
-				inputoutput.getPasswordfromKeyboard();
+			     register();
 				break;
 			case 2:
-				man.disconnect();
+				login();
+			case 0:
+				dbman.disconnect();
+				paman.disconnect();
 				System.exit(0);
+				break;
+			default:
+				break;
 			}
 		}
 	}
 
-	public static void main(String[] args) {
-		try {
-			
-			//Falta acceder a cada menu según el nombre de ususario
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	
 
+	private static void register() throws Exception {
+
+		System.out.println("Enter your email address:");
+		String email = inputoutput.get_String();
+
+		System.out.println("Enter your password:");
+		String password = inputoutput.get_String();
+		// List the roles
+		System.out.println(paman.getRoles());
+		// Ask the user for a role
+		System.out.println("Please enter yout role ID:");
+		int id = inputoutput.get_int();
+		Role role = paman.getRole(id);
+		// Generate the hash
+		MessageDigest md = MessageDigest.getInstance("MD5");
+		md.update(password.getBytes());
+		byte[] hash = md.digest();
+		User user = new User(email, hash, role);
+		paman.newUser(user);
 	}
-
-	public static void MenuAdm() throws Exception {
+	
+	private static void login() throws Exception {
+		// Ask the user for an email
+		System.out.println("Enter your email address: ");
+		String email = inputoutput.get_String();
+		// Ask the user for a password
+		System.out.println("Enter your password:");
+		String password = inputoutput.get_String();
+		User user = paman.checkPassword(email, password);
+		if (user == null) {
+			System.out.println("Wrong email or password");
+			return;
+		} else if (user.getRole().getName().equalsIgnoreCase("administrator")) {
+			MenuAdm();
+		} else if (user.getRole().getName().equalsIgnoreCase("CEO")) {
+			MenuCEO();
+		}else if (user.getRole().getName().equalsIgnoreCase("HHRR")) {
+			MenuHHRR();
+		} else if (user.getRole().getName().equalsIgnoreCase("doctor")) {
+			 MenuDoc();
+		}
+		
+		// Check the type of the user and redirect her to the proper menu
+	}
+	
+	private static void MenuAdm() throws Exception {
 		while (true) {
 			System.out.println("1.Look for a patient. ");
 			System.out.println("2.View a patient. ");
@@ -52,20 +98,19 @@ public class Menu {
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
-			int opcion;
-			opcion = inputoutput.getOptionfromKeyboard();
+			int opcion = inputoutput.get_int();
 
 			switch (opcion) {
 			case 1:
 				String name = inputoutput.getNamefromKeyboard();
-				Patient patient = man.searchPatientByName(name);
+				Patient patient = dbman.searchPatientByName(name);
 				break;
 			case 2:
 				name = inputoutput.getNamefromKeyboard();
-				patient = man.searchPatientByName(name);
+				patient = dbman.searchPatientByName(name);
 				break;
 			case 3:
-				man.addPerson(inputoutput.addPatient());
+				dbman.addPerson(inputoutput.addPatient());
 
 				break;
 			case 0:
@@ -76,23 +121,22 @@ public class Menu {
 		}
 	}
 
-	public static void MenuCEO() throws Exception {
+	private static void MenuCEO() throws Exception {
 		while (true) {
 			System.out.println("1.View a patient. ");
 			System.out.println("2.Search a patient. ");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
-			int opcion;
-			opcion = inputoutput.getOptionfromKeyboard();
+			int opcion = inputoutput.get_int();
 			switch (opcion) {
 			case 1:
 				String name = inputoutput.getNamefromKeyboard();
-				Patient patient = man.searchPatientByName(name);
+				Patient patient = dbman.searchPatientByName(name);
 				break;
 			case 2:
 				name = inputoutput.getNamefromKeyboard();
-				patient = man.searchPatientByName(name);
+				patient = dbman.searchPatientByName(name);
 				break;
 			case 0:
 				System.exit(0);
@@ -102,25 +146,24 @@ public class Menu {
 
 	}
 
-	public void MenuHHRR() throws Exception {
+	private static void MenuHHRR() throws Exception {
 		while (true) {
 			System.out.println("1.Look replacement. ");
 			System.out.println("2.Modify patient. ");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
-			int opcion;
-			opcion = inputoutput.getOptionfromKeyboard();
+			int opcion = inputoutput.get_int();
 			switch (opcion) {
 			case 1:
 				String name = inputoutput.getNamefromKeyboard();
-				Patient patient = man.searchPatientByName(name);
-				man.LookReplacement(patient);
+				Patient patient = dbman.searchPatientByName(name);
+				dbman.LookReplacement(patient);
 				break;
 			case 2:
 				name = inputoutput.getNamefromKeyboard();
-				patient = man.searchPatientByName(name);
-				man.ModifyPatient(patient);
+				patient = dbman.searchPatientByName(name);
+				dbman.ModifyPatient(patient);
 				break;
 			case 0:
 				System.exit(0);
@@ -130,17 +173,16 @@ public class Menu {
 
 	}
 
-	public void MenuDoc() throws Exception {
+	private static void MenuDoc() throws Exception {
 		while (true) {
 			System.out.println("1.Introduce new patient. ");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
-			int opcion;
-			opcion = inputoutput.getOptionfromKeyboard();
+			int opcion = inputoutput.get_int();
 			switch (opcion) {
 			case 1:
-				man.addPerson(inputoutput.addPatient());
+				dbman.addPerson(inputoutput.addPatient());
 				break;
 			case 0:
 				System.exit(0);
