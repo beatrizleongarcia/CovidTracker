@@ -85,6 +85,8 @@ public class Menu {
 			MenuHHRR();
 		} else if (user.getRole().getName().equalsIgnoreCase("doctor")) {
 			 MenuDoc();
+		}else if (user.getRole().getName().equalsIgnoreCase("informatic")) {
+			 MenuInformatic();
 		}
 		
 		// Check the type of the user and redirect her to the proper menu
@@ -191,5 +193,44 @@ public class Menu {
 
 		}
 
+	}
+	
+	private static void MenuInformatic() throws Exception {
+		while (true) {
+			System.out.println("1.Delete a user from a role. ");
+			System.out.println("2.Modify the role of a user. ");
+			System.out.println("0.EXIT. ");
+			System.out.println("\nChoose an option : ");
+
+			int opcion = inputoutput.get_int();
+			switch (opcion) {
+			case 1:
+			
+				break;
+			case 2:
+				modify();
+				break;
+			case 0:
+				System.exit(0);
+
+			}
+		}
+
+	}
+	private static User modify() throws Exception {
+
+		// List of roles
+		System.out.println(paman.getRoles());
+		// Ask the user for a role
+		System.out.println("Please enter the role ID of the user:");
+		int id = inputoutput.get_int();
+		Role role = paman.getRole(id);
+		// List of user of the choosen role
+		System.out.println(role.getUsers());
+		// Ask the user for the ID of the user
+		System.out.println("Please enter the ID of the user:");
+	    id = inputoutput.get_int();
+	    User u = new User(id,role);
+		return u;
 	}
 }

@@ -26,11 +26,12 @@ public class JPAUserManager implements UserManager {
 		entman.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		entman.getTransaction().commit();
 		List<Role> existingRoles = this.getRoles();
-		if (existingRoles.size() < 4) {
+		if (existingRoles.size() < 5) {
 			this.newRole(new Role("administrator"));
 			this.newRole(new Role("CEO"));
 			this.newRole(new Role("HHRR"));
 			this.newRole(new Role("doctor"));
+			this.newRole(new Role("informatic"));
 		}
 	}
 
@@ -90,7 +91,7 @@ public class JPAUserManager implements UserManager {
 		Query q = entman.createNativeQuery("SELECT * FROM user WHERE role = ?", User.class);
 		q.setParameter(1, user.getRole());
 		User us = (User) q.getSingleResult();
-		System.out.print("Type the new role:");
+		System.out.print("Type the new role: (administrator,doctor,informatic,HHRR or CEO)");
 
 		String newRole = inputoutput.get_String();
 		Role role = new Role(newRole);

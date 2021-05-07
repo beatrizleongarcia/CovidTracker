@@ -65,6 +65,12 @@ public class User implements Serializable {
 		super();
 	}
 
+	public User(int id, Role role) {
+		super();
+		this.id = id;
+		this.role = role;
+	}
+
 	@Override
 	public int hashCode() {
 		final int prime = 31;
