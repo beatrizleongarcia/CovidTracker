@@ -1,7 +1,5 @@
 package CovidTracker.db.jpa;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -15,7 +13,7 @@ import CovidTracker.db.ifaces.UserManager;
 import CovidTracker.db.pojos.users.Role;
 import CovidTracker.db.pojos.users.User;
 import CovidTracker.ui.inputoutput;
-import sample.db.pojos.Employee;
+
 
 
 public class JPAUserManager implements UserManager {
