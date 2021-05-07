@@ -214,7 +214,8 @@ public class inputoutput {
 	}
 	
 	public static void modify() throws Exception {
-
+        
+		paman.connect();
 		// List of roles
 		System.out.println(paman.getRoles());
 		// Ask the user for a role
@@ -232,7 +233,7 @@ public class inputoutput {
 	}
 	
 	public static void delete() throws Exception {
-
+        paman.connect();
 		// List of roles
 		System.out.println(paman.getRoles());
 		// Ask the user for a role
