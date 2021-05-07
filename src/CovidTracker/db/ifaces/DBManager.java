@@ -1,6 +1,8 @@
 package CovidTracker.db.ifaces;
 
 
+import java.sql.Date;
+
 import CovidTracker.db.pojos.*;
 
 public interface DBManager {
@@ -16,4 +18,6 @@ public interface DBManager {
 	public void delete_patient(String name);// Delete a patient
 	public void symptoms_patient(Patient p, Symptoms s);//to insert into the table symptoms_patient
 	public Patient test_patient();
+	public Date last_test(Patient pat);
+	
 }
