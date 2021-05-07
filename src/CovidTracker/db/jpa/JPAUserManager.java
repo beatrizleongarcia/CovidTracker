@@ -89,7 +89,7 @@ public class JPAUserManager implements UserManager {
 
 	@Override
 	public void changeRole(User user) {
-		Query q = entman.createNativeQuery("SELECT * FROM user WHERE role = ?", User.class);
+		Query q = entman.createNativeQuery("SELECT * FROM users WHERE role = ?", User.class);
 		q.setParameter(1, user.getRole());
 		User us = (User) q.getSingleResult();
 		System.out.print("Type the new role: (administrator,doctor,informatic,HHRR or CEO)");
@@ -110,7 +110,7 @@ public class JPAUserManager implements UserManager {
 
 	@Override
 	public void deleteRole(User user) {
-		Query q2 = entman.createNativeQuery("SELECT * FROM User WHERE id = ?", User.class);
+		Query q2 = entman.createNativeQuery("SELECT * FROM users WHERE id = ?", User.class);
 		q2.setParameter(1, user.getId());
 		User us = (User) q2.getSingleResult();
 
