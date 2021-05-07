@@ -200,7 +200,7 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 
-	}
+	} //Falta hacer un update tb
 
 	@Override
 	public Doctor searchDoctorbyName(String name) {

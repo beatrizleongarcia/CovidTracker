@@ -116,7 +116,7 @@ public class Menu {
 				Date date = dbman.last_test(pat);
 				LocalDate dateToday = LocalDate.now();
 				pat.func_daysoff(Date.valueOf(dateToday),date);
-				pat.func_economic();
+				pat.func_economic(); //Seguramente haya que hacer un update
 				break;
 			case 0:
 				System.exit(0);
