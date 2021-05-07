@@ -1,5 +1,7 @@
 package CovidTracker.db.jpa;
 
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -13,6 +15,7 @@ import CovidTracker.db.ifaces.UserManager;
 import CovidTracker.db.pojos.users.Role;
 import CovidTracker.db.pojos.users.User;
 import CovidTracker.ui.inputoutput;
+import sample.db.pojos.Employee;
 
 
 public class JPAUserManager implements UserManager {
@@ -109,8 +112,19 @@ public class JPAUserManager implements UserManager {
 
 	@Override
 	public void deleteRole(User user) {
-		// TODO Auto-generated m
+		Query q2 = entman.createNativeQuery("SELECT * FROM User WHERE id = ?", User.class);
+		q2.setParameter(1, user.getId());
+		User us = (User) q2.getSingleResult();
 
+		// Begin transaction
+		entman.getTransaction().begin();
+		// Store the object
+		entman.remove(us);
+		// End transaction
+		entman.getTransaction().commit();
+		
+		// Close the entity manager
+		entman.close();
 	}
 
 }

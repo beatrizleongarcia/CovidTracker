@@ -229,8 +229,8 @@ public class Menu {
 		System.out.println(role.getUsers());
 		// Ask the user for the ID of the user
 		System.out.println("Please enter the ID of the user:");
-	    id = inputoutput.get_int();
-	    User u = new User(id,role);
+	    int id2 = inputoutput.get_int();
+	    User u = new User(id2,role);
 		return u;
 	}
 }
