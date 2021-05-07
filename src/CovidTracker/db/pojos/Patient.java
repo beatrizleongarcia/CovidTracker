@@ -49,6 +49,16 @@ public class Patient implements Serializable {
 	
 	
 
+	public Patient(String patient_name, Date dob, String job_title, float salary, Doctor doctor) {
+		this.name=patient_name;
+        this.dob=dob;
+        this.job_title=job_title;
+        this.salary=salary;
+        this.days_off_work= 0;
+        this.economic_impact=(float) 0;
+        this.doctor=doctor;   
+	}
+
 	public Patient(int id, String patient_name, Date dob, String job_title, float salary, int days_off_work,
 			float economic_impact, Doctor doctor) {
 		this.id = id;
@@ -58,7 +68,7 @@ public class Patient implements Serializable {
         this.salary=salary;
         this.days_off_work= 0;
         this.economic_impact=(float) 0;
-        this.doctor=doctor;   
+        this.doctor=doctor;
 	}
 
 	public Float getSalary() {
