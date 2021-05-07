@@ -11,10 +11,9 @@ public interface DBManager {
 	public Patient searchPatientByName(String name); // search a patient by name 
 	public boolean LookReplacement(Patient p); //introduce job, return all patients with that job, select one patient and replace him 
 	public void ModifyPatient(Patient p); //introduce that name of a patient, show all his info. and modify it 
-	public Patient newPerson(); // create and return a new patient
 	public Doctor searchDoctorbyId(int id);//the program search the doctor's id 
 	public Doctor searchDoctorbyName(String name); //search a doctor by name using searchDoctorbyId
 	public void delete_patient(String name);// Delete a patient
 	public void symptoms_patient(Patient p, Symptoms s);//to insert into the table symptoms_patient
-	public int test_patient(Covid_Test test);
+	public Patient test_patient();
 }

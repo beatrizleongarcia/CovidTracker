@@ -10,16 +10,12 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
-import java.util.List;
-import java.util.Scanner;
-
 import CovidTracker.db.ifaces.DBManager;
+import CovidTracker.db.pojos.Covid_Test;
 import CovidTracker.db.pojos.Doctor;
 import CovidTracker.db.pojos.Patient;
 import CovidTracker.db.pojos.Symptoms;
 import CovidTracker.ui.inputoutput;
-
-
 
 public class JDBCManager implements DBManager {
 
@@ -159,8 +155,7 @@ public class JDBCManager implements DBManager {
 				int days_off_work = rs.getInt("days_off_work");
 				int doctor_id = rs.getInt("doctor_id");
 				Doctor doctor = searchDoctorbyId(doctor_id);
-				pat = new Patient(id, patient_name, dob, job_title, salary, days_off_work,
-						economic_impact, doctor);
+				pat = new Patient(id, patient_name, dob, job_title, salary, days_off_work, economic_impact, doctor);
 			}
 			rs.close();
 			prep.close();
@@ -197,7 +192,7 @@ public class JDBCManager implements DBManager {
 					System.out.println("Insert date of birth: (yyyy-MM-dd)");
 					String dob = inputoutput.get_String();
 					p.setDob(Date.valueOf(inputoutput.create_date(dob)));
-				} 
+				}
 
 			}
 
@@ -253,7 +248,6 @@ public class JDBCManager implements DBManager {
 		return doc;
 	}
 
-
 	@Override
 	public void symptoms_patient(Patient p, Symptoms s) {
 		try {
@@ -267,28 +261,30 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 	}
-
-
-
+	// Insert tabla patient-symptoms
 
 	@Override
 	public void addPerson(Patient p) {
-		Statement stmt;
+		PreparedStatement prep;
+		Doctor doc = p.getDoctor();
+		int doctor_id = doc.getId();
 		try {
-			stmt = c.createStatement();
+
 			String sql = "INSERT INTO patient (name, dob, job_tittle, salary, day_off_work, economic_impact, doctor_id) "
-					+ "VALUES ('" + p.getName() + "', '" + p.getDob() + "', '" + p.getJob_title()
-					+ "', '" + p.getSalary() + "', '" + p.getDays_off_work() + "', '" + p.getEconomic_impact() + ")";
-			stmt.executeUpdate(sql);
+					+ "VALUES ('" + p.getName() + "', '" + p.getDob() + "', '" + p.getJob_title() + "', '"
+					+ p.getSalary() + "', '" + p.getDays_off_work() + "', '" + p.getEconomic_impact() + "', '"
+					+ doctor_id + ")";
+			prep = c.prepareStatement(sql);
+			prep.executeUpdate();
 			String sql2 = "SELECT last_insert_rowid()";
-			PreparedStatement prep = c.prepareStatement(sql2);
-			ResultSet rs = prep.executeQuery();
+			PreparedStatement prep2 = c.prepareStatement(sql2);
+			ResultSet rs = prep2.executeQuery();
 			rs.next();
 			int id = rs.getInt(1);
-			prep.close();
+			prep2.close();
 			rs.close();
 			p.setId(id);
-			stmt.close();
+			prep.close();
 			System.out.println("Patient info processed");
 			System.out.println("Records inserted.");
 		} catch (SQLException e) {
@@ -296,7 +292,44 @@ public class JDBCManager implements DBManager {
 		}
 
 	}
-	
+
+	public void addCovid_Test(Covid_Test t) {
+        PreparedStatement prep;
+        Doctor doc = t.getDoctor();
+        int doctor_id= doc.getId();
+        Patient pat = t.getPatient();
+        int patient_id = pat.getId();
+        try {
+              
+              String sql = "INSERT INTO covid_test (id, public_private, type_test, laboratory, date_of_test, price, doctor_id, patient_id) "
+              + "VALUES ('" + t.getId() + "', '" + t.getPublic_private() + "', '" + t.getType_test() + "', '" + t.getLaboratory()
+              + "', '" + t.getDate_of_test() + "' , '" + t.getPrice() + "', '" + doctor_id + "' , '" + patient_id + ")";
+              prep = c.prepareStatement(sql);
+              prep.executeUpdate();
+              prep.close();
+              System.out.println("Covid test info processed");
+  			  System.out.println("Records inserted.");
+        }catch (SQLException e) {
+        	e.printStackTrace();
+        }
+
+        
+        }
+	public void addDoctor (Doctor d) {
+        PreparedStatement prep;
+        try {
+              String sql = "INSERT INTO doctor (id, name , hospital) "
+              + "VALUES ('" + d.getId() + "', '" + d.getName() + "', '" + d.getHospital() + ")" ;
+              prep = c.prepareStatement(sql);
+              prep.executeUpdate();
+              prep.close();
+              System.out.println("Doctor info processed");
+  			  System.out.println("Records inserted.");
+        }catch(SQLException e) {
+        	e.printStackTrace();
+        } 
+}
+
 	@Override
 	public Patient test_patient() {
 		Covid_Test test = inputoutput.addCovid_Test();
@@ -306,11 +339,11 @@ public class JDBCManager implements DBManager {
 		pat.addNewTest(test);
 		return pat;
 	}
-	
+
 	public void last_test(Patient pat) {
 		pat = test_patient();
 		int id = pat.getId();
-		String sql = "SELECT * FROM covid_test WHERE patient_id = '"+id+"' ORDER BY date_of_test DESC ";
+		String sql = "SELECT * FROM covid_test WHERE patient_id = '" + id + "' ORDER BY date_of_test DESC ";
 		PreparedStatement prep;
 		Date last_date = null;
 		try {
@@ -321,15 +354,12 @@ public class JDBCManager implements DBManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		//Poner en el menu debajo de este metodo
-		Localdate date = 
-		pat.func_daysoff(Date.valueOf(), last_date);
-		pat.func_economic();
-		
-		
+		/*
+		 * Poner en el menu debajo de este metodo Localdate date =
+		 * pat.func_daysoff(Date.valueOf(), last_date); pat.func_economic();
+		 */
+
 	}
-	
-	
 
 	@Override
 	public void delete_patient(String name) {
@@ -344,16 +374,8 @@ public class JDBCManager implements DBManager {
 		}
 	}
 
-	@Override
-	public Patient newPerson() {
-		// TODO Auto-generated method stub
-		return null;
-	}
 
-	@Override
-	public int test_patient(CovidTracker.db.pojos.Covid_Test test) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
+
+
 
 }
