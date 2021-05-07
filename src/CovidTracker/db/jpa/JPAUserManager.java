@@ -1,7 +1,5 @@
 package CovidTracker.db.jpa;
 
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
 import java.util.List;
@@ -15,7 +13,7 @@ import CovidTracker.db.ifaces.UserManager;
 import CovidTracker.db.pojos.users.Role;
 import CovidTracker.db.pojos.users.User;
 import CovidTracker.ui.inputoutput;
-import sample.db.pojos.Employee;
+
 
 
 public class JPAUserManager implements UserManager {
@@ -91,7 +89,7 @@ public class JPAUserManager implements UserManager {
 
 	@Override
 	public void changeRole(User user) {
-		Query q = entman.createNativeQuery("SELECT * FROM user WHERE role = ?", User.class);
+		Query q = entman.createNativeQuery("SELECT * FROM users WHERE role = ?", User.class);
 		q.setParameter(1, user.getRole());
 		User us = (User) q.getSingleResult();
 		System.out.print("Type the new role: (administrator,doctor,informatic,HHRR or CEO)");
@@ -112,7 +110,7 @@ public class JPAUserManager implements UserManager {
 
 	@Override
 	public void deleteRole(User user) {
-		Query q2 = entman.createNativeQuery("SELECT * FROM User WHERE id = ?", User.class);
+		Query q2 = entman.createNativeQuery("SELECT * FROM users WHERE id = ?", User.class);
 		q2.setParameter(1, user.getId());
 		User us = (User) q2.getSingleResult();
 

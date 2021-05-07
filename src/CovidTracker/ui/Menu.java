@@ -205,10 +205,10 @@ public class Menu {
 			int opcion = inputoutput.get_int();
 			switch (opcion) {
 			case 1:
-			
+			     inputoutput.delete();
 				break;
 			case 2:
-				modify();
+				inputoutput.modify();
 				break;
 			case 0:
 				System.exit(0);
@@ -217,20 +217,5 @@ public class Menu {
 		}
 
 	}
-	private static User modify() throws Exception {
-
-		// List of roles
-		System.out.println(paman.getRoles());
-		// Ask the user for a role
-		System.out.println("Please enter the role ID of the user:");
-		int id = inputoutput.get_int();
-		Role role = paman.getRole(id);
-		// List of user of the choosen role
-		System.out.println(role.getUsers());
-		// Ask the user for the ID of the user
-		System.out.println("Please enter the ID of the user:");
-	    int id2 = inputoutput.get_int();
-	    User u = new User(id2,role);
-		return u;
-	}
+	
 }
