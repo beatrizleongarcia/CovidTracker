@@ -2,6 +2,9 @@ package CovidTracker.ui;
 
 
 import java.security.MessageDigest;
+import java.sql.Date;
+import java.time.LocalDate;
+
 import CovidTracker.db.jdbc.JDBCManager;
 import CovidTracker.db.jpa.JPAUserManager;
 import CovidTracker.db.pojos.Patient;
@@ -95,8 +98,7 @@ public class Menu {
 	private static void MenuAdm() throws Exception {
 		while (true) {
 			System.out.println("1.Look for a patient. ");
-			System.out.println("2.View a patient. ");
-			System.out.println("3.Introduce a new a patient. ");
+			System.out.println("2.Introduce a new a patient. ");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
@@ -108,12 +110,13 @@ public class Menu {
 				Patient patient = dbman.searchPatientByName(name);
 				break;
 			case 2:
-				name = inputoutput.getNamefromKeyboard();
-				patient = dbman.searchPatientByName(name);
-				break;
-			case 3:
-				dbman.addPerson(inputoutput.addPatient());
-
+				Patient pat = inputoutput.addPatient();
+				dbman.addPerson(pat);
+				pat = dbman.test_patient();
+				Date date = dbman.last_test(pat);
+				LocalDate dateToday = LocalDate.now();
+				pat.func_daysoff(Date.valueOf(dateToday),date);
+				pat.func_economic(); //Seguramente haya que hacer un update
 				break;
 			case 0:
 				System.exit(0);

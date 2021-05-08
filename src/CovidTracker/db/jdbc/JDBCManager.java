@@ -200,7 +200,7 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 
-	}
+	} //Falta hacer un update tb
 
 	@Override
 	public Doctor searchDoctorbyName(String name) {
@@ -340,7 +340,9 @@ public class JDBCManager implements DBManager {
 		return pat;
 	}
 
-	public void last_test(Patient pat) {
+	
+	@Override
+	public Date last_test(Patient pat) {
 		pat = test_patient();
 		int id = pat.getId();
 		String sql = "SELECT * FROM covid_test WHERE patient_id = '" + id + "' ORDER BY date_of_test DESC ";
@@ -354,10 +356,8 @@ public class JDBCManager implements DBManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		/*
-		 * Poner en el menu debajo de este metodo Localdate date =
-		 * pat.func_daysoff(Date.valueOf(), last_date); pat.func_economic();
-		 */
+	
+		return last_date;
 
 	}
 
