@@ -139,6 +139,7 @@ public class Menu {
 			case 2:
 				name = inputoutput.getNamefromKeyboard();
 				patient = dbman.searchPatientByName(name);
+				
 				break;
 			case 0:
 				System.exit(0);

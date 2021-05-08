@@ -22,7 +22,7 @@ public class Role implements Serializable {
 	    pkColumnName="name", valueColumnName="seq", pkColumnValue="roles")
 	private Integer id;
 	private String name;
-	@OneToMany(mappedBy="role")
+	@OneToMany(mappedBy="role",fetch = FetchType.EAGER)
 	private List<User> users;
 	public Integer getId() {
 		return id;

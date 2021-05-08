@@ -222,7 +222,7 @@ public class inputoutput {
 		System.out.println("Please enter the role ID of the user:");
 		int id = inputoutput.get_int();
 		Role role = paman.getRole(id);
-		// List of user of the choosen role
+		// List of user of the chosen role
 		System.out.println(role.getUsers());
 		// Ask the user for the ID of the user
 		System.out.println("Please enter the ID of the user:");
@@ -230,6 +230,7 @@ public class inputoutput {
 	    User u = new User(id,role);
 		paman.changeRole(u);
 		System.out.println("The user's role has been changed correctly");
+		
 	}
 	
 	public static void delete() throws Exception {
@@ -240,7 +241,7 @@ public class inputoutput {
 		System.out.println("Please enter the role ID of the user you want to eliminate:");
 		int id = inputoutput.get_int();
 		Role role = paman.getRole(id);
-		// List of user of the choosen role
+		// List of user of the chosen role
 		System.out.println(role.getUsers());
 		// Ask the user for the ID of the user
 		System.out.println("Please enter the ID of the user:");
