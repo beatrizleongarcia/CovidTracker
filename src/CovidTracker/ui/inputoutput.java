@@ -29,7 +29,7 @@ public class inputoutput {
 	private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 	Patient patient;
 	private static JDBCManager man = new JDBCManager();
-	private static JPAUserManager paman = new JPAUserManager();
+
 
 
 
@@ -213,42 +213,6 @@ public class inputoutput {
 		return a;
 	}
 	
-	public static void modify() throws Exception {
-        
-		paman.connect();
-		// List of roles
-		System.out.println(paman.getRoles());
-		// Ask the user for a role
-		System.out.println("Please enter the role ID of the user:");
-		int id = inputoutput.get_int();
-		Role role = paman.getRole(id);
-		// List of user of the chosen role
-		System.out.println(role.getUsers());
-		// Ask the user for the ID of the user
-		System.out.println("Please enter the ID of the user:");
-	    id = inputoutput.get_int();
-	    User u = new User(id,role);
-		paman.changeRole(u);
-		System.out.println("The user's role has been changed correctly");
-		
-	}
 	
-	public static void delete() throws Exception {
-        paman.connect();
-		// List of roles
-		System.out.println(paman.getRoles());
-		// Ask the user for a role
-		System.out.println("Please enter the role ID of the user you want to eliminate:");
-		int id = inputoutput.get_int();
-		Role role = paman.getRole(id);
-		// List of user of the chosen role
-		System.out.println(role.getUsers());
-		// Ask the user for the ID of the user
-		System.out.println("Please enter the ID of the user:");
-	    id = inputoutput.get_int();
-	    User u = new User(id,role);
-		paman.deleteRole(u);
-		System.out.println("The user has been removed correctly");
-	}
 
 }

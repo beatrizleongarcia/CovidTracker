@@ -21,7 +21,7 @@ public class Menu {
 		dbman.connect();
         paman.connect();
 		while (true) {
-			System.out.println("WELCOME! ");
+			System.out.println("\nWELCOME! ");
 			System.out.println("\nChoose an option : ");
 			System.out.println("1.Register ");
 			System.out.println("2.Log in");
@@ -209,10 +209,10 @@ public class Menu {
 			int opcion = inputoutput.get_int();
 			switch (opcion) {
 			case 1:
-			     inputoutput.delete();
+			    delete();
 				break;
 			case 2:
-				inputoutput.modify();
+				modify();
 				break;
 			case 0:
 				System.exit(0);
@@ -221,5 +221,44 @@ public class Menu {
 		}
 
 	}
+	
+private static void modify() throws Exception {
+        
+		// List of roles
+		System.out.println(paman.getRoles());
+		// Ask the user for a role
+		System.out.println("Please enter the role ID of the user:");
+		int id = inputoutput.get_int();
+		Role role = paman.getRole(id);
+		// List of user of the chosen role
+		System.out.println(role.getUsers());
+		// Ask the user for the ID of the user
+		System.out.println("Please enter the ID of the user:");
+	    id = inputoutput.get_int();
+	    User u = new User(id,role);
+		paman.changeRole(u);
+		System.out.println("The user's role has been changed correctly");
+		
+	}
+	
+	private static void delete() throws Exception {
+ 
+		// List of roles
+		System.out.println(paman.getRoles());
+		// Ask the user for a role
+		System.out.println("Please enter the role ID of the user you want to eliminate:");
+		int id = inputoutput.get_int();
+		Role role = paman.getRole(id);
+		// List of user of the chosen role
+		System.out.println(role.getUsers());
+		// Ask the user for the ID of the user
+		System.out.println("Please enter the ID of the user:");
+	    id = inputoutput.get_int();
+	    User u = new User(id,role);
+		paman.deleteRole(u);
+		System.out.println("The user has been removed correctly");
+	}
+	
+
 	
 }
