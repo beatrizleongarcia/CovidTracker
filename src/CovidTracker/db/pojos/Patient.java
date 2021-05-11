@@ -71,6 +71,19 @@ public class Patient implements Serializable {
         this.doctor=doctor;
 	}
 
+	public Patient(String name, Date dob, String job_title, Float salary, List<Symptoms> symptoms,
+			List<Quarantine> quarantines, List<Covid_Test> tests) {
+		
+		this.name=name;
+        this.dob=dob;
+        this.job_title=job_title;
+        this.salary=salary;  
+        this.quarantine= quarantines;
+		this.symptoms= symptoms ;
+		this.tests= tests;	
+		
+	}
+
 	public Float getSalary() {
 		return salary;
 	}
@@ -199,6 +212,9 @@ public class Patient implements Serializable {
 	public void addNewTest(Covid_Test test) {
 		tests.add(test);
 		
+	}
+	public void addDoctor(Doctor doc) {
+		this.doctor = doc;
 	}
 	
 }

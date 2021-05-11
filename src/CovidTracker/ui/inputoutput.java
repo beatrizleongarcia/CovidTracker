@@ -30,9 +30,6 @@ public class inputoutput {
 	Patient patient;
 	private static JDBCManager man = new JDBCManager();
 
-
-
-
 	public static Patient addPatient() {
 		List<Covid_Test> tests = new ArrayList<Covid_Test>();
 		List<Symptoms> symptoms = new ArrayList<Symptoms>();
@@ -40,41 +37,33 @@ public class inputoutput {
 		try {
 			System.out.println("Introduce a new patient");
 			System.out.println("Name:");
-			String name = in.readLine();
+			String name = get_String();
 			System.out.println("Date of birth (yyyy-MM-dd)");
-			String dob = in.readLine();
+			String dob = get_String();
 			LocalDate date = create_date(dob);
 			System.out.println("Job title");
-			String job_title = in.readLine();
+			String job_title = get_String();
 			System.out.println("Salary");
-			Float salary = Float.parseFloat(in.readLine());
-			System.out.println("Doctor that has done the test");
-			String doctor_name = in.readLine();
-			Doctor doc = man.searchDoctorbyName(doctor_name);
-			Patient pat = new Patient(name, Date.valueOf(date), job_title, salary, doc);
-			man.addPerson(pat);
-
-			// DELETE
-			System.out.println("How many covid tests the patient has done?");
+			Float salary = get_Float();
+			System.out.println("How many covid tests the patient has taken?");
 			Integer test_number = Integer.parseInt(in.readLine());
-			for (int i = 0; i < test_number; i++) {
+			for (int i = 0; i <= test_number; i++) {
 				Covid_Test test = addCovid_Test();
 				tests.add(test);
 			}
-			System.out.println("How many symptoms the patient has done? (0 for no synmptoms)");
-			Integer number_symptoms = Integer.parseInt(in.readLine());
-			for (int j = 0; j < number_symptoms; j++) {
+			System.out.println("How many symptoms does the patient have? (0 for no synmptoms)");
+			Integer number_symptoms = get_int();
+			for (int j = 0; j <= number_symptoms; j++) {
 				Symptoms symp = addSymptoms();
 				symptoms.add(symp);
 			}
-			System.out.println("How many times this patient has been on quarentine?");
-			Integer number_quarantine = Integer.parseInt(in.readLine());
-			for (int j = 0; j < number_quarantine; j++) {
-				Quarantine qua = addQuarantine();
-				quarantines.add(qua);
-			}
-			// return new Patient(name, Date.valueOf(date), job_title, salary, doc, tests,
-			// symptoms, quarantines);
+		
+			quarantines.add(addQuarantine());
+			
+		
+			Patient pat = new Patient(name, Date.valueOf(date), job_title, salary, symptoms,quarantines,tests);
+			return pat;
+			
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -84,33 +73,53 @@ public class inputoutput {
 	}
 
 	private static Quarantine addQuarantine() {
-		String reason;
-		Integer time;
-		Quarantine qua = null;
 		try {
-			System.out.println("Reason of quarantine:");
-			reason = in.readLine();
-			System.out.println("How many days of quarantine?");
-			time = Integer.parseInt(in.readLine());
-			qua = new Quarantine(reason, time);
+			while (true) {
+				System.out.println("What is the reason of quarentine?");
+				System.out.println("1.The patient have been in contact with someone infected");
+				System.out.println("2.The patient have symptoms");
+				System.out.println("3.Positive covid test ");
+				System.out.println("4.Routine covid test that has been positive");
+				System.out.println("\nChoose an option : ");
+
+				int opcion = get_int();
+
+				switch (opcion) {
+				case 1:
+					String type = "contact";
+					return new Quarantine(type);
+				case 2:
+					type = "symptoms";
+					return new Quarantine(type);
+				case 3:
+					type = "confirmed";
+					return new Quarantine(type);
+				case 4:
+					type = "Routine test";
+					return new Quarantine(type);
+
+				}
+			}
+
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return qua;
+		return null;
 	}
 
 	public static Covid_Test addCovid_Test() {
 		Covid_Test tests = null;
 		try {
+			System.out.println("Complete the information about the covid test");
 			System.out.println("Public or private test:");
-			String public_private = in.readLine();
-			System.out.println("Type of test:");
-			String type_test = in.readLine();
-			System.out.println("Date of the test:");
-			String date_of_test = in.readLine();
+			String public_private = get_String();
+			System.out.println("Type of test(pcr,rapid test or antibody test");
+			String type_test = get_String();
+			System.out.println("Date of the test (yyyy-MM-dd):");
+			String date_of_test = get_String();
 			LocalDate date = create_date(date_of_test);
 			System.out.println("Price of the test:");
-			Float price = Float.parseFloat(in.readLine());
+			Float price = get_Float();
 			tests = new Covid_Test(public_private, type_test, Date.valueOf(date), price);
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -120,36 +129,38 @@ public class inputoutput {
 
 	public static Symptoms addSymptoms() {
 		try {
-			System.out.println("What is the symptom?");
-			System.out.println("1.Fever");
-			System.out.println("2.Dry cough");
-			System.out.println("3.Tireness ");
-			System.out.println("4.Ache and pains");
-			System.out.println("5.Diarrhoea");
-			System.out.println("6.Loss taste and smell");
-			System.out.println("\nChoose an option : ");
+			while (true) {
+				System.out.println("What is the symptom?");
+				System.out.println("1.Fever");
+				System.out.println("2.Dry cough");
+				System.out.println("3.Tireness ");
+				System.out.println("4.Ache and pains");
+				System.out.println("5.Diarrhoea");
+				System.out.println("6.Loss taste and smell");
+				System.out.println("\nChoose an option : ");
 
-			int opcion = get_int();
+				int opcion = get_int();
 
-			switch (opcion) {
-			case 1:
-				String type = "Fever";
-				return new Symptoms(type);
-			case 2:
-				type = "Dry cough";
-				return new Symptoms(type);
-			case 3:
-				type = "Tireness";
-				return new Symptoms(type);
-			case 4:
-				type = "Ache and pains";
-				return new Symptoms(type);
-			case 5:
-				type = "Diarrhoea";
-				return new Symptoms(type);
-			case 6:
-				type = "Loss taste and smell";
-				return new Symptoms(type);
+				switch (opcion) {
+				case 1:
+					String type = "Fever";
+					return new Symptoms(type);
+				case 2:
+					type = "Dry cough";
+					return new Symptoms(type);
+				case 3:
+					type = "Tireness";
+					return new Symptoms(type);
+				case 4:
+					type = "Ache and pains";
+					return new Symptoms(type);
+				case 5:
+					type = "Diarrhoea";
+					return new Symptoms(type);
+				case 6:
+					type = "Loss taste and smell";
+					return new Symptoms(type);
+				}
 			}
 
 		} catch (Exception e) {
@@ -212,7 +223,5 @@ public class inputoutput {
 		}
 		return a;
 	}
-	
-	
 
 }
