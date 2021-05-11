@@ -22,6 +22,9 @@ public class Quarantine implements Serializable{
 		this.time = time;
 	}
 
+	public Quarantine(String type) {
+		this.reason = type;
+	}
 	public Integer getId() {
 		return id;
 	}

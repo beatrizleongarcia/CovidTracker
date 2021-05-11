@@ -71,6 +71,19 @@ public class Patient implements Serializable {
         this.doctor=doctor;
 	}
 
+	public Patient(String name, Date dob, String job_title, Float salary, List<Symptoms> symptoms,
+			List<Quarantine> quarantines, List<Covid_Test> tests) {
+		
+		this.name=name;
+        this.dob=dob;
+        this.job_title=job_title;
+        this.salary=salary;  
+        this.quarantine= quarantines;
+		this.symptoms= symptoms ;
+		this.tests= tests;	
+		
+	}
+
 	public Float getSalary() {
 		return salary;
 	}
@@ -102,6 +115,14 @@ public class Patient implements Serializable {
 	public void setDays_off_work(Integer days_off_work) {
 		this.days_off_work = days_off_work;
 	}
+	
+	public Float getEconomic_impact() {
+		return economic_impact;
+	}
+	public void setEconomic_impact(Float economic_impact) {
+		this.economic_impact = economic_impact;
+	}
+	
 	public Integer getId() {
 		return id;
 	}
@@ -142,10 +163,7 @@ public class Patient implements Serializable {
 	public void setTests(List<Covid_Test> tests) {
 		this.tests = tests;
 	}
-	public Float getEconomic_impact() {
-		float economic_impact= getDays_off_work()*5;
-		return economic_impact;
-	}
+
 
 	@Override
 	public int hashCode() {
@@ -179,22 +197,24 @@ public class Patient implements Serializable {
 				+ tests + ", synmptoms=" + symptoms + ", quarantine=" + quarantine + "]";
 	}
 	
-	public Integer func_daysoff(Date today,Date date2) {
+	public void func_daysoff(Date today,Date date2) {
 		long difference = today.getTime()-date2.getTime();
 		long days = difference/(1000*60*60*24); //time is in miliseconds
-		return (int) days; 
+		setDays_off_work((int) days); 
 	}
 
-	public Float func_economic() {
+	public void func_economic() {
 		Float ec;
 		ec = this.days_off_work * (this.salary/30);
-		return ec;
-				
+		setEconomic_impact(ec);	
 	}
 
 	public void addNewTest(Covid_Test test) {
-		// TODO Auto-generated method stub
+		tests.add(test);
 		
+	}
+	public void addDoctor(Doctor doc) {
+		this.doctor = doc;
 	}
 	
 }

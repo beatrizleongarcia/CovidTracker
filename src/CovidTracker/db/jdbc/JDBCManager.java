@@ -1,8 +1,5 @@
 package CovidTracker.db.jdbc;
 
-import java.awt.font.FontRenderContext;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -14,6 +11,7 @@ import CovidTracker.db.ifaces.DBManager;
 import CovidTracker.db.pojos.Covid_Test;
 import CovidTracker.db.pojos.Doctor;
 import CovidTracker.db.pojos.Patient;
+import CovidTracker.db.pojos.Quarantine;
 import CovidTracker.db.pojos.Symptoms;
 import CovidTracker.ui.inputoutput;
 
@@ -59,10 +57,9 @@ public class JDBCManager implements DBManager {
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE patient" + "(id INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL,"
-					+ "dob DATE NOT NULL," + "job_title TEXT NOT NULL," + "salary INTEGER NOT NULL,"
-					+ "days_off_work INTEGER NOT NULL," + "economic_impact INTEGER NOT NULL,"
-					+ "doctor_id INTEGER REFERENCES doctor(id)," + "symptoms_id INTEGER REFERENCES symptoms(id),"
-					+ "quarantine_id INTEGER REFERENCES quarantine(id))";
+					+ "dob DATE NOT NULL," + "job_title TEXT NOT NULL," + "salary REAL NOT NULL,"
+					+ "days_off_work INTEGER NOT NULL," + "economic_impact REAL NOT NULL,"
+					+ "doctor_id INTEGER REFERENCES doctor(id)," + "quarantine_id INTEGER REFERENCES quarantine(id))";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE covid_test" + "(id INTEGER PRIMARY KEY AUTOINCREMENT," + "date_of_test DATE NOT NULL,"
@@ -169,32 +166,56 @@ public class JDBCManager implements DBManager {
 	@Override
 	public void ModifyPatient(Patient p) {
 		try {
-			System.out.println("Insert the name of the patient");
-			p = searchPatientByName(inputoutput.get_String());
-			System.out.println(
-					"What aspect of your patient do you want to change? \n (name/salary/job title/date of birth/days off work)");
-			String modification = inputoutput.get_String();
+			System.out.println("What feature do you want to change: ");
+			System.out.println("1. Name");
+			System.out.println("2.Salary ");
+			System.out.println("3.Job tittle ");
+			System.out.println("4.Date of birth");
 
-			if (modification != null) {
-				if (modification == "name") {
-					System.out.println("Insert new name");
-					String new_name = inputoutput.get_String();
-					p.setName(new_name);
-				} else if (modification == "salary") {
-					System.out.println("Insert new salary");
-					float new_salary = inputoutput.get_Float();
-					p.setSalary(new_salary);
-				} else if (modification == "job title") {
-					System.out.println("Insert new job title");
-					String new_job_title = inputoutput.get_String();
-					p.setJob_title(new_job_title);
-				} else if (modification == "date of birth") {
-					System.out.println("Insert date of birth: (yyyy-MM-dd)");
-					String dob = inputoutput.get_String();
-					p.setDob(Date.valueOf(inputoutput.create_date(dob)));
-				}
+			Integer feature = inputoutput.get_int();
+			String sql;
+			PreparedStatement prep;
 
+			switch (feature) {
+			case 1:
+				sql = "UPDATE patient SET name =?";
+				prep = c.prepareStatement(sql);
+				System.out.println("Introduce the new name:");
+				String name = inputoutput.get_String();
+				prep.setString(1, name);
+				prep.executeUpdate();
+				break;
+			case 2:
+				sql = "UPDATE patient SET salary =?";
+				prep = c.prepareStatement(sql);
+				System.out.println("Introduce the new salary:");
+				Float salary = inputoutput.get_Float();
+				prep.setFloat(1, salary);
+				prep.executeUpdate();
+				break;
+			case 3:
+				sql = "UPDATE patient SET job_tittle =?";
+				prep = c.prepareStatement(sql);
+				System.out.println("Introduce the new job tittle:");
+				String job = inputoutput.get_String();
+				prep.setString(1, job);
+				prep.executeUpdate();
+				break;
+			case 4:
+				sql = "UPDATE patient SET dob =?";
+				prep = c.prepareStatement(sql);
+				System.out.println("Introduce the new date of birth (yyyy-MM-dd):");
+				String dob = inputoutput.get_String();
+				Date d = Date.valueOf(inputoutput.create_date(dob));
+				prep.setDate(1, d);
+				prep.executeUpdate();
+				break;
+			default:
+				System.out.println("That optiont does not exist");
+				break;
 			}
+
+			System.out.println("Update finished.");
 
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -261,19 +282,22 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 	}
-	// Insert tabla patient-symptoms
 
 	@Override
 	public void addPerson(Patient p) {
 		PreparedStatement prep;
 		Doctor doc = p.getDoctor();
 		int doctor_id = doc.getId();
+		Quarantine qua = (Quarantine) p.getQuarantine();
+	    int quarantine_id =  qua.getId();
+	    Covid_Test test = (Covid_Test) p.getTests();
+	    int Covid_id = test.getId();
 		try {
 
 			String sql = "INSERT INTO patient (name, dob, job_tittle, salary, day_off_work, economic_impact, doctor_id) "
 					+ "VALUES ('" + p.getName() + "', '" + p.getDob() + "', '" + p.getJob_title() + "', '"
 					+ p.getSalary() + "', '" + p.getDays_off_work() + "', '" + p.getEconomic_impact() + "', '"
-					+ doctor_id + ")";
+					+ doctor_id +"', '" + quarantine_id +"', '"+ Covid_id + ")";
 			prep = c.prepareStatement(sql);
 			prep.executeUpdate();
 			String sql2 = "SELECT last_insert_rowid()";
@@ -294,53 +318,55 @@ public class JDBCManager implements DBManager {
 	}
 
 	public void addCovid_Test(Covid_Test t) {
-        PreparedStatement prep;
-        Doctor doc = t.getDoctor();
-        int doctor_id= doc.getId();
-        Patient pat = t.getPatient();
-        int patient_id = pat.getId();
-        try {
-              
-              String sql = "INSERT INTO covid_test (id, public_private, type_test, laboratory, date_of_test, price, doctor_id, patient_id) "
-              + "VALUES ('" + t.getId() + "', '" + t.getPublic_private() + "', '" + t.getType_test() + "', '" + t.getLaboratory()
-              + "', '" + t.getDate_of_test() + "' , '" + t.getPrice() + "', '" + doctor_id + "' , '" + patient_id + ")";
-              prep = c.prepareStatement(sql);
-              prep.executeUpdate();
-              prep.close();
-              System.out.println("Covid test info processed");
-  			  System.out.println("Records inserted.");
-        }catch (SQLException e) {
-        	e.printStackTrace();
-        }
+		PreparedStatement prep;
+		Doctor doc = t.getDoctor();
+		int doctor_id = doc.getId();
+		Patient pat = t.getPatient();
+		int patient_id = pat.getId();
+		try {
 
-        
-        }
-	public void addDoctor (Doctor d) {
-        PreparedStatement prep;
-        try {
-              String sql = "INSERT INTO doctor (id, name , hospital) "
-              + "VALUES ('" + d.getId() + "', '" + d.getName() + "', '" + d.getHospital() + ")" ;
-              prep = c.prepareStatement(sql);
-              prep.executeUpdate();
-              prep.close();
-              System.out.println("Doctor info processed");
-  			  System.out.println("Records inserted.");
-        }catch(SQLException e) {
-        	e.printStackTrace();
-        } 
-}
+			String sql = "INSERT INTO covid_test (id, public_private, type_test, laboratory, date_of_test, price, doctor_id, patient_id) "
+					+ "VALUES ('" + t.getId() + "', '" + t.getPublic_private() + "', '" + t.getType_test() + "', '"
+					+ t.getLaboratory() + "', '" + t.getDate_of_test() + "' , '" + t.getPrice() + "', '" + doctor_id
+					+ "' , '" + patient_id + ")";
+			prep = c.prepareStatement(sql);
+			prep.executeUpdate();
+			prep.close();
+			System.out.println("Covid test info processed");
+			System.out.println("Records inserted.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void addDoctor(Doctor d) {
+		PreparedStatement prep;
+		try {
+			String sql = "INSERT INTO doctor (id, name , hospital) " + "VALUES ('" + d.getId() + "', '" + d.getName()
+					+ "', '" + d.getHospital() + ")";
+			prep = c.prepareStatement(sql);
+			prep.executeUpdate();
+			prep.close();
+			System.out.println("Doctor info processed");
+			System.out.println("Records inserted.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public Patient test_patient() {
 		Covid_Test test = inputoutput.addCovid_Test();
-		System.out.println("Insert name");
+		System.out.println("Insert name of the patient");
 		String name = inputoutput.get_String();
 		Patient pat = searchPatientByName(name);
 		pat.addNewTest(test);
 		return pat;
 	}
 
-	public void last_test(Patient pat) {
+	@Override
+	public Date last_test(Patient pat) {
 		pat = test_patient();
 		int id = pat.getId();
 		String sql = "SELECT * FROM covid_test WHERE patient_id = '" + id + "' ORDER BY date_of_test DESC ";
@@ -354,10 +380,8 @@ public class JDBCManager implements DBManager {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		/*
-		 * Poner en el menu debajo de este metodo Localdate date =
-		 * pat.func_daysoff(Date.valueOf(), last_date); pat.func_economic();
-		 */
+
+		return last_date;
 
 	}
 
@@ -374,8 +398,26 @@ public class JDBCManager implements DBManager {
 		}
 	}
 
+	@Override
+	public void viewDoctors() {
 
+		String sql = "SELECT name FROM doctor";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
 
+				String name = rs.getString("name");
+				System.out.println(name);
+			}
+			rs.close();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
+	}
+	
+	
 
 }

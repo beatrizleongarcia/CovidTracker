@@ -104,8 +104,6 @@ public class JPAUserManager implements UserManager {
 		// End transaction
 		entman.getTransaction().commit();
 
-		// Close the entity manager
-		entman.close();
 	}
 
 	@Override
@@ -120,9 +118,7 @@ public class JPAUserManager implements UserManager {
 		entman.remove(us);
 		// End transaction
 		entman.getTransaction().commit();
-		
-		// Close the entity manager
-		entman.close();
+	
 	}
 
 }
