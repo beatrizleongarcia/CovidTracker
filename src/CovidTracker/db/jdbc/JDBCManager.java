@@ -59,7 +59,7 @@ public class JDBCManager implements DBManager {
 			sql = "CREATE TABLE patient" + "(id INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL,"
 					+ "dob DATE NOT NULL," + "job_title TEXT NOT NULL," + "salary REAL NOT NULL,"
 					+ "days_off_work INTEGER NOT NULL," + "economic_impact REAL NOT NULL,"
-					+ "doctor_id INTEGER REFERENCES doctor(id)," + "quarantine_id INTEGER REFERENCES quarantine(id))";
+					+ "doctor_id INTEGER REFERENCES doctor(id))";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE covid_test" + "(id INTEGER PRIMARY KEY AUTOINCREMENT," + "date_of_test DATE NOT NULL,"
@@ -69,6 +69,10 @@ public class JDBCManager implements DBManager {
 
 			sql = "CREATE TABLE patient_symptoms" + "(patient_id INTEGER REFERENCES patient(id),"
 					+ "symptoms_id INTEGER REFERENCES symptoms(id)," + "PRIMARY KEY (patient_id , symptoms_id))";
+			stmt.executeUpdate(sql);
+			
+			sql = "CREATE TABLE patient_quarantine" + "(patient_id INTEGER REFERENCES patient(id),"
+					+ "quarantine_id INTEGER REFERENCES quarantine(id)," + "PRIMARY KEY (patient_id , quarantine_id))";
 			stmt.executeUpdate(sql);
 
 			this.symptoms_table();
@@ -282,22 +286,32 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 	}
+	@Override
+	public void quarantine_patient(Patient p, Symptoms s) {
+		try {
+			String sql = "INSERT INTO patient_symptoms(patient_id, symptoms_id) VALUES (?,?)";
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setInt(1, p.getId());
+			prep.setInt(2, s.getId());
+			prep.executeUpdate();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 
 	@Override
 	public void addPerson(Patient p) {
 		PreparedStatement prep;
 		Doctor doc = p.getDoctor();
 		int doctor_id = doc.getId();
-		Quarantine qua = (Quarantine) p.getQuarantine();
-	    int quarantine_id =  qua.getId();
-	    Covid_Test test = (Covid_Test) p.getTests();
-	    int Covid_id = test.getId();
+	    
 		try {
 
 			String sql = "INSERT INTO patient (name, dob, job_tittle, salary, day_off_work, economic_impact, doctor_id) "
 					+ "VALUES ('" + p.getName() + "', '" + p.getDob() + "', '" + p.getJob_title() + "', '"
 					+ p.getSalary() + "', '" + p.getDays_off_work() + "', '" + p.getEconomic_impact() + "', '"
-					+ doctor_id +"', '" + quarantine_id +"', '"+ Covid_id + ")";
+					+ doctor_id +"', '"+ ")";
 			prep = c.prepareStatement(sql);
 			prep.executeUpdate();
 			String sql2 = "SELECT last_insert_rowid()";
@@ -356,19 +370,17 @@ public class JDBCManager implements DBManager {
 	}
 
 	@Override
-	public Patient test_patient() {
+	public Patient test_patient(Patient pat) {
 		Covid_Test test = inputoutput.addCovid_Test();
-		System.out.println("Insert name of the patient");
-		String name = inputoutput.get_String();
-		Patient pat = searchPatientByName(name);
 		pat.addNewTest(test);
+		addCovid_Test(test);
 		return pat;
 	}
 
 	@Override
-	public Date last_test(Patient pat) {
-		pat = test_patient();
-		int id = pat.getId();
+	public Date last_test(Patient pattest, Patient patnotest) {
+		pattest = test_patient(patnotest);
+		int id = pattest.getId();
 		String sql = "SELECT * FROM covid_test WHERE patient_id = '" + id + "' ORDER BY date_of_test DESC ";
 		PreparedStatement prep;
 		Date last_date = null;

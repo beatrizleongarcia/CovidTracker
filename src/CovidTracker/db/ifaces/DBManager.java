@@ -17,8 +17,8 @@ public interface DBManager {
 	public Doctor searchDoctorbyName(String name); //search a doctor by name using searchDoctorbyId
 	public void delete_patient(String name);// Delete a patient
 	public void symptoms_patient(Patient p, Symptoms s);//to insert into the table symptoms_patient
-	public Patient test_patient();//borrar
-	public Date last_test(Patient pat);// get the data of the test to generate days off work
+	public Patient test_patient(Patient pat);//borrar
+	public Date last_test(Patient pattest, Patient patnotest);// get the data of the test to generate days off work
 	public void viewDoctors();// print the names of the doctors
 
 	

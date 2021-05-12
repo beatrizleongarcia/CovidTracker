@@ -133,6 +133,7 @@ public class Menu {
 	
 	private static void newpat() throws Exception{
 		Patient pat = inputoutput.addPatient(); //Introduce the patient
+		
 		dbman.viewDoctors();
 		System.out.println("Write the name of the doctor that has done the test");
 		String doctor_name = inputoutput.get_String();
