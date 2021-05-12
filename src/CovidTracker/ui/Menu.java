@@ -10,6 +10,7 @@ import CovidTracker.db.jdbc.JDBCManager;
 import CovidTracker.db.jpa.JPAUserManager;
 import CovidTracker.db.pojos.Doctor;
 import CovidTracker.db.pojos.Patient;
+import CovidTracker.db.pojos.Quarantine;
 import CovidTracker.db.pojos.Symptoms;
 import CovidTracker.db.pojos.users.Role;
 import CovidTracker.db.pojos.users.User;
@@ -139,14 +140,23 @@ public class Menu {
 		String doctor_name = inputoutput.get_String();
 		Doctor doc = dbman.searchDoctorbyName(doctor_name);
         pat.addDoctor(doc);
-		Date date = dbman.last_test(pat);
+        dbman.addPerson(pat);
+        Patient pattest = dbman.test_patient(pat);
+        
+		Date date = dbman.last_test(pattest,pat);
 		LocalDate dateToday = LocalDate.now();
-		pat.func_daysoff(Date.valueOf(dateToday),date);
-		pat.func_economic(); 
-		dbman.addPerson(pat);//Patient table no symptoms
-		List <Symptoms> symptoms = pat.getSymptoms();
+		pattest.func_daysoff(Date.valueOf(dateToday),date);
+		pattest.func_economic(); 
+		dbman.change_daysoffwork(pattest);
+		dbman.change_economicimpact(pattest);
+		
+		List <Symptoms> symptoms = pattest.getSymptoms();
        for(int x = 0; x <=symptoms.size(); x++) {
     	  dbman.symptoms_patient(pat, symptoms.get(x));//add to the many to many table
+       }
+       List <Quarantine> qua = pattest.getQuarantine();
+       for(int x = 0; x <=qua.size(); x++) {
+    	  dbman.quarantine_patient(pattest, qua.get(x));//add to the many to many table
     	   
        }
 	}

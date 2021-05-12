@@ -72,15 +72,14 @@ public class Patient implements Serializable {
 	}
 
 	public Patient(String name, Date dob, String job_title, Float salary, List<Symptoms> symptoms,
-			List<Quarantine> quarantines, List<Covid_Test> tests) {
+			List<Quarantine> quarantines) {
 		
 		this.name=name;
         this.dob=dob;
         this.job_title=job_title;
         this.salary=salary;  
         this.quarantine= quarantines;
-		this.symptoms= symptoms ;
-		this.tests= tests;	
+		this.symptoms= symptoms ;	
 		
 	}
 

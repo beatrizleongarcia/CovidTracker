@@ -70,7 +70,7 @@ public class JDBCManager implements DBManager {
 			sql = "CREATE TABLE patient_symptoms" + "(patient_id INTEGER REFERENCES patient(id),"
 					+ "symptoms_id INTEGER REFERENCES symptoms(id)," + "PRIMARY KEY (patient_id , symptoms_id))";
 			stmt.executeUpdate(sql);
-			
+
 			sql = "CREATE TABLE patient_quarantine" + "(patient_id INTEGER REFERENCES patient(id),"
 					+ "quarantine_id INTEGER REFERENCES quarantine(id)," + "PRIMARY KEY (patient_id , quarantine_id))";
 			stmt.executeUpdate(sql);
@@ -182,36 +182,40 @@ public class JDBCManager implements DBManager {
 
 			switch (feature) {
 			case 1:
-				sql = "UPDATE patient SET name =?";
+				sql = "UPDATE patient SET name =? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				System.out.println("Introduce the new name:");
 				String name = inputoutput.get_String();
 				prep.setString(1, name);
+				prep.setInt(2, p.getId());
 				prep.executeUpdate();
 				break;
 			case 2:
-				sql = "UPDATE patient SET salary =?";
+				sql = "UPDATE patient SET salary =? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				System.out.println("Introduce the new salary:");
 				Float salary = inputoutput.get_Float();
 				prep.setFloat(1, salary);
+				prep.setInt(2, p.getId());
 				prep.executeUpdate();
 				break;
 			case 3:
-				sql = "UPDATE patient SET job_tittle =?";
+				sql = "UPDATE patient SET job_tittle =? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				System.out.println("Introduce the new job tittle:");
 				String job = inputoutput.get_String();
 				prep.setString(1, job);
+				prep.setInt(2, p.getId());
 				prep.executeUpdate();
 				break;
 			case 4:
-				sql = "UPDATE patient SET dob =?";
+				sql = "UPDATE patient SET dob =? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				System.out.println("Introduce the new date of birth (yyyy-MM-dd):");
 				String dob = inputoutput.get_String();
 				Date d = Date.valueOf(inputoutput.create_date(dob));
 				prep.setDate(1, d);
+				prep.setInt(2, p.getId());
 				prep.executeUpdate();
 				break;
 			default:
@@ -227,6 +231,35 @@ public class JDBCManager implements DBManager {
 
 	}
 
+	public void change_daysoffwork(Patient pat) {
+
+		try {
+			String sql = "UPDATE patient SET days_off_work =? WHERE id=?";
+			PreparedStatement prep;
+			prep = c.prepareStatement(sql);
+			prep.setInt(1, pat.getDays_off_work());
+			prep.setInt(2, pat.getId());
+			prep.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	public void change_economicimpact(Patient pat) {
+
+		try {
+			String sql = "UPDATE patient SET economic_impact =? WHERE id=?";
+			PreparedStatement prep;
+			prep = c.prepareStatement(sql);
+			prep.setFloat(1, pat.getEconomic_impact());
+			prep.setInt(2, pat.getId());
+			prep.executeUpdate();
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+
+	}
 	@Override
 	public Doctor searchDoctorbyName(String name) {
 		Doctor doc = null;
@@ -286,10 +319,11 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 	}
+
 	@Override
-	public void quarantine_patient(Patient p, Symptoms s) {
+	public void quarantine_patient(Patient p, Quarantine s) {
 		try {
-			String sql = "INSERT INTO patient_symptoms(patient_id, symptoms_id) VALUES (?,?)";
+			String sql = "INSERT INTO patient_quarantine(patient_id, quarantine_id) VALUES (?,?)";
 			PreparedStatement prep = c.prepareStatement(sql);
 			prep.setInt(1, p.getId());
 			prep.setInt(2, s.getId());
@@ -305,13 +339,13 @@ public class JDBCManager implements DBManager {
 		PreparedStatement prep;
 		Doctor doc = p.getDoctor();
 		int doctor_id = doc.getId();
-	    
+
 		try {
 
 			String sql = "INSERT INTO patient (name, dob, job_tittle, salary, day_off_work, economic_impact, doctor_id) "
 					+ "VALUES ('" + p.getName() + "', '" + p.getDob() + "', '" + p.getJob_title() + "', '"
 					+ p.getSalary() + "', '" + p.getDays_off_work() + "', '" + p.getEconomic_impact() + "', '"
-					+ doctor_id +"', '"+ ")";
+					+ doctor_id + "', '" + ")";
 			prep = c.prepareStatement(sql);
 			prep.executeUpdate();
 			String sql2 = "SELECT last_insert_rowid()";
@@ -429,7 +463,5 @@ public class JDBCManager implements DBManager {
 		}
 
 	}
-	
-	
 
 }
