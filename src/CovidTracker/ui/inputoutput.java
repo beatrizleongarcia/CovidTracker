@@ -71,7 +71,23 @@ public class inputoutput {
 		return null;
 
 	}
+	public static Doctor addDoctor() {
+		try {
+			System.out.println("Introduce a new doctor");
+			System.out.println("Name:");
+			String name = get_String();
+			System.out.println("Hospital:");
+			String hospital = get_String();
+			Doctor doc = new Doctor (name, hospital);
+			return doc;
+			
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
+		return null;
+
+	}
 	private static Quarantine addQuarantine() {
 		try {
 			while (true) {
@@ -223,5 +239,14 @@ public class inputoutput {
 		}
 		return a;
 	}
-
+	public static String getDocfromKeyboard() {
+		String a = null;
+		try {
+			System.out.println("Enter your name:");
+			a = in.readLine();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		return a;
+	}
 }

@@ -26,6 +26,11 @@ public class Doctor implements Serializable {
 		this.hospital= hospital;	
 	}
 
+	public Doctor(String name, String hospital) {
+		this.name = name;
+		this.hospital= hospital;
+	}
+
 	public Integer getId() {
 		return id;
 	}
@@ -115,6 +120,12 @@ public class Doctor implements Serializable {
 		return true;
 	}
 
+	public void listPatient() {
+	for(int i=0;i<=patients.size();i++) {
+		System.out.println(patients.get(i).getName());
+	}
+	}
+	
 	@Override
 	public String toString() {
 		return "Doctor [id=" + id + ", name=" + name + ", hospital=" + hospital + ", patients=" + patients + ", tests="

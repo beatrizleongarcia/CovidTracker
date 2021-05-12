@@ -1,6 +1,5 @@
 package CovidTracker.ui;
 
-
 import java.security.MessageDigest;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -15,7 +14,6 @@ import CovidTracker.db.pojos.Symptoms;
 import CovidTracker.db.pojos.users.Role;
 import CovidTracker.db.pojos.users.User;
 
-
 public class Menu {
 
 	private static JDBCManager dbman = new JDBCManager();
@@ -23,7 +21,7 @@ public class Menu {
 
 	public static void main(String[] args) throws Exception {
 		dbman.connect();
-        paman.connect();
+		paman.connect();
 		while (true) {
 			System.out.println("\nWELCOME! ");
 			System.out.println("\nChoose an option : ");
@@ -35,7 +33,7 @@ public class Menu {
 
 			switch (opcion) {
 			case 1:
-			     register();
+				register();
 				break;
 			case 2:
 				login();
@@ -49,8 +47,6 @@ public class Menu {
 			}
 		}
 	}
-
-	
 
 	private static void register() throws Exception {
 
@@ -72,7 +68,7 @@ public class Menu {
 		User user = new User(email, hash, role);
 		paman.newUser(user);
 	}
-	
+
 	private static void login() throws Exception {
 		// Ask the user for an email
 		System.out.println("Enter your email address: ");
@@ -88,17 +84,17 @@ public class Menu {
 			MenuAdm();
 		} else if (user.getRole().getName().equalsIgnoreCase("CEO")) {
 			MenuCEO();
-		}else if (user.getRole().getName().equalsIgnoreCase("HHRR")) {
+		} else if (user.getRole().getName().equalsIgnoreCase("HHRR")) {
 			MenuHHRR();
 		} else if (user.getRole().getName().equalsIgnoreCase("doctor")) {
-			 MenuDoc();
-		}else if (user.getRole().getName().equalsIgnoreCase("informatic")) {
-			 MenuInformatic();
+			MenuDoc();
+		} else if (user.getRole().getName().equalsIgnoreCase("informatic")) {
+			MenuInformatic();
 		}
-		
+
 		// Check the type of the user and redirect her to the proper menu
 	}
-	
+
 	private static void MenuAdm() throws Exception {
 		while (true) {
 			System.out.println("1.Look for a patient. ");
@@ -122,46 +118,44 @@ public class Menu {
 
 		}
 	}
-	
+
 	private static void view() throws Exception {
 		String name = inputoutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
-		if(patient == null) {
-			System.out.println("There are no patients");	
-		}else 
-		System.out.println(patient);
+		if (patient == null) {
+			System.out.println("There are no patients");
+		} else
+			System.out.println(patient);
 	}
-	
-	private static void newpat() throws Exception{
-		Patient pat = inputoutput.addPatient(); //Introduce the patient
-		
+
+	private static void newpat() throws Exception {
+		Patient pat = inputoutput.addPatient(); // Introduce the patient
+
 		dbman.viewDoctors();
 		System.out.println("Write the name of the doctor that has done the test");
 		String doctor_name = inputoutput.get_String();
 		Doctor doc = dbman.searchDoctorbyName(doctor_name);
-        pat.addDoctor(doc);
-        dbman.addPerson(pat);
-        Patient pattest = dbman.test_patient(pat);
-        
-		Date date = dbman.last_test(pattest,pat);
+		pat.addDoctor(doc);
+		dbman.addPerson(pat);
+		Patient pattest = dbman.test_patient(pat);
+
+		Date date = dbman.last_test(pattest, pat);
 		LocalDate dateToday = LocalDate.now();
-		pattest.func_daysoff(Date.valueOf(dateToday),date);
-		pattest.func_economic(); 
+		pattest.func_daysoff(Date.valueOf(dateToday), date);
+		pattest.func_economic();
 		dbman.change_daysoffwork(pattest);
 		dbman.change_economicimpact(pattest);
-		
-		List <Symptoms> symptoms = pattest.getSymptoms();
-       for(int x = 0; x <=symptoms.size(); x++) {
-    	  dbman.symptoms_patient(pat, symptoms.get(x));//add to the many to many table
-       }
-       List <Quarantine> qua = pattest.getQuarantine();
-       for(int x = 0; x <=qua.size(); x++) {
-    	  dbman.quarantine_patient(pattest, qua.get(x));//add to the many to many table
-    	   
-       }
-	}
-	
 
+		List<Symptoms> symptoms = pattest.getSymptoms();
+		for (int x = 0; x <= symptoms.size(); x++) {
+			dbman.symptoms_patient(pat, symptoms.get(x));// add to the many to many table
+		}
+		List<Quarantine> qua = pattest.getQuarantine();
+		for (int x = 0; x <= qua.size(); x++) {
+			dbman.quarantine_patient(pattest, qua.get(x));// add to the many to many table
+
+		}
+	}
 
 	private static void MenuCEO() throws Exception {
 		while (true) {
@@ -177,9 +171,10 @@ public class Menu {
 				view();
 				break;
 			case 2:
-				String name = inputoutput.getNamefromKeyboard();
-				//patient = dbman.searchPatientByName(name);
-				
+				deletepat();
+				break;
+			case 3:
+				adddoc();
 				break;
 			case 0:
 				System.exit(0);
@@ -187,6 +182,16 @@ public class Menu {
 			}
 		}
 
+	}
+
+	private static void deletepat() throws Exception {
+		String name = inputoutput.getNamefromKeyboard();
+		dbman.delete_patient(name);
+	}
+
+	private static void adddoc() throws Exception {
+		Doctor doc = inputoutput.addDoctor();
+		dbman.addDoctor(doc);
 	}
 
 	private static void MenuHHRR() throws Exception {
@@ -199,14 +204,10 @@ public class Menu {
 			int opcion = inputoutput.get_int();
 			switch (opcion) {
 			case 1:
-				String name = inputoutput.getNamefromKeyboard();
-				Patient patient = dbman.searchPatientByName(name);
-				dbman.LookReplacement(patient);
+				replacement();
 				break;
 			case 2:
-				name = inputoutput.getNamefromKeyboard();
-				patient = dbman.searchPatientByName(name);
-				dbman.ModifyPatient(patient);
+				modifypat();
 				break;
 			case 0:
 				System.exit(0);
@@ -216,16 +217,41 @@ public class Menu {
 
 	}
 
+	private static void replacement() throws Exception {
+		String name = inputoutput.getNamefromKeyboard();
+		Patient patient = dbman.searchPatientByName(name);
+		int days = patient.getDays_off_work();
+		if (days > 20) {
+			System.out.println("Look for a replacement");
+		} else {
+			System.out.println("It is not necesary to look for a replacemnet yet.");
+		}
+	}
+	private static void modifypat() throws Exception {
+		String name = inputoutput.getNamefromKeyboard();
+		Patient patient = dbman.searchPatientByName(name);
+		dbman.ModifyPatient(patient);
+	}
+	
+	
 	private static void MenuDoc() throws Exception {
 		while (true) {
-			System.out.println("1.Introduce new patient. ");
+			System.out.println("1. Introduce new patient. ");.
+			System.out.println("2. Add a patient's covid test");
+			System.out.println("3. List patients");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
 			int opcion = inputoutput.get_int();
 			switch (opcion) {
 			case 1:
-				dbman.addPerson(inputoutput.addPatient());
+				newpat();
+				break;
+			case 2:
+				addcovid();
+				break;
+			case 3:
+				listpat();
 				break;
 			case 0:
 				System.exit(0);
@@ -235,6 +261,19 @@ public class Menu {
 		}
 
 	}
+
+	private static void addcovid() throws Exception {
+		String name = inputoutput.getNamefromKeyboard();
+		Patient patient = dbman.searchPatientByName(name);
+		dbman.test_patient(patient);
+	}
+	private static void listpat() throws Exception {
+		
+		String name = inputoutput.getDocfromKeyboard();
+		Doctor doc = dbman.searchDoctorbyName(name);
+		doc.listPatient();
+	}
+	
 	
 	private static void MenuInformatic() throws Exception {
 		while (true) {
@@ -246,7 +285,7 @@ public class Menu {
 			int opcion = inputoutput.get_int();
 			switch (opcion) {
 			case 1:
-			    delete();
+				delete();
 				break;
 			case 2:
 				modify();
@@ -258,9 +297,9 @@ public class Menu {
 		}
 
 	}
-	
-private static void modify() throws Exception {
-        
+
+	private static void modify() throws Exception {
+
 		// List of roles
 		System.out.println(paman.getRoles());
 		// Ask the user for a role
@@ -271,15 +310,15 @@ private static void modify() throws Exception {
 		System.out.println(role.getUsers());
 		// Ask the user for the ID of the user
 		System.out.println("Please enter the ID of the user:");
-	    id = inputoutput.get_int();
-	    User u = new User(id,role);
+		id = inputoutput.get_int();
+		User u = new User(id, role);
 		paman.changeRole(u);
 		System.out.println("The user's role has been changed correctly");
-		
+
 	}
-	
+
 	private static void delete() throws Exception {
- 
+
 		// List of roles
 		System.out.println(paman.getRoles());
 		// Ask the user for a role
@@ -290,12 +329,10 @@ private static void modify() throws Exception {
 		System.out.println(role.getUsers());
 		// Ask the user for the ID of the user
 		System.out.println("Please enter the ID of the user:");
-	    id = inputoutput.get_int();
-	    User u = new User(id,role);
+		id = inputoutput.get_int();
+		User u = new User(id, role);
 		paman.deleteRole(u);
 		System.out.println("The user has been removed correctly");
 	}
-	
 
-	
 }

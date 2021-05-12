@@ -127,16 +127,7 @@ public class JDBCManager implements DBManager {
 		}
 	}
 
-	@Override
-	public boolean LookReplacement(Patient p) {
-		int days = p.getDays_off_work();
-		if (days > 10) {
-			return true;
-		} else {
-			return false;
-		}
-
-	}
+	
 
 	@Override
 	public Patient searchPatientByName(String name) {
