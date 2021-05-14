@@ -1,0 +1,18 @@
+This week we expected to be able to do...
+=========================================
+Continue with XML
+
+Optional: Reasons why
+---------------------
+
+This week we did...
+===================
+We have defined the XML subsystem’s HTML interface
+Optional: Reasons why
+---------------------
+
+Next weeks we will do...
+========================
+Expand our UML class diagram to include the XML subsystem
+Optional: Reasons why
+---------------------
