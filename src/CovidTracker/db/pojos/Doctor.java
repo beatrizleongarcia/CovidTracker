@@ -2,16 +2,25 @@ package CovidTracker.db.pojos;
 
 import java.util.ArrayList;
 import java.util.List;
+
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlTransient;
+
 import java.io.Serializable;
 
 public class Doctor implements Serializable {
 
 	private static final long serialVersionUID = 8612696465626368239L;
-
+	@XmlAttribute
 	private Integer id;
+	@XmlAttribute
 	private String name;
+	@XmlElement
 	private String hospital;
+	@XmlTransient
 	private List<Patient> patients;
+	@XmlTransient
 	private List<Covid_Test> tests;
 
 	public Doctor() {

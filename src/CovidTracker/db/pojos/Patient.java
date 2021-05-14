@@ -6,20 +6,53 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
+import javax.xml.bind.annotation.XmlAttribute;
+import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
+import javax.xml.bind.annotation.XmlRootElement;
+import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
+import javax.xml.bind.annotation.adapters.XmlJavaTypeAdapter;
+
+import CovidTracker.db.xml.utils.SQLDateAdapter;
+
+@Entity
+@Table(name = "patient")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Patient")
+@XmlType(propOrder = { "name","dob", "salary","job_title", "economic_impact", "days_off_work","doctor","test","symptoms","quarentine"})
 public class Patient implements Serializable {
 
 	private static final long serialVersionUID = 6791061415881333978L;
-	
+	@XmlAttribute
 	private Integer id;
-	private Float salary;
+	@XmlAttribute
 	private String name;
+	@XmlElement
+	private Float salary;
+	@XmlElement
+	@XmlJavaTypeAdapter(CovidTracker.db.xml.utils.SQLDateAdapter.class)
 	private Date dob;
+	@XmlElement
 	private String job_title;
+	@XmlElement
 	private Float economic_impact;
+	@XmlElement
 	private Integer days_off_work;
+	@XmlTransient
 	private Doctor doctor;
+	@XmlElement(name = "Covid_test")
+    @XmlElementWrapper(name = "tests")
 	private List <Covid_Test> tests;
+	@XmlElement(name = "Symptoms")
+    @XmlElementWrapper(name = "symptoms")
 	private List <Symptoms> symptoms;
+	@XmlElement(name = "Quarentine")
+    @XmlElementWrapper(name = "quarentine")
 	private List <Quarantine> quarantine;
 
 	
