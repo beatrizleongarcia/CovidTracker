@@ -1,6 +1,7 @@
 package CovidTracker.db.xml;
 
 import java.io.File;
+import java.sql.Date;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -12,11 +13,12 @@ import javax.xml.bind.JAXBException;
 import javax.xml.bind.Unmarshaller;
 import javax.xml.bind.annotation.XmlType;
 
+import CovidTracker.db.pojos.Covid_Test;
 import CovidTracker.db.pojos.Patient;
 import CovidTracker.db.pojos.Quarantine;
 import CovidTracker.db.pojos.Symptoms;
 
-public class Xml2JavaReport {
+public class Xml2Java {
 
 	private static final String PERSISTENCE_PROVIDER = "user-company";
 	private static EntityManagerFactory factory;
@@ -33,7 +35,7 @@ public class Xml2JavaReport {
 		Patient patient = (Patient) unmarshaller.unmarshal(file);
 
 		// Print the report
-		System.out.println("Patient:");
+		System.out.println("Patient's information:");
 		System.out.println("Name: " + patient.getName());
 		System.out.println("Date of birth: " + patient.getDob());
 		System.out.println("Salary: " + patient.getSalary());
@@ -43,14 +45,22 @@ public class Xml2JavaReport {
 		System.out.println("Name of doctor: " + patient.getDoctor());
 		List<Symptoms> symp = patient.getSymptoms();
 		for (Symptoms sy : symp) {
-			System.out.println("Symptoms: " + sy.getType());
+			System.out.println("Symptom: " + sy.getType());
 		}
 		List<Quarantine> qua = patient.getQuarantine();
 		for (Quarantine quar: qua) {
-			System.out.println("Quarantine: " + quar.getReason());
+			System.out.println("Quarantine resason: " + quar.getReason());
 		}
-		///falta lista de test!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!! 
-		
+		System.out.println("Information about covid test:");
+		List<Covid_Test> test = patient.getTests();
+		for (Covid_Test covtest: test) {
+			System.out.println("Type of test: " + covtest.getType_test());
+			System.out.println("Public/Private:"+ covtest.getPublic_private());
+			System.out.println("Laboratory: " + covtest.getLaboratory());
+			System.out.println("Date of the test:"+ covtest.getDate_of_test());
+			System.out.println("Price: " + covtest.getPrice());
+		}
+
 		
 		// Store the report in the database
 		// Create entity manager
@@ -73,14 +83,20 @@ public class Xml2JavaReport {
 		for (Quarantine quarantine : qua) {
 			em.persist(quarantine);
 		}
+		for (Covid_Test covid : test) {
+			em.persist(covid);
+		}
 		em.persist(patient);
 		
 		// End transaction
 		tx1.commit();
 	}
 	
+	
+	
+	
 	///falta hacer el del doctor igual que el del paticente!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
-	public static void xml2JavaDOC() throws JAXBException {
+	/*public static void xml2JavaDOC() throws JAXBException {
 
 		// Create the JAXBContext
 		JAXBContext jaxbContext = JAXBContext.newInstance(Doctor.class);
@@ -126,5 +142,5 @@ public class Xml2JavaReport {
 		
 		// End transaction
 		tx1.commit();
-	}
+	}*/
 }

@@ -13,7 +13,7 @@ import CovidTracker.db.pojos.Doctor;
 import CovidTracker.db.pojos.Patient;
 import CovidTracker.ui.inputoutput;
 
-public class Java2XmlReport {
+public class Java2Xml {
 
 	// Put entity manager and buffered reader here so it can be used
 	// in several methods
