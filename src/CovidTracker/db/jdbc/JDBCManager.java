@@ -7,6 +7,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+
 import CovidTracker.db.ifaces.DBManager;
 import CovidTracker.db.pojos.Covid_Test;
 import CovidTracker.db.pojos.Doctor;
@@ -14,6 +15,7 @@ import CovidTracker.db.pojos.Patient;
 import CovidTracker.db.pojos.Quarantine;
 import CovidTracker.db.pojos.Symptoms;
 import CovidTracker.ui.inputoutput;
+
 
 public class JDBCManager implements DBManager {
 

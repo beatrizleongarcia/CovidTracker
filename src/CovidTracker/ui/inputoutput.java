@@ -12,7 +12,6 @@ import java.util.Scanner;
 import java.util.ArrayList;
 import java.util.List;
 
-import CovidTracker.db.ifaces.DBManager;
 import CovidTracker.db.jdbc.JDBCManager;
 import CovidTracker.db.jpa.JPAUserManager;
 import CovidTracker.db.pojos.Covid_Test;
@@ -22,6 +21,7 @@ import CovidTracker.db.pojos.Quarantine;
 import CovidTracker.db.pojos.Symptoms;
 import CovidTracker.db.pojos.users.Role;
 import CovidTracker.db.pojos.users.User;
+import CovidTracker.db.ifaces.DBManager;
 import jdk.jshell.execution.Util;
 
 public class inputoutput {

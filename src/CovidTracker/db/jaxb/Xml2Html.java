@@ -1,4 +1,4 @@
-package CovidTracker.db.xml;
+package CovidTracker.db.jaxb;
 
 import java.io.File;
 
@@ -25,8 +25,12 @@ public class Xml2Html {
 		}
 	}
 
-	public static void transform() {
-		simpleTransform("./xmls/External-Report.xml", "./xmls/Report-Style.xslt", "./xmls/External-Report.html");
+	public static void transformPat(String filename) {
+		simpleTransform("./files/"+filename+".xml", "./xmls/Patient-Style.xslt", "./files/"+filename+".html");
+
+	}
+	public static void transformDoc(String filename) {
+		simpleTransform("./files/"+filename+".xml", "./xmls/Doctor-Style.xslt","./files/"+filename+".html");
 
 	}
 }

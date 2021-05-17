@@ -5,6 +5,10 @@ import java.sql.Date;
 import java.time.LocalDate;
 import java.util.List;
 
+import CovidTracker.db.jaxb.DTDChecker;
+import CovidTracker.db.jaxb.Java2Xml;
+import CovidTracker.db.jaxb.Xml2Html;
+import CovidTracker.db.jaxb.Xml2Java;
 import CovidTracker.db.jdbc.JDBCManager;
 import CovidTracker.db.jpa.JPAUserManager;
 import CovidTracker.db.pojos.Doctor;
@@ -18,6 +22,11 @@ public class Menu {
 
 	private static JDBCManager dbman = new JDBCManager();
 	private static JPAUserManager paman = new JPAUserManager();
+	private static Xml2Java xj = new Xml2Java();
+	private static Java2Xml jx = new  Java2Xml();
+	private static Xml2Html xh = new Xml2Html();
+	private static DTDChecker dc = new  DTDChecker();
+	
 
 	public static void main(String[] args) throws Exception {
 		dbman.connect();
@@ -97,8 +106,10 @@ public class Menu {
 
 	private static void MenuAdm() throws Exception {
 		while (true) {
-			System.out.println("1.Look for a patient. ");
-			System.out.println("2.Introduce a new a patient. ");
+			System.out.println("1.View a patient. ");
+			System.out.println("2.View a patient from a XML file");
+			System.out.println("3.Introduce a new a patient. ");
+			System.out.println("4.Save a patient in a XML file ");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
@@ -109,7 +120,13 @@ public class Menu {
 				view();
 				break;
 			case 2:
+				viewXML();
+				break;
+			case 3:
 				newpat();
+				break;
+			case 4:
+				newpatXML();
 				break;
 			case 0:
 				System.exit(0);
@@ -127,7 +144,19 @@ public class Menu {
 		} else
 			System.out.println(patient);
 	}
-
+	
+	private static void viewXML() throws Exception{
+		System.out.println("Introduce the name of the file where the patient is stored: ");
+		String filename = inputoutput.get_String();
+		dc.Checker(filename);
+		xj.xml2JavaPAT(filename);
+	}
+	
+	private static void newpatXML() throws Exception{
+			System.out.println("Introduce the name of the new file: ");
+			String filename = inputoutput.get_String();
+			jx.java2XmlPAT(filename);
+	}
 	private static void newpat() throws Exception {
 		Patient pat = inputoutput.addPatient(); // Introduce the patient
 
@@ -155,13 +184,18 @@ public class Menu {
 			dbman.quarantine_patient(pattest, qua.get(x));// add to the many to many table
 
 		}
+		
 	}
 
 	private static void MenuCEO() throws Exception {
 		while (true) {
 			System.out.println("1.View a patient. ");
-			System.out.println("2.Delete a patient. ");
-			System.out.println("3.Add a new doctor");
+			System.out.println("2.View a patient from a XML file");
+			System.out.println("3.Delete a patient. ");
+			System.out.println("4.Add a new doctor");
+			System.out.println("5.Save a doctor in a XML file");
+			System.out.println("6.View a doctor");
+			System.out.println("7.View a doctor from a XML file");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
@@ -171,10 +205,22 @@ public class Menu {
 				view();
 				break;
 			case 2:
-				deletepat();
+				viewXML();
 				break;
 			case 3:
+				deletepat();
+				break;
+			case 4:
 				adddoc();
+				break;
+			case 5:
+				adddocXML();
+				break;
+			case 6:
+				viewDoc();
+				break;
+			case 7:
+				viewDocXML();
 				break;
 			case 0:
 				System.exit(0);
@@ -182,6 +228,22 @@ public class Menu {
 			}
 		}
 
+	}
+
+	private static void viewDoc() throws Exception {
+		String name = inputoutput.getNamefromKeyboard();
+		Doctor doc = dbman.searchDoctorbyName(name);
+		if (doc == null) {
+			System.out.println("There are no doctors with that name");
+		} else
+			System.out.println(doc);
+	}
+	
+	private static void viewDocXML() throws Exception{
+		System.out.println("Introduce the name of the file where the doctor is stored: ");
+		String filename = inputoutput.get_String();
+		dc.Checker(filename);
+		xj.xml2JavaDOC(filename);
 	}
 
 	private static void deletepat() throws Exception {
@@ -192,6 +254,18 @@ public class Menu {
 	private static void adddoc() throws Exception {
 		Doctor doc = inputoutput.addDoctor();
 		dbman.addDoctor(doc);
+		System.out.println("Do you want to record the doctors's information in a Xml file? (Yes/No)");
+		String xml = inputoutput.get_String();
+		if(xml.equalsIgnoreCase("Yes")){
+			System.out.println("Introduce the name of the file: ");
+			String filename = inputoutput.get_String();
+			jx.java2XmlDOC(filename);
+		}
+	}
+	private static void adddocXML() throws Exception{
+			System.out.println("Introduce the name of the new file: ");
+			String filename = inputoutput.get_String();
+			jx.java2XmlDOC(filename);
 	}
 
 	private static void MenuHHRR() throws Exception {
@@ -236,9 +310,10 @@ public class Menu {
 	
 	private static void MenuDoc() throws Exception {
 		while (true) {
-			System.out.println("1. Introduce new patient. ");.
-			System.out.println("2. Add a patient's covid test");
-			System.out.println("3. List patients");
+			System.out.println("1. Introduce new patient. ");
+			System.out.println("2. Save a patient in a XML file ");
+			System.out.println("3. Add a patient's covid test");
+			System.out.println("4. List patients");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
@@ -248,9 +323,12 @@ public class Menu {
 				newpat();
 				break;
 			case 2:
-				addcovid();
+				newpatXML();
 				break;
 			case 3:
+				addcovid();
+				break;
+			case 4:
 				listpat();
 				break;
 			case 0:
