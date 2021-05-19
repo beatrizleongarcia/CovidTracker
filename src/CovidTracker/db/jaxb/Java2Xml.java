@@ -1,6 +1,7 @@
 package CovidTracker.db.jaxb;
 
 import java.io.File;
+import java.io.Serializable;
 import java.util.List;
 
 import javax.persistence.EntityManager;
@@ -13,7 +14,7 @@ import CovidTracker.db.pojos.Doctor;
 import CovidTracker.db.pojos.Patient;
 import CovidTracker.ui.inputoutput;
 
-public class Java2Xml {
+public class Java2Xml implements Serializable {
 
 	// Put entity manager and buffered reader here so it can be used
 	// in several methods
@@ -67,6 +68,7 @@ public class Java2Xml {
 		marshaller.marshal(pat, System.out);
 
 	}
+	
 	
 	public static void java2XmlDOC(String filename) throws Exception {
 		// Get the entity manager
