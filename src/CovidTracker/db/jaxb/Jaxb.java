@@ -44,7 +44,8 @@ public class Jaxb implements JaxbManager {
 			System.out.println(d.getId() +"."+ d.getName());
 		}
 	}
-	public static void java2XmlPAT(String filename) throws Exception {
+	@Override
+	public void java2XmlPAT(String filename) throws Exception {
 		// Get the entity manager
 		// Note that we are using the class' entity manager
 		em = Persistence.createEntityManagerFactory("user-company").createEntityManager();
@@ -77,7 +78,8 @@ public class Jaxb implements JaxbManager {
 
 	}
 	
-	public static void java2XmlDOC(String filename) throws Exception {
+	@Override
+	public void java2XmlDOC(String filename) throws Exception {
 		// Get the entity manager
 		// Note that we are using the class' entity manager
 		em = Persistence.createEntityManagerFactory("user-company").createEntityManager();
@@ -110,7 +112,8 @@ public class Jaxb implements JaxbManager {
 
 	}
 	
-	public static void simpleTransform(String sourcePath, String xsltPath,String resultDir) {
+	@Override 
+	public void simpleTransform(String sourcePath, String xsltPath,String resultDir) {
 		TransformerFactory tFactory = TransformerFactory.newInstance();
 		try {
 			Transformer transformer = tFactory.newTransformer(new StreamSource(new File(xsltPath)));
@@ -119,20 +122,28 @@ public class Jaxb implements JaxbManager {
 			e.printStackTrace();
 		}
 	}
-
-	public static void transformPat(String filename) {
+	@Override 
+	public  void transformPat(String filename) {
 		simpleTransform("./files/"+filename+".xml", "./xmls/Patient-Style.xslt", "./files/"+filename+".html");
 
 	}
-	public static void transformDoc(String filename) {
+	
+	@Override 
+	public  void transformDoc(String filename) {
 		simpleTransform("./files/"+filename+".xml", "./xmls/Doctor-Style.xslt","./files/"+filename+".html");
 
 	}
 	
-	private static final String PERSISTENCE_PROVIDER = "user-company";
-	private static EntityManagerFactory factory;
+	
+	
+	
+	
+	
+	private  final String PERSISTENCE_PROVIDER = "user-company";
+	private  EntityManagerFactory factory;
 
-	public static void xml2JavaPAT(String filename) throws JAXBException {
+	@Override
+	public  void xml2JavaPAT(String filename) throws JAXBException {
 
 		// Create the JAXBContext
 		JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
@@ -202,8 +213,8 @@ public class Jaxb implements JaxbManager {
 	}
 	
 	
-
-	public static void xml2JavaDOC(String filename) throws JAXBException {
+@Override
+	public  void xml2JavaDOC(String filename) throws JAXBException {
 
 		// Create the JAXBContext
 		JAXBContext jaxbContext = JAXBContext.newInstance(Doctor.class);

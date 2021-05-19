@@ -6,9 +6,7 @@ import java.time.LocalDate;
 import java.util.List;
 
 import CovidTracker.db.jaxb.DTDChecker;
-import CovidTracker.db.jaxb.Java2Xml;
-import CovidTracker.db.jaxb.Xml2Html;
-import CovidTracker.db.jaxb.Xml2Java;
+import CovidTracker.db.jaxb.Jaxb;
 import CovidTracker.db.jdbc.JDBCManager;
 import CovidTracker.db.jpa.JPAUserManager;
 import CovidTracker.db.pojos.Doctor;
@@ -22,9 +20,7 @@ public class Menu {
 
 	private static JDBCManager dbman = new JDBCManager();
 	private static JPAUserManager paman = new JPAUserManager();
-	private static Xml2Java xj = new Xml2Java();
-	private static Java2Xml jx = new  Java2Xml();
-	private static Xml2Html xh = new Xml2Html();
+	private static Jaxb jaxb = new Jaxb();
 	private static DTDChecker dc = new  DTDChecker();
 	
 
@@ -149,13 +145,13 @@ public class Menu {
 		System.out.println("Introduce the name of the file where the patient is stored: ");
 		String filename = inputoutput.get_String();
 		dc.Checker(filename);
-		xj.xml2JavaPAT(filename);
+		jaxb.xml2JavaPAT(filename);
 	}
 	
 	private static void newpatXML() throws Exception{
 			System.out.println("Introduce the name of the new file: ");
 			String filename = inputoutput.get_String();
-			jx.java2XmlPAT(filename);
+			jaxb.java2XmlPAT(filename);
 	}
 	private static void newpat() throws Exception {
 		Patient pat = inputoutput.addPatient(); // Introduce the patient
@@ -243,7 +239,7 @@ public class Menu {
 		System.out.println("Introduce the name of the file where the doctor is stored: ");
 		String filename = inputoutput.get_String();
 		dc.Checker(filename);
-		xj.xml2JavaDOC(filename);
+		jaxb.xml2JavaDOC(filename);
 	}
 
 	private static void deletepat() throws Exception {
@@ -259,13 +255,13 @@ public class Menu {
 		if(xml.equalsIgnoreCase("Yes")){
 			System.out.println("Introduce the name of the file: ");
 			String filename = inputoutput.get_String();
-			jx.java2XmlDOC(filename);
+			jaxb.java2XmlDOC(filename);
 		}
 	}
 	private static void adddocXML() throws Exception{
 			System.out.println("Introduce the name of the new file: ");
 			String filename = inputoutput.get_String();
-			jx.java2XmlDOC(filename);
+			jaxb.java2XmlDOC(filename);
 	}
 
 	private static void MenuHHRR() throws Exception {
