@@ -49,13 +49,13 @@ public class inputoutput {
 			System.out.println("How many symptoms does the patient have? (0 for no synmptoms)");
 			Integer number_symptoms = get_int();
 			if(number_symptoms>0) {
-			for (int j = 0; j <= number_symptoms; j++) {
+			for (int j = 0; j < number_symptoms; j++) {
 				Symptoms symp = addSymptoms();
 				symptoms.add(symp);
 			}}
 			System.out.println("How many quarantines the patient has been in?");
 			Integer number_qua = get_int();
-			for (int j = 0; j <= number_qua; j++) {
+			for (int j = 0; j < number_qua; j++) {
 				Quarantine qua  = addQuarantine();
 				quarantines.add(qua);
 			}

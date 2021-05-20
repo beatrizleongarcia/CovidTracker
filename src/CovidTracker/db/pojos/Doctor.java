@@ -3,12 +3,22 @@ package CovidTracker.db.pojos;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.Table;
+import javax.xml.bind.annotation.XmlAccessType;
+import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
+import javax.xml.bind.annotation.XmlType;
 
 import java.io.Serializable;
-
+@Entity
+@Table(name = "doctor")
+@XmlAccessorType(XmlAccessType.FIELD)
+@XmlRootElement(name = "Doctor")
+@XmlType(propOrder = { "name","hospital", "patients","tests"})
 public class Doctor implements Serializable {
 
 	private static final long serialVersionUID = 8612696465626368239L;

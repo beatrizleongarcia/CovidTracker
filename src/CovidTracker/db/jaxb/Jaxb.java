@@ -27,23 +27,25 @@ import CovidTracker.ui.inputoutput;
 
 public class Jaxb implements JaxbManager {
 	private static EntityManager em;
-	
+
 	private static void printPatients() {
 		Query q1 = em.createNativeQuery("SELECT * FROM patient", Patient.class);
 		List<Patient> ps = (List<Patient>) q1.getResultList();
 		// Print the departments
 		for (Patient p : ps) {
-			System.out.println(p.getId() +"."+ p.getName());
+			System.out.println(p.getId() + "." + p.getName());
 		}
 	}
+
 	private static void printDoctor() {
 		Query q1 = em.createNativeQuery("SELECT * FROM doctor", Doctor.class);
 		List<Doctor> ds = (List<Doctor>) q1.getResultList();
 		// Print the departments
 		for (Doctor d : ds) {
-			System.out.println(d.getId() +"."+ d.getName());
+			System.out.println(d.getId() + "." + d.getName());
 		}
 	}
+
 	@Override
 	public void java2XmlPAT(String filename) throws Exception {
 		// Get the entity manager
@@ -52,15 +54,15 @@ public class Jaxb implements JaxbManager {
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
-				
+
 		// Create the JAXBContext
 		JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
 		// Get the marshaller
 		Marshaller marshaller = jaxbContext.createMarshaller();
-		
+
 		// Pretty formatting
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
-		
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
 		// Choose the report to turn into an XML
 		// Choose his new department
 		printPatients();
@@ -69,15 +71,15 @@ public class Jaxb implements JaxbManager {
 		Query q2 = em.createNativeQuery("SELECT * FROM patient WHERE id = ?", Patient.class);
 		q2.setParameter(1, pat_id);
 		Patient pat = (Patient) q2.getSingleResult();
-		
+
 		// Use the Marshaller to marshal the Java object to a file
-		File file = new File("./files/"+filename+".xml");
+		File file = new File("./files/" + filename + ".xml");
 		marshaller.marshal(pat, file);
 		// Printout
 		marshaller.marshal(pat, System.out);
 
 	}
-	
+
 	@Override
 	public void java2XmlDOC(String filename) throws Exception {
 		// Get the entity manager
@@ -86,64 +88,60 @@ public class Jaxb implements JaxbManager {
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
 		em.getTransaction().commit();
-				
+
 		// Create the JAXBContext
 		JAXBContext jaxbContext = JAXBContext.newInstance(Doctor.class);
 		// Get the marshaller
 		Marshaller marshaller = jaxbContext.createMarshaller();
-		
+
 		// Pretty formatting
-		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT,Boolean.TRUE);
-		
+		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
+
 		// Choose the report to turn into an XML
 		// Choose his new department
-		printPatients();
+		printDoctor();
 		System.out.print("Choose the doctor's id to turn into an XML file:");
 		int doc_id = inputoutput.get_int();
-		Query q2 = em.createNativeQuery("SELECT * FROM patient WHERE id = ?", Doctor.class);
+		Query q2 = em.createNativeQuery("SELECT * FROM doctor WHERE id = ?", Doctor.class);
 		q2.setParameter(1, doc_id);
 		Doctor doc = (Doctor) q2.getSingleResult();
-		
+
 		// Use the Marshaller to marshal the Java object to a file
-		File file = new File("./files/"+filename+".xml");
+		File file = new File("./files/" + filename + ".xml");
 		marshaller.marshal(doc, file);
 		// Printout
 		marshaller.marshal(doc, System.out);
 
 	}
-	
-	@Override 
-	public void simpleTransform(String sourcePath, String xsltPath,String resultDir) {
+
+	@Override
+	public void simpleTransform(String sourcePath, String xsltPath, String resultDir) {
 		TransformerFactory tFactory = TransformerFactory.newInstance();
 		try {
 			Transformer transformer = tFactory.newTransformer(new StreamSource(new File(xsltPath)));
-			transformer.transform(new StreamSource(new File(sourcePath)),new StreamResult(new File(resultDir)));
+			transformer.transform(new StreamSource(new File(sourcePath)), new StreamResult(new File(resultDir)));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	@Override 
-	public  void transformPat(String filename) {
-		simpleTransform("./files/"+filename+".xml", "./xmls/Patient-Style.xslt", "./files/"+filename+".html");
-
-	}
-	
-	@Override 
-	public  void transformDoc(String filename) {
-		simpleTransform("./files/"+filename+".xml", "./xmls/Doctor-Style.xslt","./files/"+filename+".html");
-
-	}
-	
-	
-	
-	
-	
-	
-	private  final String PERSISTENCE_PROVIDER = "user-company";
-	private  EntityManagerFactory factory;
 
 	@Override
-	public  void xml2JavaPAT(String filename) throws JAXBException {
+	public void transformPat(String filename) {
+		simpleTransform("./files/" + filename + ".xml", "./xmls/Patient-Style.xslt", "./files/" + filename + ".html");
+
+	}
+
+	@Override
+	public void transformDoc(String filename) {
+		simpleTransform("./files/" + filename + ".xml", "./xmls/Doctor-Style.xslt", "./files/" + filename + ".html");
+
+	}
+
+	private final String PERSISTENCE_PROVIDER = "user-company";
+	private EntityManagerFactory factory;
+
+	@Override
+	public void xml2JavaPAT(String filename) throws JAXBException {
 
 		// Create the JAXBContext
 		JAXBContext jaxbContext = JAXBContext.newInstance(Patient.class);
@@ -151,7 +149,7 @@ public class Jaxb implements JaxbManager {
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 		// Use the Unmarshaller to unmarshal the XML document from a file
-		File file = new File("./files/"+filename+".xml");
+		File file = new File("./files/" + filename + ".xml");
 		Patient patient = (Patient) unmarshaller.unmarshal(file);
 
 		// Print the report
@@ -168,20 +166,19 @@ public class Jaxb implements JaxbManager {
 			System.out.println("Symptom: " + sy.getType());
 		}
 		List<Quarantine> qua = patient.getQuarantine();
-		for (Quarantine quar: qua) {
+		for (Quarantine quar : qua) {
 			System.out.println("Quarantine resason: " + quar.getReason());
 		}
 		System.out.println("Information about covid test:");
 		List<Covid_Test> test = patient.getTests();
-		for (Covid_Test covtest: test) {
+		for (Covid_Test covtest : test) {
 			System.out.println("Type of test: " + covtest.getType_test());
-			System.out.println("Public/Private:"+ covtest.getPublic_private());
+			System.out.println("Public/Private:" + covtest.getPublic_private());
 			System.out.println("Laboratory: " + covtest.getLaboratory());
-			System.out.println("Date of the test:"+ covtest.getDate_of_test());
+			System.out.println("Date of the test:" + covtest.getDate_of_test());
 			System.out.println("Price: " + covtest.getPrice());
 		}
 
-		
 		// Store the report in the database
 		// Create entity manager
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_PROVIDER);
@@ -207,14 +204,13 @@ public class Jaxb implements JaxbManager {
 			em.persist(covid);
 		}
 		em.persist(patient);
-		
+
 		// End transaction
 		tx1.commit();
 	}
-	
-	
-@Override
-	public  void xml2JavaDOC(String filename) throws JAXBException {
+
+	@Override
+	public void xml2JavaDOC(String filename) throws JAXBException {
 
 		// Create the JAXBContext
 		JAXBContext jaxbContext = JAXBContext.newInstance(Doctor.class);
@@ -222,7 +218,7 @@ public class Jaxb implements JaxbManager {
 		Unmarshaller unmarshaller = jaxbContext.createUnmarshaller();
 
 		// Use the Unmarshaller to unmarshal the XML document from a file
-		File file = new File("./files/"+filename+".xml");
+		File file = new File("./files/" + filename + ".xml");
 		Doctor doctor = (Doctor) unmarshaller.unmarshal(file);
 
 		// Print the report
@@ -231,7 +227,7 @@ public class Jaxb implements JaxbManager {
 		System.out.println("Hospital: " + doctor.getHospital());
 		System.out.println("Information about the patients:");
 		List<Patient> pat = doctor.getPatients();
-		for (Patient patient: pat) {
+		for (Patient patient : pat) {
 			System.out.println("Patient's information:");
 			System.out.println("Name: " + patient.getName());
 			System.out.println("Date of birth: " + patient.getDob());
@@ -241,16 +237,16 @@ public class Jaxb implements JaxbManager {
 				System.out.println("Symptom: " + sy.getType());
 			}
 			List<Quarantine> qua = patient.getQuarantine();
-			for (Quarantine quar: qua) {
+			for (Quarantine quar : qua) {
 				System.out.println("Quarantine resason: " + quar.getReason());
 			}
 			System.out.println("Information about the covid tests:");
 			List<Covid_Test> test = patient.getTests();
-			for (Covid_Test covtest: test) {
+			for (Covid_Test covtest : test) {
 				System.out.println("Type of test: " + covtest.getType_test());
-				System.out.println("Public/Private:"+ covtest.getPublic_private());
+				System.out.println("Public/Private:" + covtest.getPublic_private());
 				System.out.println("Laboratory: " + covtest.getLaboratory());
-				System.out.println("Date of the test:"+ covtest.getDate_of_test());
+				System.out.println("Date of the test:" + covtest.getDate_of_test());
 				System.out.println("Price: " + covtest.getPrice());
 			}
 		}
@@ -276,12 +272,11 @@ public class Jaxb implements JaxbManager {
 		for (Patient p : pat) {
 			em.persist(p);
 		}
-		/*/List<Doctor>  = 
-		for (Covid_Test covid : test) {
-			em.persist(covid);
-		}*/
+		/*
+		 * /List<Doctor> = for (Covid_Test covid : test) { em.persist(covid); }
+		 */
 		em.persist(doctor);
-		
+
 		// End transaction
 		tx1.commit();
 	}

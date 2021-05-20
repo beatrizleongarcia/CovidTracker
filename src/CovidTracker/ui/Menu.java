@@ -125,7 +125,7 @@ public class Menu {
 				newpatXML();
 				break;
 			case 0:
-				System.exit(0);
+				return;
 
 			}
 
@@ -219,7 +219,7 @@ public class Menu {
 				viewDocXML();
 				break;
 			case 0:
-				System.exit(0);
+				return;
 
 			}
 		}
@@ -227,7 +227,7 @@ public class Menu {
 	}
 
 	private static void viewDoc() throws Exception {
-		String name = inputoutput.getNamefromKeyboard();
+		String name = inputoutput.getDocfromKeyboard();
 		Doctor doc = dbman.searchDoctorbyName(name);
 		if (doc == null) {
 			System.out.println("There are no doctors with that name");
@@ -280,7 +280,7 @@ public class Menu {
 				modifypat();
 				break;
 			case 0:
-				System.exit(0);
+				return;
 
 			}
 		}
@@ -328,7 +328,7 @@ public class Menu {
 				listpat();
 				break;
 			case 0:
-				System.exit(0);
+				return;
 
 			}
 
@@ -365,7 +365,7 @@ public class Menu {
 				modify();
 				break;
 			case 0:
-				System.exit(0);
+				return;
 
 			}
 		}

@@ -16,7 +16,6 @@ import CovidTracker.db.pojos.Quarantine;
 import CovidTracker.db.pojos.Symptoms;
 import CovidTracker.ui.inputoutput;
 
-
 public class JDBCManager implements DBManager {
 
 	private Connection c;
@@ -60,7 +59,7 @@ public class JDBCManager implements DBManager {
 
 			sql = "CREATE TABLE patient" + "(id INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL,"
 					+ "dob DATE NOT NULL," + "job_title TEXT NOT NULL," + "salary REAL NOT NULL,"
-					+ "days_off_work INTEGER NOT NULL," + "economic_impact REAL NOT NULL,"
+					+ "days_off_work INTEGER," + "economic_impact REAL,"
 					+ "doctor_id INTEGER REFERENCES doctor(id))";
 			stmt.executeUpdate(sql);
 
@@ -128,8 +127,6 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 	}
-
-	
 
 	@Override
 	public Patient searchPatientByName(String name) {
@@ -253,6 +250,7 @@ public class JDBCManager implements DBManager {
 		}
 
 	}
+
 	@Override
 	public Doctor searchDoctorbyName(String name) {
 		Doctor doc = null;
@@ -334,12 +332,16 @@ public class JDBCManager implements DBManager {
 		int doctor_id = doc.getId();
 
 		try {
-
-			String sql = "INSERT INTO patient (name, dob, job_tittle, salary, day_off_work, economic_impact, doctor_id) "
-					+ "VALUES ('" + p.getName() + "', '" + p.getDob() + "', '" + p.getJob_title() + "', '"
-					+ p.getSalary() + "', '" + p.getDays_off_work() + "', '" + p.getEconomic_impact() + "', '"
-					+ doctor_id + "', '" + ")";
+			String sql = "INSERT INTO patient (name, dob, job_title, salary,days_off_work,economic_impact, doctor_id) "
+					+ "VALUES (?,?,?,?,?,?,?)";
 			prep = c.prepareStatement(sql);
+			prep.setString(1, p.getName());
+			prep.setDate(2, p.getDob());
+			prep.setString(3, p.getJob_title());
+			prep.setFloat(4, p.getSalary());
+			prep.setInt(5, 0);
+			prep.setFloat(6, 0);
+			prep.setInt(7, doc.getId());
 			prep.executeUpdate();
 			String sql2 = "SELECT last_insert_rowid()";
 			PreparedStatement prep2 = c.prepareStatement(sql2);
@@ -350,6 +352,7 @@ public class JDBCManager implements DBManager {
 			rs.close();
 			p.setId(id);
 			prep.close();
+
 			System.out.println("Patient info processed");
 			System.out.println("Records inserted.");
 		} catch (SQLException e) {
@@ -366,11 +369,16 @@ public class JDBCManager implements DBManager {
 		int patient_id = pat.getId();
 		try {
 
-			String sql = "INSERT INTO covid_test (id, public_private, type_test, laboratory, date_of_test, price, doctor_id, patient_id) "
-					+ "VALUES ('" + t.getId() + "', '" + t.getPublic_private() + "', '" + t.getType_test() + "', '"
-					+ t.getLaboratory() + "', '" + t.getDate_of_test() + "' , '" + t.getPrice() + "', '" + doctor_id
-					+ "' , '" + patient_id + ")";
+			String sql = "INSERT INTO covid_test ( public_private, type_test, laboratory, date_of_test, price, doctor_id, patient_id) "
+					+ "VALUES (?,?)";
 			prep = c.prepareStatement(sql);
+			prep.setString(1, t.getPublic_private());
+			prep.setString(2, t.getType_test());
+			prep.setString(3, t.getLaboratory());
+			prep.setDate(4, t.getDate_of_test());
+			prep.setFloat(5, t.getPrice());
+			prep.setInt(6, doc.getId());
+			prep.setInt(7, pat.getId());
 			prep.executeUpdate();
 			prep.close();
 			System.out.println("Covid test info processed");
@@ -382,13 +390,13 @@ public class JDBCManager implements DBManager {
 	}
 
 	public void addDoctor(Doctor d) {
-		PreparedStatement prep;
+
+		Statement stmt;
 		try {
-			String sql = "INSERT INTO doctor (id, name , hospital) " + "VALUES ('" + d.getId() + "', '" + d.getName()
-					+ "', '" + d.getHospital() + ")";
-			prep = c.prepareStatement(sql);
-			prep.executeUpdate();
-			prep.close();
+			stmt = c.createStatement();
+			String sql = "INSERT INTO doctor (name , hospital) " + "VALUES ( '" + d.getName() + "', '" + d.getHospital() + "')";
+			stmt.executeUpdate(sql);
+			stmt.close();
 			System.out.println("Doctor info processed");
 			System.out.println("Records inserted.");
 		} catch (SQLException e) {
