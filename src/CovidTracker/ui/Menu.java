@@ -163,7 +163,6 @@ public class Menu {
 		pat.addDoctor(doc);
 		dbman.addPerson(pat);
 		Patient pattest = dbman.test_patient(pat);
-
 		Date date = dbman.last_test(pattest, pat);
 		LocalDate dateToday = LocalDate.now();
 		pattest.func_daysoff(Date.valueOf(dateToday), date);

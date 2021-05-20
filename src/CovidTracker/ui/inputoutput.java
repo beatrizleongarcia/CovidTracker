@@ -124,7 +124,7 @@ public class inputoutput {
 	}
 
 	public static Covid_Test addCovid_Test() {
-		Covid_Test tests = null;
+		
 		try {
 			System.out.println("Complete the information about the covid test");
 			System.out.println("Public or private test:");
@@ -136,11 +136,15 @@ public class inputoutput {
 			LocalDate date = create_date(date_of_test);
 			System.out.println("Price of the test:");
 			Float price = get_Float();
-			tests = new Covid_Test(public_private, type_test, Date.valueOf(date), price);
+			System.out.println("Laboratory: ");
+			String laboratory = get_String();
+			Covid_Test tests = new Covid_Test(public_private, type_test, Date.valueOf(date), price,laboratory);
+			System.out.println(tests);
+			return tests;
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return tests;
+		return null;
 	}
 
 	public static Symptoms addSymptoms() {

@@ -112,7 +112,11 @@ public class Patient implements Serializable {
         this.job_title=job_title;
         this.salary=salary;  
         this.quarantine= quarantines;
-		this.symptoms= symptoms ;	
+		this.symptoms= symptoms ;
+		this.days_off_work= 0;
+        this.economic_impact=(float) 0;
+        this.tests= new ArrayList<Covid_Test>();	
+		
 		
 	}
 
@@ -242,9 +246,13 @@ public class Patient implements Serializable {
 	}
 
 	public void addNewTest(Covid_Test test) {
+		if(test!=null){
 		tests.add(test);
-		
+		}else {
+			System.out.println("No existe el test");
+		}
 	}
+	
 	public void addDoctor(Doctor doc) {
 		this.doctor = doc;
 	}

@@ -339,8 +339,8 @@ public class JDBCManager implements DBManager {
 			prep.setDate(2, p.getDob());
 			prep.setString(3, p.getJob_title());
 			prep.setFloat(4, p.getSalary());
-			prep.setInt(5, 0);
-			prep.setFloat(6, 0);
+			prep.setInt(5, p.getDays_off_work());
+			prep.setFloat(6, p.getEconomic_impact());
 			prep.setInt(7, doc.getId());
 			prep.executeUpdate();
 			String sql2 = "SELECT last_insert_rowid()";
@@ -407,7 +407,11 @@ public class JDBCManager implements DBManager {
 	@Override
 	public Patient test_patient(Patient pat) {
 		Covid_Test test = inputoutput.addCovid_Test();
-		pat.addNewTest(test);
+		if(test!=null){
+			pat.addNewTest(test);
+			}else {
+				System.out.println("No existe el test 1");
+			}
 		addCovid_Test(test);
 		return pat;
 	}
