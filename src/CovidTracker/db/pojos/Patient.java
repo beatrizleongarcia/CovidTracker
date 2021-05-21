@@ -7,7 +7,14 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
@@ -24,11 +31,15 @@ import CovidTracker.db.xml.utils.SQLDateAdapter;
 @Table(name = "patient")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Patient")
-@XmlType(propOrder = { "name","dob", "salary","job_title", "economic_impact", "days_off_work","doctor","test","symptoms","quarentine"})
+@XmlType(propOrder = { "name","dob", "salary","job_title", "economic_impact", "days_off_work"})
 public class Patient implements Serializable {
 
 	private static final long serialVersionUID = 6791061415881333978L;
-	@XmlAttribute
+	@Id
+	@GeneratedValue(generator="patient")
+	@TableGenerator(name="patient", table="sqlite_sequence",
+		pkColumnName="name", valueColumnName="seq", pkColumnValue="patient")
+	@XmlTransient
 	private Integer id;
 	@XmlAttribute
 	private String name;
@@ -45,14 +56,11 @@ public class Patient implements Serializable {
 	private Integer days_off_work;
 	@XmlTransient
 	private Doctor doctor;
-	@XmlElement(name = "Covid_test")
-    @XmlElementWrapper(name = "tests")
+	@XmlTransient
 	private List <Covid_Test> tests;
-	@XmlElement(name = "Symptoms")
-    @XmlElementWrapper(name = "symptoms")
+	@XmlTransient
 	private List <Symptoms> symptoms;
-	@XmlElement(name = "Quarentine")
-    @XmlElementWrapper(name = "quarentine")
+	@XmlTransient
 	private List <Quarantine> quarantine;
 
 	
@@ -112,7 +120,7 @@ public class Patient implements Serializable {
         this.job_title=job_title;
         this.salary=salary;  
         this.quarantine= quarantines;
-		this.symptoms= symptoms ;
+		this.symptoms= symptoms;
 		this.days_off_work= 0;
         this.economic_impact=(float) 0;
         this.tests= new ArrayList<Covid_Test>();	

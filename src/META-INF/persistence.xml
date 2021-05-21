@@ -12,6 +12,8 @@
 		<!-- Entity Class -->
 		<class>CovidTracker.db.pojos.users.Role</class>
 		<class>CovidTracker.db.pojos.users.User</class>
+		<class>CovidTracker.db.pojos.Patient</class>
+		<class>CovidTracker.db.pojos.Doctor</class>
  
 		<properties>	
 			<!-- Connection properties -->

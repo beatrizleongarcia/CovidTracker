@@ -102,16 +102,17 @@ public class inputoutput {
 				switch (opcion) {
 				case 1:
 					String type = "contact";
-					return new Quarantine(type);
+					return new Quarantine(type,1);
 				case 2:
 					type = "symptoms";
-					return new Quarantine(type);
+					return new Quarantine(type,2);
+					
 				case 3:
 					type = "confirmed";
-					return new Quarantine(type);
+					return new Quarantine(type,3);
 				case 4:
 					type = "Routine test";
-					return new Quarantine(type);
+					return new Quarantine(type,4);
 
 				}
 			}
@@ -161,22 +162,22 @@ public class inputoutput {
 				switch (opcion) {
 				case 1:
 					String type = "Fever";
-					return new Symptoms(type);
+					return new Symptoms(type,1);
 				case 2:
 					type = "Dry cough";
-					return new Symptoms(type);
+					return new Symptoms(type,2);
 				case 3:
 					type = "Tireness";
-					return new Symptoms(type);
+					return new Symptoms(type,3);
 				case 4:
 					type = "Ache and pains";
-					return new Symptoms(type);
+					return new Symptoms(type,4);
 				case 5:
 					type = "Diarrhoea";
-					return new Symptoms(type);
+					return new Symptoms(type,5);
 				case 6:
 					type = "Loss taste and smell";
-					return new Symptoms(type);
+					return new Symptoms(type,6);
 				}
 			}
 

@@ -19,9 +19,10 @@ public class Symptoms implements Serializable {
 		this.patients= new ArrayList<Patient>();		
 	}
 
-	public Symptoms(String type2) {
-		
-		this.type = type2;
+	public Symptoms(String type, int id) {
+		this.type = type;
+		this.id = id;
+		this.patients= new ArrayList<>();
 	}
 
 	public String getType() {

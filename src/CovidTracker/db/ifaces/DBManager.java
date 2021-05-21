@@ -21,6 +21,7 @@ public interface DBManager {
 	public void viewDoctors();// print the names of the doctors
 	public void quarantine_patient(Patient p, Quarantine s);
 	public void dropTables(); // Drop all the tables of the data base 
+	void viewPatient(int id);
 
 	
 }

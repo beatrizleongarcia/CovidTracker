@@ -475,6 +475,8 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 	}
+	
+	
 
 	@Override
 	public void viewDoctors() {
@@ -485,6 +487,26 @@ public class JDBCManager implements DBManager {
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
 
+				String name = rs.getString("name");
+				System.out.println(name);
+			}
+			rs.close();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+	
+	@Override
+	public void viewPatient(int id) {
+
+		String sql = "SELECT name FROM patient WHERE doctor_id = ?";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setInt(1, id);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
 				String name = rs.getString("name");
 				System.out.println(name);
 			}

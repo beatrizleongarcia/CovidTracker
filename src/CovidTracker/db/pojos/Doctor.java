@@ -4,11 +4,16 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.TableGenerator;
 import javax.xml.bind.annotation.XmlAccessType;
 import javax.xml.bind.annotation.XmlAccessorType;
 import javax.xml.bind.annotation.XmlAttribute;
 import javax.xml.bind.annotation.XmlElement;
+import javax.xml.bind.annotation.XmlElementWrapper;
 import javax.xml.bind.annotation.XmlRootElement;
 import javax.xml.bind.annotation.XmlTransient;
 import javax.xml.bind.annotation.XmlType;
@@ -18,17 +23,23 @@ import java.io.Serializable;
 @Table(name = "doctor")
 @XmlAccessorType(XmlAccessType.FIELD)
 @XmlRootElement(name = "Doctor")
-@XmlType(propOrder = { "name","hospital", "patients","tests"})
+@XmlType(propOrder = { "name","hospital","patients"})
 public class Doctor implements Serializable {
 
 	private static final long serialVersionUID = 8612696465626368239L;
-	@XmlAttribute
+	@Id
+	@GeneratedValue(generator="doctor")
+	@TableGenerator(name="doctor", table="sqlite_sequence",
+		pkColumnName="name", valueColumnName="seq", pkColumnValue="doctor")
+	@XmlTransient
 	private Integer id;
 	@XmlAttribute
 	private String name;
 	@XmlElement
 	private String hospital;
-	@XmlTransient
+	@OneToMany(mappedBy="doctor")
+	@XmlElement(name = "Patient")
+    @XmlElementWrapper(name = "patient")
 	private List<Patient> patients;
 	@XmlTransient
 	private List<Covid_Test> tests;
@@ -42,12 +53,14 @@ public class Doctor implements Serializable {
 	public Doctor(Integer id, String name, String hospital) {
 		this.id= id;
 		this.name = name;
-		this.hospital= hospital;	
+		this.hospital= hospital;
+		this.patients= new ArrayList<Patient>();
 	}
 
 	public Doctor(String name, String hospital) {
 		this.name = name;
 		this.hospital= hospital;
+		this.patients= new ArrayList<Patient>();
 	}
 
 	public Integer getId() {
@@ -137,12 +150,6 @@ public class Doctor implements Serializable {
 		} else if (!tests.equals(other.tests))
 			return false;
 		return true;
-	}
-
-	public void listPatient() {
-	for(int i=0;i<=patients.size();i++) {
-		System.out.println(patients.get(i).getName());
-	}
 	}
 	
 	@Override

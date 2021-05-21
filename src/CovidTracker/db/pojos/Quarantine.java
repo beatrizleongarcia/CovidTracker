@@ -1,6 +1,7 @@
 package CovidTracker.db.pojos;
 
 import java.io.Serializable;
+import java.util.ArrayList;
 import java.util.List;
 
 public class Quarantine implements Serializable{
@@ -12,7 +13,7 @@ public class Quarantine implements Serializable{
 	private Integer id;
 	private Integer time;
 	private String reason;
-	private Patient patient;
+	private List <Patient> patients;
 	
 	public Quarantine() {
 		super();
@@ -22,8 +23,11 @@ public class Quarantine implements Serializable{
 		this.time = time;
 	}
 
-	public Quarantine(String type) {
+	public Quarantine(String type, int id) {
 		this.reason = type;
+		this.id = id;
+		this.time = 10;
+		this.patients = new ArrayList<>();
 	}
 	public Integer getId() {
 		return id;
@@ -49,15 +53,12 @@ public class Quarantine implements Serializable{
 		this.reason = reason;
 	}
 
-
-	public Patient getPatient() {
-		return patient;
+	public List<Patient> getPatients() {
+		return patients;
 	}
-
-	public void setPatient(Patient patient) {
-		this.patient = patient;
+	public void setPatients(List<Patient> patients) {
+		this.patients = patients;
 	}
-
 	@Override
 	public int hashCode() {
 		final int prime = 31;
@@ -85,7 +86,7 @@ public class Quarantine implements Serializable{
 
 	@Override
 	public String toString() {
-		return "Quarantine [id=" + id + ", time=" + time + ", reason=" + reason + ", patient=" + patient + "]";
+		return "Quarantine [id=" + id + ", time=" + time + ", reason=" + reason + "]";
 	}
 	
 	
