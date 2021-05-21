@@ -64,7 +64,7 @@ public class JDBCManager implements DBManager {
 
 			sql = "CREATE TABLE covid_test" + "(id INTEGER PRIMARY KEY AUTOINCREMENT," + "date_of_test DATE NOT NULL,"
 					+ "price REAL NOT NULL," + "laboratory TEXT NOT NULL," + "type TEXT NOT NULL,"
-					+ "pb_pv TEXT NOT NULL," + "patient_id INTEGER REFERENCES patient(id)" + "doctor_id INTEGER REFERENCES doctor(id))";
+					+ "pb_pv TEXT NOT NULL," + "patient_id INTEGER REFERENCES patient(id)," + "doctor_id INTEGER REFERENCES doctor(id))";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE patient_symptoms" + "(patient_id INTEGER REFERENCES patient(id),"
@@ -87,6 +87,36 @@ public class JDBCManager implements DBManager {
 		}
 
 	}
+	
+	@Override
+	public void dropTables() {
+
+		Statement stmt;
+		try {
+			stmt = c.createStatement();
+			String sql5 = "DROP TABLE patient_symptoms ";
+			stmt.executeUpdate(sql5);
+			String sql6 = "DROP TABLE patient_quarantine ";
+			stmt.executeUpdate(sql6);
+			String sql4 = "DROP TABLE covid_test ";
+			stmt.executeUpdate(sql4);	
+			String sql3 = "DROP TABLE patient";
+			stmt.executeUpdate(sql3);
+			String sql2 = "DROP TABLE quarantine";
+			stmt.executeUpdate(sql2);
+			String sql1 = "DROP TABLE symptoms";
+			stmt.executeUpdate(sql1);
+			String sql = "DROP TABLE doctor";
+			stmt.executeUpdate(sql);
+	
+			stmt.close();
+			System.out.println("Doctor info processed");
+			System.out.println("Records inserted.");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+	
 
 	private void symptoms_table() {
 		Statement stmt;

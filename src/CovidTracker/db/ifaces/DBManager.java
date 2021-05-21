@@ -20,6 +20,7 @@ public interface DBManager {
 	public Date last_test(Patient pattest, Patient patnotest);// get the data of the test to generate days off work
 	public void viewDoctors();// print the names of the doctors
 	public void quarantine_patient(Patient p, Quarantine s);
+	public void dropTables(); // Drop all the tables of the data base 
 
 	
 }

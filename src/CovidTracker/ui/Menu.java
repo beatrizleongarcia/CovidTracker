@@ -30,6 +30,7 @@ public class Menu {
 	public static void menuPrinicpal() throws Exception {
 		dbman.connect();
 		paman.connect();
+	
 		while (true) {
 			System.out.println("\nWELCOME! ");
 			System.out.println("\nChoose an option : ");
