@@ -1,0 +1,18 @@
+This week we expected to be able to do...
+=========================================
+Finish XML subsystem’s HTML interface
+
+Optional: Reasons why
+---------------------
+
+This week we did...
+===================
+Fix all the errors of our data base
+Optional: Reasons why
+---------------------
+
+Next weeks we will do...
+========================
+Finish the data base and do the video explaining everything
+Optional: Reasons why
+---------------------
