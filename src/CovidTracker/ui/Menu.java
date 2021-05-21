@@ -107,7 +107,7 @@ public class Menu {
 
 	private static void MenuAdm() throws Exception {
 		while (true) {
-			System.out.println("1.View a patient. ");
+			System.out.println("\n1.View a patient. ");
 			System.out.println("2.View a patient from a XML file");
 			System.out.println("3.Introduce a new a patient. ");
 			System.out.println("4.Save a patient in a XML file ");
@@ -191,7 +191,7 @@ public class Menu {
 
 	private static void MenuCEO() throws Exception {
 		while (true) {
-			System.out.println("1.View a patient. ");
+			System.out.println("\n1.View a patient. ");
 			System.out.println("2.View a patient from a XML file");
 			System.out.println("3.Delete a patient. ");
 			System.out.println("4.Add a new doctor");
@@ -267,7 +267,7 @@ public class Menu {
 
 	private static void MenuHHRR() throws Exception {
 		while (true) {
-			System.out.println("1.Look replacement. ");
+			System.out.println("\n1.Look replacement. ");
 			System.out.println("2.Modify patient. ");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
@@ -307,7 +307,7 @@ public class Menu {
 
 	private static void MenuDoc() throws Exception {
 		while (true) {
-			System.out.println("1. Introduce new patient. ");
+			System.out.println("\n1. Introduce new patient. ");
 			System.out.println("2. Save a patient in a XML file ");
 			System.out.println("3. Add a patient's covid test");
 			System.out.println("4. List patients");
@@ -352,7 +352,7 @@ public class Menu {
 
 	private static void MenuInformatic() throws Exception {
 		while (true) {
-			System.out.println("1.Delete a user from a role. ");
+			System.out.println("\n1.Delete a user from a role. ");
 			System.out.println("2.Modify the role of a user. ");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");

@@ -304,7 +304,7 @@ public class JDBCManager implements DBManager {
 	@Override
 	public Doctor searchDoctorbyId(int id) {
 		Doctor doc = null;
-		String sql = "SELECT * FROM doctor WHERE name LIKE ?";
+		String sql = "SELECT * FROM doctor WHERE id = ?";
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
 			prep.setInt(1, id);

@@ -120,8 +120,8 @@ public class Patient implements Serializable {
         this.dob=dob;
         this.job_title=job_title;
         this.salary=salary;
-        this.days_off_work= 0;
-        this.economic_impact=(float) 0;
+        this.days_off_work= days_off_work;
+        this.economic_impact=economic_impact;
         this.doctor=doctor;
 	}
 
@@ -246,12 +246,14 @@ public class Patient implements Serializable {
 			return false;
 		return true;
 	}
+	
+	
 
 	@Override
 	public String toString() {
-		return "Patient [id=" + id + ", salary=" + salary + ", name=" + name + ", dob=" + dob
-				+ ", job_title=" + job_title + ", days_off_work=" + days_off_work + ", doctor=" + doctor + ", tests="
-				+ tests + ", synmptoms=" + symptoms + ", quarantine=" + quarantine + "]";
+		return "\nid=" + id + "\nName=" + name + "\nSalary=" + salary + "\nDob=" + dob + "\nJob title="
+				+ job_title + "\nEconomic_impact=" + economic_impact + "\nDays_off_work=" + days_off_work + "\nDoctor="
+				+ doctor;
 	}
 	
 	public void func_daysoff(Date today,Date date2) {

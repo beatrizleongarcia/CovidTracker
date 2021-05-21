@@ -153,31 +153,13 @@ public class Jaxb implements JaxbManager {
 		Patient patient = (Patient) unmarshaller.unmarshal(file);
 
 		// Print the report
-		System.out.println("Patient's information:");
+		System.out.println("\nPatient's information:");
 		System.out.println("Name: " + patient.getName());
 		System.out.println("Date of birth: " + patient.getDob());
 		System.out.println("Salary: " + patient.getSalary());
 		System.out.println("Job tittle: " + patient.getJob_title());
 		System.out.println("Days off work: " + patient.getDays_off_work());
 		System.out.println("Economic impact: " + patient.getEconomic_impact());
-		System.out.println("Name of doctor: " + patient.getDoctor().getName());
-		List<Symptoms> symp = patient.getSymptoms();
-		for (Symptoms sy : symp) {
-			System.out.println("Symptom: " + sy.getType());
-		}
-		List<Quarantine> qua = patient.getQuarantine();
-		for (Quarantine quar : qua) {
-			System.out.println("Quarantine resason: " + quar.getReason());
-		}
-		System.out.println("Information about covid test:");
-		List<Covid_Test> test = patient.getTests();
-		for (Covid_Test covtest : test) {
-			System.out.println("Type of test: " + covtest.getType_test());
-			System.out.println("Public/Private:" + covtest.getPublic_private());
-			System.out.println("Laboratory: " + covtest.getLaboratory());
-			System.out.println("Date of the test:" + covtest.getDate_of_test());
-			System.out.println("Price: " + covtest.getPrice());
-		}
 
 		// Store the report in the database
 		// Create entity manager
@@ -192,17 +174,6 @@ public class Jaxb implements JaxbManager {
 
 		// Start transaction
 		tx1.begin();
-
-		// Persist
-		for (Symptoms symptoms : symp) {
-			em.persist(symptoms);
-		}
-		for (Quarantine quarantine : qua) {
-			em.persist(quarantine);
-		}
-		for (Covid_Test covid : test) {
-			em.persist(covid);
-		}
 		em.persist(patient);
 
 		// End transaction
@@ -222,33 +193,20 @@ public class Jaxb implements JaxbManager {
 		Doctor doctor = (Doctor) unmarshaller.unmarshal(file);
 
 		// Print the report
-		System.out.println("Doctor:");
+		System.out.println("\nDoctor's information:");
 		System.out.println("Name: " + doctor.getName());
 		System.out.println("Hospital: " + doctor.getHospital());
-		System.out.println("Information about the patients:");
+		System.out.println("\nInformation about the patients:");
 		List<Patient> pat = doctor.getPatients();
 		for (Patient patient : pat) {
-			System.out.println("Patient's information:");
+			System.out.println("\nPatient: ");
 			System.out.println("Name: " + patient.getName());
 			System.out.println("Date of birth: " + patient.getDob());
 			System.out.println("Job tittle: " + patient.getJob_title());
-			List<Symptoms> symp = patient.getSymptoms();
-			for (Symptoms sy : symp) {
-				System.out.println("Symptom: " + sy.getType());
-			}
-			List<Quarantine> qua = patient.getQuarantine();
-			for (Quarantine quar : qua) {
-				System.out.println("Quarantine resason: " + quar.getReason());
-			}
-			System.out.println("Information about the covid tests:");
-			List<Covid_Test> test = patient.getTests();
-			for (Covid_Test covtest : test) {
-				System.out.println("Type of test: " + covtest.getType_test());
-				System.out.println("Public/Private:" + covtest.getPublic_private());
-				System.out.println("Laboratory: " + covtest.getLaboratory());
-				System.out.println("Date of the test:" + covtest.getDate_of_test());
-				System.out.println("Price: " + covtest.getPrice());
-			}
+			System.out.println("Salary: " +patient.getSalary());
+			System.out.println("Economic impact: " +patient.getEconomic_impact());
+			System.out.println("Days off work: " + patient.getDays_off_work());
+			
 		}
 
 		// Store the report in the database
