@@ -21,10 +21,13 @@ public class Menu {
 	private static JDBCManager dbman = new JDBCManager();
 	private static JPAUserManager paman = new JPAUserManager();
 	private static Jaxb jaxb = new Jaxb();
-	private static DTDChecker dc = new  DTDChecker();
-	
+	private static DTDChecker dc = new DTDChecker();
 
 	public static void main(String[] args) throws Exception {
+		menuPrinicpal();
+	}
+
+	public static void menuPrinicpal() throws Exception {
 		dbman.connect();
 		paman.connect();
 		while (true) {
@@ -125,7 +128,7 @@ public class Menu {
 				newpatXML();
 				break;
 			case 0:
-				return;
+				Menu.menuPrinicpal();
 
 			}
 
@@ -140,19 +143,20 @@ public class Menu {
 		} else
 			System.out.println(patient);
 	}
-	
-	private static void viewXML() throws Exception{
+
+	private static void viewXML() throws Exception {
 		System.out.println("Introduce the name of the file where the patient is stored: ");
 		String filename = inputoutput.get_String();
 		dc.Checker(filename);
 		jaxb.xml2JavaPAT(filename);
 	}
-	
-	private static void newpatXML() throws Exception{
-			System.out.println("Introduce the name of the new file: ");
-			String filename = inputoutput.get_String();
-			jaxb.java2XmlPAT(filename);
+
+	private static void newpatXML() throws Exception {
+		System.out.println("Introduce the name of the new file: ");
+		String filename = inputoutput.get_String();
+		jaxb.java2XmlPAT(filename);
 	}
+
 	private static void newpat() throws Exception {
 		Patient pat = inputoutput.addPatient(); // Introduce the patient
 
@@ -179,7 +183,7 @@ public class Menu {
 			dbman.quarantine_patient(pattest, qua.get(x));// add to the many to many table
 
 		}
-		
+
 	}
 
 	private static void MenuCEO() throws Exception {
@@ -218,7 +222,7 @@ public class Menu {
 				viewDocXML();
 				break;
 			case 0:
-				return;
+				Menu.menuPrinicpal();
 
 			}
 		}
@@ -233,8 +237,8 @@ public class Menu {
 		} else
 			System.out.println(doc);
 	}
-	
-	private static void viewDocXML() throws Exception{
+
+	private static void viewDocXML() throws Exception {
 		System.out.println("Introduce the name of the file where the doctor is stored: ");
 		String filename = inputoutput.get_String();
 		dc.Checker(filename);
@@ -251,16 +255,17 @@ public class Menu {
 		dbman.addDoctor(doc);
 		System.out.println("Do you want to record the doctors's information in a Xml file? (Yes/No)");
 		String xml = inputoutput.get_String();
-		if(xml.equalsIgnoreCase("Yes")){
+		if (xml.equalsIgnoreCase("Yes")) {
 			System.out.println("Introduce the name of the file: ");
 			String filename = inputoutput.get_String();
 			jaxb.java2XmlDOC(filename);
 		}
 	}
-	private static void adddocXML() throws Exception{
-			System.out.println("Introduce the name of the new file: ");
-			String filename = inputoutput.get_String();
-			jaxb.java2XmlDOC(filename);
+
+	private static void adddocXML() throws Exception {
+		System.out.println("Introduce the name of the new file: ");
+		String filename = inputoutput.get_String();
+		jaxb.java2XmlDOC(filename);
 	}
 
 	private static void MenuHHRR() throws Exception {
@@ -279,7 +284,7 @@ public class Menu {
 				modifypat();
 				break;
 			case 0:
-				return;
+				Menu.menuPrinicpal();
 
 			}
 		}
@@ -296,13 +301,13 @@ public class Menu {
 			System.out.println("It is not necesary to look for a replacemnet yet.");
 		}
 	}
+
 	private static void modifypat() throws Exception {
 		String name = inputoutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
 		dbman.ModifyPatient(patient);
 	}
-	
-	
+
 	private static void MenuDoc() throws Exception {
 		while (true) {
 			System.out.println("1. Introduce new patient. ");
@@ -327,7 +332,7 @@ public class Menu {
 				listpat();
 				break;
 			case 0:
-				return;
+				Menu.menuPrinicpal();
 
 			}
 
@@ -340,14 +345,14 @@ public class Menu {
 		Patient patient = dbman.searchPatientByName(name);
 		dbman.test_patient(patient);
 	}
+
 	private static void listpat() throws Exception {
-		
+
 		String name = inputoutput.getDocfromKeyboard();
 		Doctor doc = dbman.searchDoctorbyName(name);
 		doc.listPatient();
 	}
-	
-	
+
 	private static void MenuInformatic() throws Exception {
 		while (true) {
 			System.out.println("1.Delete a user from a role. ");
@@ -364,7 +369,7 @@ public class Menu {
 				modify();
 				break;
 			case 0:
-				return;
+				Menu.menuPrinicpal();
 
 			}
 		}

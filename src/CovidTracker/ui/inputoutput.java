@@ -31,7 +31,6 @@ public class inputoutput {
 	private static JDBCManager man = new JDBCManager();
 
 	public static Patient addPatient() {
-		List<Covid_Test> tests = new ArrayList<Covid_Test>();
 		List<Symptoms> symptoms = new ArrayList<Symptoms>();
 		List<Quarantine> quarantines = new ArrayList<Quarantine>();
 		try {
@@ -124,27 +123,25 @@ public class inputoutput {
 	}
 
 	public static Covid_Test addCovid_Test() {
-		
+		Covid_Test tests = null;
 		try {
 			System.out.println("Complete the information about the covid test");
 			System.out.println("Public or private test:");
 			String public_private = get_String();
-			System.out.println("Type of test(pcr,rapid test or antibody test");
+			System.out.println("Type of test(pcr,rapid test or antibody test)");
 			String type_test = get_String();
 			System.out.println("Date of the test (yyyy-MM-dd):");
 			String date_of_test = get_String();
 			LocalDate date = create_date(date_of_test);
 			System.out.println("Price of the test:");
 			Float price = get_Float();
-			System.out.println("Laboratory: ");
+			System.out.println("Laboratory");
 			String laboratory = get_String();
-			Covid_Test tests = new Covid_Test(public_private, type_test, Date.valueOf(date), price,laboratory);
-			System.out.println(tests);
-			return tests;
+			tests = new Covid_Test(public_private, type_test, Date.valueOf(date), price,laboratory);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
-		return null;
+		return tests;
 	}
 
 	public static Symptoms addSymptoms() {

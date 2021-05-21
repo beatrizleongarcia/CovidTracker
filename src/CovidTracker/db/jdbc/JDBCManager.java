@@ -30,7 +30,6 @@ public class JDBCManager implements DBManager {
 			c = DriverManager.getConnection("jdbc:sqlite:./db/covidTracker.db");
 			c.createStatement().execute("PRAGMA foreign_keys=ON");
 			System.out.println("Database connection opened.");
-
 			this.create();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -65,7 +64,7 @@ public class JDBCManager implements DBManager {
 
 			sql = "CREATE TABLE covid_test" + "(id INTEGER PRIMARY KEY AUTOINCREMENT," + "date_of_test DATE NOT NULL,"
 					+ "price REAL NOT NULL," + "laboratory TEXT NOT NULL," + "type TEXT NOT NULL,"
-					+ "pb_pv TEXT NOT NULL," + "patient_id INTEGER REFERENCES patient(id))";
+					+ "pb_pv TEXT NOT NULL," + "patient_id INTEGER REFERENCES patient(id)" + "doctor_id INTEGER REFERENCES doctor(id))";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE patient_symptoms" + "(patient_id INTEGER REFERENCES patient(id),"
@@ -354,7 +353,7 @@ public class JDBCManager implements DBManager {
 			prep.close();
 
 			System.out.println("Patient info processed");
-			System.out.println("Records inserted.");
+			System.out.println("Records inserted. \n \n");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -369,20 +368,20 @@ public class JDBCManager implements DBManager {
 		int patient_id = pat.getId();
 		try {
 
-			String sql = "INSERT INTO covid_test ( public_private, type_test, laboratory, date_of_test, price, doctor_id, patient_id) "
-					+ "VALUES (?,?)";
+			String sql = "INSERT INTO covid_test (date_of_test, price, laboratory, type, pb_pv, patient_id, doctor_id) "
+					+ "VALUES (?,?,?,?,?,?,?)";
 			prep = c.prepareStatement(sql);
-			prep.setString(1, t.getPublic_private());
-			prep.setString(2, t.getType_test());
+			prep.setDate(1, t.getDate_of_test());
+			prep.setFloat(2, t.getPrice());
 			prep.setString(3, t.getLaboratory());
-			prep.setDate(4, t.getDate_of_test());
-			prep.setFloat(5, t.getPrice());
-			prep.setInt(6, doc.getId());
-			prep.setInt(7, pat.getId());
+			prep.setString(4, t.getType_test());
+			prep.setString(5, t.getPublic_private());
+			prep.setInt(6, pat.getId());
+			prep.setInt(7, doc.getId());
 			prep.executeUpdate();
 			prep.close();
 			System.out.println("Covid test info processed");
-			System.out.println("Records inserted.");
+			System.out.println("Records inserted. \n \n");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
@@ -407,11 +406,9 @@ public class JDBCManager implements DBManager {
 	@Override
 	public Patient test_patient(Patient pat) {
 		Covid_Test test = inputoutput.addCovid_Test();
-		if(test!=null){
-			pat.addNewTest(test);
-			}else {
-				System.out.println("No existe el test 1");
-			}
+		pat.addNewTest(test);
+		test.setPatient(pat);
+		test.setDoctor(pat.getDoctor());
 		addCovid_Test(test);
 		return pat;
 	}
