@@ -179,7 +179,6 @@ public class JDBCManager implements DBManager {
 			}
 			rs.close();
 			prep.close();
-			System.out.println("Search finished");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -296,7 +295,6 @@ public class JDBCManager implements DBManager {
 			}
 			rs.close();
 			prep.close();
-			System.out.println("Search finished");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -319,7 +317,6 @@ public class JDBCManager implements DBManager {
 			}
 			rs.close();
 			prep.close();
-			System.out.println("Search finished");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -466,16 +463,60 @@ public class JDBCManager implements DBManager {
 	@Override
 	public void delete_patient(String name) {
 		try {
+			delete_covidtest(name);
+			delete_quarantine(name);
+			delete_symptoms(name);
 			String sql = "DELETE FROM patient WHERE name = ?";
 			PreparedStatement prep = c.prepareStatement(sql);
 			prep.setString(1, name);
+			prep.executeUpdate();
+			prep.close();
+			System.out.println("The patient " +name+ " has been deleted successfully");
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	
+	private void delete_covidtest(String name) {
+		try {
+			Patient pat = searchPatientByName(name);
+			Integer id =pat.getId();
+			String sql = "DELETE FROM covid_test WHERE patient_id = ?";
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setInt(1, id);
 			prep.executeUpdate();
 			prep.close();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
+	private void delete_quarantine(String name) {
+		try {
+			Patient pat = searchPatientByName(name);
+			Integer id =pat.getId();
+			String sql = "DELETE FROM patient_quarantine WHERE patient_id = ?";
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setInt(1, id);
+			prep.executeUpdate();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	private void delete_symptoms(String name) {
+		try {
+			Patient pat = searchPatientByName(name);
+			Integer id =pat.getId();
+			String sql = "DELETE FROM patient_symptoms WHERE patient_id = ?";
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setInt(1, id);
+			prep.executeUpdate();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
 	
 
 	@Override
