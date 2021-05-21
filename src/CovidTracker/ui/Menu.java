@@ -1,5 +1,6 @@
 package CovidTracker.ui;
 
+import java.io.File;
 import java.security.MessageDigest;
 import java.sql.Date;
 import java.time.LocalDate;
@@ -255,13 +256,7 @@ public class Menu {
 	private static void adddoc() throws Exception {
 		Doctor doc = inputoutput.addDoctor();
 		dbman.addDoctor(doc);
-		System.out.println("Do you want to record the doctors's information in a Xml file? (Yes/No)");
-		String xml = inputoutput.get_String();
-		if (xml.equalsIgnoreCase("Yes")) {
-			System.out.println("Introduce the name of the file: ");
-			String filename = inputoutput.get_String();
-			jaxb.java2XmlDOC(filename);
-		}
+		
 	}
 
 	private static void adddocXML() throws Exception {

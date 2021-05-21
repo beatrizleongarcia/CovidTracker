@@ -68,7 +68,7 @@ public class Jaxb implements JaxbManager {
 		printPatients();
 		System.out.print("Choose a patient's id to turn into an XML file:");
 		int pat_id = inputoutput.get_int();
-		Query q2 = em.createNativeQuery("SELECT id, name, dob, salary, days_off_work, economic_impact FROM patient WHERE id = ?", Patient.class);
+		Query q2 = em.createNativeQuery("SELECT * FROM patient WHERE id = ?", Patient.class);
 		q2.setParameter(1, pat_id);
 		Patient pat = (Patient) q2.getSingleResult();
 
@@ -102,7 +102,7 @@ public class Jaxb implements JaxbManager {
 		printDoctor();
 		System.out.print("Choose the doctor's id to turn into an XML file:");
 		int doc_id = inputoutput.get_int();
-		Query q2 = em.createNativeQuery("SELECT id, hospital, name FROM doctor WHERE id = ?", Doctor.class);
+		Query q2 = em.createNativeQuery("SELECT * FROM doctor WHERE id = ?", Doctor.class);
 		q2.setParameter(1, doc_id);
 		Doctor doc = (Doctor) q2.getSingleResult();
 

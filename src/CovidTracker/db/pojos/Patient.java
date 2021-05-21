@@ -7,11 +7,13 @@ import java.util.ArrayList;
 import java.util.List;
 
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.TableGenerator;
@@ -54,12 +56,23 @@ public class Patient implements Serializable {
 	private Float economic_impact;
 	@XmlElement
 	private Integer days_off_work;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "doctor_id")
 	@XmlTransient
 	private Doctor doctor;
+	@OneToMany(mappedBy="patient")
 	@XmlTransient
 	private List <Covid_Test> tests;
+	@ManyToMany
+	@JoinTable(name="patient_symptoms",
+		joinColumns={@JoinColumn(name="patient_id", referencedColumnName="id")},
+	    inverseJoinColumns={@JoinColumn(name="symptoms_id", referencedColumnName="id")})
 	@XmlTransient
 	private List <Symptoms> symptoms;
+	@ManyToMany
+	@JoinTable(name="patient_quarantine",
+		joinColumns={@JoinColumn(name="patient_id", referencedColumnName="id")},
+	    inverseJoinColumns={@JoinColumn(name="quarantine_id", referencedColumnName="id")})
 	@XmlTransient
 	private List <Quarantine> quarantine;
 

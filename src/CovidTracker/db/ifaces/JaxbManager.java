@@ -1,5 +1,7 @@
 package CovidTracker.db.ifaces;
 
+import java.io.File;
+
 import javax.xml.bind.JAXBException;
 
 import CovidTracker.db.jaxb.*;

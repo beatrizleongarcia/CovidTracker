@@ -4,15 +4,33 @@ import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+
+@Entity
+@Table(name = "quarantine")
 public class Quarantine implements Serializable{
 	
 
 	private static final long serialVersionUID = 3509916136418043506L;
 
+	@Id
+	@GeneratedValue(generator="quarantine")
+	@TableGenerator(name="quarantine", table="sqlite_sequence",
+	    pkColumnName="name", valueColumnName="seq", pkColumnValue="quarantine")
 	
 	private Integer id;
 	private Integer time;
 	private String reason;
+	@ManyToMany(mappedBy = "quarantine")
 	private List <Patient> patients;
 	
 	public Quarantine() {

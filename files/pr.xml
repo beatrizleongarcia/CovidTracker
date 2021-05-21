@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Patient name="Enrique">
+    <dob>2000-07-28</dob>
+    <salary>1000.0</salary>
+    <job_title>Worker</job_title>
+    <economic_impact>0.0</economic_impact>
+    <days_off_work>0</days_off_work>
+</Patient>

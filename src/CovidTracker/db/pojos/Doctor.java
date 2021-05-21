@@ -42,6 +42,7 @@ public class Doctor implements Serializable {
     @XmlElementWrapper(name = "patient")
 	private List<Patient> patients;
 	@XmlTransient
+	@OneToMany(mappedBy="doctor")
 	private List<Covid_Test> tests;
 
 	public Doctor() {

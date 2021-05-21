@@ -3,19 +3,37 @@ package CovidTracker.db.pojos;
 import java.io.Serializable;
 import java.sql.Date;
 
+import javax.persistence.Entity;
+import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.Table;
+import javax.persistence.TableGenerator;
+
+@Entity
+@Table(name = "covid_test")
 public class Covid_Test implements Serializable {
 
 
 	private static final long serialVersionUID = -524555949615115069L;
 
-	
+	@Id
+	@GeneratedValue(generator="covid_test")
+	@TableGenerator(name="covid_test", table="sqlite_sequence",
+	    pkColumnName="name", valueColumnName="seq", pkColumnValue="covid_test")
 	private Integer id;
 	private String public_private;
 	private String type_test;
 	private String laboratory;
 	private Date date_of_test;
 	private Float price;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "doctor_id")
 	private Doctor doctor;
+	@ManyToOne(fetch = FetchType.LAZY)
+	@JoinColumn(name = "patient_id")
 	private Patient patient;
 	
 	public Covid_Test() {

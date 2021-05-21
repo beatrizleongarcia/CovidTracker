@@ -14,6 +14,11 @@
 		<class>CovidTracker.db.pojos.users.User</class>
 		<class>CovidTracker.db.pojos.Patient</class>
 		<class>CovidTracker.db.pojos.Doctor</class>
+		<class>CovidTracker.db.pojos.Covid_Test</class>
+		<class>CovidTracker.db.pojos.Quarantine</class>
+		<class>CovidTracker.db.pojos.Symptoms</class>
+ 
+ 
  
 		<properties>	
 			<!-- Connection properties -->
