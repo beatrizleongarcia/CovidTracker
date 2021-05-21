@@ -444,8 +444,8 @@ public class JDBCManager implements DBManager {
 	}
 
 	@Override
-	public Date last_test(Patient pattest, Patient patnotest) {
-		pattest = test_patient(patnotest);
+	public Date last_test(Patient patnotest) {
+		Patient pattest = test_patient(patnotest);
 		int id = pattest.getId();
 		String sql = "SELECT * FROM covid_test WHERE patient_id = '" + id + "' ORDER BY date_of_test DESC ";
 		PreparedStatement prep;

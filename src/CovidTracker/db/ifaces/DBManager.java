@@ -17,7 +17,7 @@ public interface DBManager {
 	public void delete_patient(String name);// Delete a patient
 	public void symptoms_patient(Patient p, Symptoms s);//to insert into the table symptoms_patient
 	public Patient test_patient(Patient pat);//borrar
-	public Date last_test(Patient pattest, Patient patnotest);// get the data of the test to generate days off work
+	public Date last_test(Patient patnotest);// get the data of the test to generate days off work
 	public void viewDoctors();// print the names of the doctors
 	public void quarantine_patient(Patient p, Quarantine s);
 	public void dropTables(); // Drop all the tables of the data base 

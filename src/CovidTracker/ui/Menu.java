@@ -167,21 +167,20 @@ public class Menu {
 		Doctor doc = dbman.searchDoctorbyName(doctor_name);
 		pat.addDoctor(doc);
 		dbman.addPerson(pat);
-		Patient pattest = dbman.test_patient(pat);
-		Date date = dbman.last_test(pattest, pat);
+		Date date = dbman.last_test(pat);
 		LocalDate dateToday = LocalDate.now();
-		pattest.func_daysoff(Date.valueOf(dateToday), date);
-		pattest.func_economic();
-		dbman.change_daysoffwork(pattest);
-		dbman.change_economicimpact(pattest);
+		pat.func_daysoff(Date.valueOf(dateToday), date);
+		pat.func_economic();
+		dbman.change_daysoffwork(pat);
+		dbman.change_economicimpact(pat);
 
-		List<Symptoms> symptoms = pattest.getSymptoms();
+		List<Symptoms> symptoms = pat.getSymptoms();
 		for (int x = 0; x <= symptoms.size(); x++) {
 			dbman.symptoms_patient(pat, symptoms.get(x));// add to the many to many table
 		}
-		List<Quarantine> qua = pattest.getQuarantine();
+		List<Quarantine> qua = pat.getQuarantine();
 		for (int x = 0; x <= qua.size(); x++) {
-			dbman.quarantine_patient(pattest, qua.get(x));// add to the many to many table
+			dbman.quarantine_patient(pat, qua.get(x));// add to the many to many table
 
 		}
 
