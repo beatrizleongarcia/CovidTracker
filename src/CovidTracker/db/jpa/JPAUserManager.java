@@ -86,16 +86,19 @@ public class JPAUserManager implements UserManager {
 		}
 		return null;
 	}
+	
 
 	@Override
 	public void changeRole(User user) {
-		Query q = entman.createNativeQuery("SELECT * FROM users WHERE role = ?", User.class);
-		q.setParameter(1, user.getRole());
+		Query q = entman.createNativeQuery("SELECT * FROM users WHERE id = ?", User.class);
+		q.setParameter(1, user.getId());
 		User us = (User) q.getSingleResult();
-		System.out.print("Type the new role: (administrator,doctor,informatic,HHRR or CEO)");
-
-		String newRole = inputoutput.get_String();
-		Role role = new Role(newRole);
+		for(int x = 0; x< getRoles().size();x++) {
+			System.out.println(getRoles().get(x));
+			}
+		System.out.println("Please enter the ID of the new user's role:");
+		int id = inputoutput.get_int();
+		Role role = getRole(id);
 
 		// Begin transaction
 		entman.getTransaction().begin();

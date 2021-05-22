@@ -77,7 +77,7 @@ public class Role implements Serializable {
 	}
 	@Override
 	public String toString() {
-		return ("id=" + id + "." +name);
+		return ("\nid=" + id + "." +name);
 	}
 	
 	

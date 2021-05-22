@@ -31,7 +31,7 @@ public class Menu {
 	public static void menuPrinicpal() throws Exception {
 		dbman.connect();
 		paman.connect();
-	
+
 		while (true) {
 			System.out.println("\nWELCOME! ");
 			System.out.println("\nChoose an option : ");
@@ -66,9 +66,11 @@ public class Menu {
 		System.out.println("Enter your password:");
 		String password = inputoutput.get_String();
 		// List the roles
-		System.out.println(paman.getRoles());
+		for (int x = 0; x < paman.getRoles().size(); x++) {
+			System.out.println(paman.getRoles().get(x));
+		}
 		// Ask the user for a role
-		System.out.println("Please enter yout role ID:");
+		System.out.println("\nPlease enter yout role ID:");
 		int id = inputoutput.get_int();
 		Role role = paman.getRole(id);
 		// Generate the hash
@@ -144,24 +146,24 @@ public class Menu {
 		Patient patient = dbman.searchPatientByName(name);
 		Integer doctor_id = dbman.searchDoctorId(name);
 		Doctor doc = dbman.searchDoctorbyId(doctor_id);
-		List <Integer> symptoms_id = dbman.searchSymptomsId(patient.getId());
+		List<Integer> symptoms_id = dbman.searchSymptomsId(patient.getId());
 		System.out.println(symptoms_id);
-		List <Integer> quarantine_id = dbman.searchQuarantineId(patient.getId());
+		List<Integer> quarantine_id = dbman.searchQuarantineId(patient.getId());
 		System.out.println(quarantine_id);
-		
+
 		if (patient == null) {
 			System.out.println("There are no patients");
 		} else
 			System.out.println(patient);
-		    System.out.println("Doctor: " +doc.getName());
-		    System.out.println("\nSymptom's types:");
-		    for(int x=0; x< symptoms_id.size();x++) {
-		    	System.out.println(dbman.searchSymptomstype(symptoms_id.get(x)));
-		    }
-		    System.out.println("\nQuarantine's reasons:");
-		    for(int x=0; x< quarantine_id.size();x++) {
-		    	System.out.println(dbman.searchQuarantinereason(quarantine_id.get(x)));
-		    }
+		System.out.println("Doctor: " + doc.getName());
+		System.out.println("\nSymptom's types:");
+		for (int x = 0; x < symptoms_id.size(); x++) {
+			System.out.println(dbman.searchSymptomstype(symptoms_id.get(x)));
+		}
+		System.out.println("\nQuarantine's reasons:");
+		for (int x = 0; x < quarantine_id.size(); x++) {
+			System.out.println(dbman.searchQuarantinereason(quarantine_id.get(x)));
+		}
 	}
 
 	private static void viewXML() throws Exception {
@@ -194,10 +196,10 @@ public class Menu {
 		dbman.change_economicimpact(pat);
 
 		List<Symptoms> symptoms = pat.getSymptoms();
-		if(symptoms.size()!= 0 ) {
-		for (int x = 0; x < symptoms.size(); x++) {
-			dbman.symptoms_patient(pat, symptoms.get(x));// add to the many to many table
-		}
+		if (symptoms.size() != 0) {
+			for (int x = 0; x < symptoms.size(); x++) {
+				dbman.symptoms_patient(pat, symptoms.get(x));// add to the many to many table
+			}
 		}
 		List<Quarantine> qua = pat.getQuarantine();
 		for (int x = 0; x < qua.size(); x++) {
@@ -210,13 +212,13 @@ public class Menu {
 	private static void MenuCEO() throws Exception {
 		while (true) {
 			System.out.println("\n1.View a patient. ");
-			System.out.println("2.View a patient from a XML file");
+			System.out.println("2.Add a patient from a XML file");
 			System.out.println("3.Delete a patient. ");
 			System.out.println("4.Add a new doctor");
 			System.out.println("5.Save a doctor in a XML file");
 			System.out.println("6.View a doctor");
-			System.out.println("7.View a doctor from a XML file");
-			System.out.println("8.Create an Html file of a doctor");
+			System.out.println("7.Add a doctor from a XML file");
+			System.out.println("8.Create an Html file for a doctor");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
@@ -280,17 +282,19 @@ public class Menu {
 	private static void adddoc() throws Exception {
 		Doctor doc = inputoutput.addDoctor();
 		dbman.addDoctor(doc);
-		
+
 	}
+
 	private static void createHtmldoc() throws Exception {
 		System.out.println("Introduce the name of the file where the doctor is stored: ");
 		String filename = inputoutput.get_String();
 		dc.Checker(filename);
 		System.out.println("Introduce the name of the new Html file: ");
 		String filename2 = inputoutput.get_String();
-		jaxb.simpleTransform("./files/" +filename+ ".xml", "./files/Doctor-Style.xslt", "./files/" +filename2+ ".html");;
+		jaxb.simpleTransform("./files/" + filename + ".xml", "./files/Doctor-Style.xslt",
+				"./files/" + filename2 + ".html");
+		;
 	}
-
 
 	private static void adddocXML() throws Exception {
 		System.out.println("Introduce the name of the new file: ");
@@ -322,6 +326,8 @@ public class Menu {
 	}
 
 	private static void replacement() throws Exception {
+		System.out.println("Patient's list:");
+		dbman.viewPatientsName();
 		String name = inputoutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
 		int days = patient.getDays_off_work();
@@ -333,6 +339,8 @@ public class Menu {
 	}
 
 	private static void modifypat() throws Exception {
+		System.out.println("Patient's list:");
+		dbman.viewPatientsName();
 		String name = inputoutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
 		dbman.ModifyPatient(patient);
@@ -342,7 +350,7 @@ public class Menu {
 		while (true) {
 			System.out.println("\n1. Introduce new patient. ");
 			System.out.println("2.Save a patient in a XML file ");
-			System.out.println("3.Create an Html file of a patient");
+			System.out.println("3.Create an Html file for a patient");
 			System.out.println("4. Add a patient's covid test");
 			System.out.println("5. List patients");
 			System.out.println("0.EXIT. ");
@@ -379,15 +387,17 @@ public class Menu {
 		Patient patient = dbman.searchPatientByName(name);
 		dbman.test_patient(patient);
 	}
+
 	private static void createHtmlpat() throws Exception {
 		System.out.println("Introduce the name of the file where the patient is stored: ");
 		String filename = inputoutput.get_String();
 		dc.Checker(filename);
 		System.out.println("Introduce the name of the new Html file: ");
 		String filename2 = inputoutput.get_String();
-		jaxb.simpleTransform("./files/" +filename+ ".xml", "./files/Patient-Style.xslt", "./files/" +filename2+ ".html");;
+		jaxb.simpleTransform("./files/" + filename + ".xml", "./files/Patient-Style.xslt",
+				"./files/" + filename2 + ".html");
+		;
 	}
-
 
 	private static void listpat() throws Exception {
 
@@ -422,17 +432,21 @@ public class Menu {
 	private static void modify() throws Exception {
 
 		// List of roles
-		System.out.println(paman.getRoles());
+		for (int x = 0; x < paman.getRoles().size(); x++) {
+			System.out.println(paman.getRoles().get(x));
+		}
 		// Ask the user for a role
-		System.out.println("Please enter the role ID of the user:");
+		System.out.println("\nPlease enter the role ID of the user:");
 		int id = inputoutput.get_int();
 		Role role = paman.getRole(id);
 		// List of user of the chosen role
-		System.out.println(role.getUsers());
+		for (int x = 0; x < role.getUsers().size(); x++) {
+			System.out.println(role.getUsers().get(x));
+		}
 		// Ask the user for the ID of the user
-		System.out.println("Please enter the ID of the user:");
-		id = inputoutput.get_int();
-		User u = new User(id, role);
+		System.out.println("\nPlease enter the ID of the user:");
+		int iduser = inputoutput.get_int();
+		User u = new User(iduser, role);
 		paman.changeRole(u);
 		System.out.println("The user's role has been changed correctly");
 
@@ -441,15 +455,19 @@ public class Menu {
 	private static void delete() throws Exception {
 
 		// List of roles
-		System.out.println(paman.getRoles());
+		for (int x = 0; x < paman.getRoles().size(); x++) {
+			System.out.println(paman.getRoles().get(x));
+		}
 		// Ask the user for a role
-		System.out.println("Please enter the role ID of the user you want to eliminate:");
+		System.out.println("\nPlease enter the role ID of the user you want to eliminate:");
 		int id = inputoutput.get_int();
 		Role role = paman.getRole(id);
 		// List of user of the chosen role
-		System.out.println(role.getUsers());
+		for (int x = 0; x < role.getUsers().size(); x++) {
+			System.out.println(role.getUsers().get(x));
+		}
 		// Ask the user for the ID of the user
-		System.out.println("Please enter the ID of the user:");
+		System.out.println("\nPlease enter the ID of the user:");
 		id = inputoutput.get_int();
 		User u = new User(id, role);
 		paman.deleteRole(u);

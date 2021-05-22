@@ -395,7 +395,6 @@ public class JDBCManager implements DBManager {
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
 				int id_quarantine = rs.getInt("quarantine_id");
-				System.out.println(id_quarantine);
 				 id_qua.add(id_quarantine);
 			}
 			

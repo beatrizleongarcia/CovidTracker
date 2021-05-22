@@ -19,5 +19,3 @@ public interface UserManager {
 	public void changeRole(User user);//Change the role of the user passed UPDATE(setter)
 }
 
-// nos queda hacer el deleterole y terminariamos JPA. 
-//lugeo falta añadirlo al menu 
