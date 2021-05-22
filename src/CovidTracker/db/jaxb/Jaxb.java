@@ -125,17 +125,7 @@ public class Jaxb implements JaxbManager {
 		}
 	}
 
-	@Override
-	public void transformPat(String filename) {
-		simpleTransform("./files/" + filename + ".xml", "./xmls/Patient-Style.xslt", "./files/" + filename + ".html");
-
-	}
-
-	@Override
-	public void transformDoc(String filename) {
-		simpleTransform("./files/" + filename + ".xml", "./xmls/Doctor-Style.xslt", "./files/" + filename + ".html");
-
-	}
+	
 
 	private final String PERSISTENCE_PROVIDER = "user-company";
 	private EntityManagerFactory factory;

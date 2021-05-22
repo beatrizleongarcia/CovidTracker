@@ -216,6 +216,7 @@ public class Menu {
 			System.out.println("5.Save a doctor in a XML file");
 			System.out.println("6.View a doctor");
 			System.out.println("7.View a doctor from a XML file");
+			System.out.println("8.Create an Html file");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
@@ -241,6 +242,9 @@ public class Menu {
 				break;
 			case 7:
 				viewDocXML();
+				break;
+			case 8:
+				createHtml();
 				break;
 			case 0:
 				Menu.menuPrinicpal();
@@ -278,6 +282,15 @@ public class Menu {
 		dbman.addDoctor(doc);
 		
 	}
+	private static void createHtml() throws Exception {
+		System.out.println("Introduce the name of the file where the doctor is stored: ");
+		String filename = inputoutput.get_String();
+		dc.Checker(filename);
+		System.out.println("Introduce the name of the new Html file: ");
+		String filename2 = inputoutput.get_String();
+		jaxb.simpleTransform("./files/" +filename+ ".xml", "./files/"+filename2+"-Style.xslt", "./files/"+filename2+".html");;
+	}
+
 
 	private static void adddocXML() throws Exception {
 		System.out.println("Introduce the name of the new file: ");

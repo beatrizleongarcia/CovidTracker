@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Doctor name="Gonzalo">
+    <hospital>HM Montepríncipe</hospital>
+    <patient>
+        <Patient name="Patricia">
+            <dob>2001-02-14</dob>
+            <salary>1200.0</salary>
+            <job_title>Informatic</job_title>
+            <economic_impact>80.0</economic_impact>
+            <days_off_work>2</days_off_work>
+        </Patient>
+        <Patient name="Pedro">
+            <dob>1980-02-23</dob>
+            <salary>50000.0</salary>
+            <job_title>Boss</job_title>
+            <economic_impact>5000.0</economic_impact>
+            <days_off_work>3</days_off_work>
+        </Patient>
+    </patient>
+</Doctor>
