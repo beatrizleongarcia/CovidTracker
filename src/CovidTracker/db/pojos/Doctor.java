@@ -33,7 +33,7 @@ public class Doctor implements Serializable {
 		pkColumnName="name", valueColumnName="seq", pkColumnValue="doctor")
 	@XmlTransient
 	private Integer id;
-	@XmlAttribute
+	@XmlElement
 	private String name;
 	@XmlElement
 	private String hospital;

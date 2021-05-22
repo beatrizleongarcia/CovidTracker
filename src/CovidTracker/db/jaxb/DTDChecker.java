@@ -12,7 +12,7 @@ import CovidTracker.db.xml.utils.CustomErrorHandler;
 
 public class DTDChecker {
 
-    public static void Checker(String filename) {
+    public void Checker(String filename) {
     	File file = new File("./files/"+filename+".xml");
         try {
         	// Create a DocumentBuilderFactory

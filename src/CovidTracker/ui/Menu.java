@@ -216,7 +216,7 @@ public class Menu {
 			System.out.println("5.Save a doctor in a XML file");
 			System.out.println("6.View a doctor");
 			System.out.println("7.View a doctor from a XML file");
-			System.out.println("8.Create an Html file");
+			System.out.println("8.Create an Html file of a doctor");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
@@ -244,7 +244,7 @@ public class Menu {
 				viewDocXML();
 				break;
 			case 8:
-				createHtml();
+				createHtmldoc();
 				break;
 			case 0:
 				Menu.menuPrinicpal();
@@ -282,13 +282,13 @@ public class Menu {
 		dbman.addDoctor(doc);
 		
 	}
-	private static void createHtml() throws Exception {
+	private static void createHtmldoc() throws Exception {
 		System.out.println("Introduce the name of the file where the doctor is stored: ");
 		String filename = inputoutput.get_String();
 		dc.Checker(filename);
 		System.out.println("Introduce the name of the new Html file: ");
 		String filename2 = inputoutput.get_String();
-		jaxb.simpleTransform("./files/" +filename+ ".xml", "./files/"+filename2+"-Style.xslt", "./files/"+filename2+".html");;
+		jaxb.simpleTransform("./files/" +filename+ ".xml", "./files/Doctor-Style.xslt", "./files/" +filename2+ ".html");;
 	}
 
 
@@ -341,9 +341,10 @@ public class Menu {
 	private static void MenuDoc() throws Exception {
 		while (true) {
 			System.out.println("\n1. Introduce new patient. ");
-			System.out.println("2. Save a patient in a XML file ");
-			System.out.println("3. Add a patient's covid test");
-			System.out.println("4. List patients");
+			System.out.println("2.Save a patient in a XML file ");
+			System.out.println("3.Create an Html file of a patient");
+			System.out.println("4. Add a patient's covid test");
+			System.out.println("5. List patients");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
@@ -356,9 +357,12 @@ public class Menu {
 				newpatXML();
 				break;
 			case 3:
-				addcovid();
+				createHtmlpat();
 				break;
 			case 4:
+				addcovid();
+				break;
+			case 5:
 				listpat();
 				break;
 			case 0:
@@ -375,6 +379,15 @@ public class Menu {
 		Patient patient = dbman.searchPatientByName(name);
 		dbman.test_patient(patient);
 	}
+	private static void createHtmlpat() throws Exception {
+		System.out.println("Introduce the name of the file where the patient is stored: ");
+		String filename = inputoutput.get_String();
+		dc.Checker(filename);
+		System.out.println("Introduce the name of the new Html file: ");
+		String filename2 = inputoutput.get_String();
+		jaxb.simpleTransform("./files/" +filename+ ".xml", "./files/Patient-Style.xslt", "./files/" +filename2+ ".html");;
+	}
+
 
 	private static void listpat() throws Exception {
 
