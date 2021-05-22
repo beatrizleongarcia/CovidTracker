@@ -138,6 +138,8 @@ public class Menu {
 	}
 
 	private static void view() throws Exception {
+		System.out.println("Patient's list:");
+		dbman.viewPatientsName();
 		String name = inputoutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
 		Integer doctor_id = dbman.searchDoctorId(name);
@@ -265,6 +267,8 @@ public class Menu {
 	}
 
 	private static void deletepat() throws Exception {
+		System.out.println("Patient's list:");
+		dbman.viewPatientsName();
 		String name = inputoutput.getNamefromKeyboard();
 		dbman.delete_patient(name);
 	}

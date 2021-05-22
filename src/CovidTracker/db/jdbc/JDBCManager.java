@@ -175,8 +175,6 @@ public class JDBCManager implements DBManager {
 				float salary = rs.getFloat("salary");
 				float economic_impact = rs.getFloat("economic_impact");
 				int days_off_work = rs.getInt("days_off_work");
-				//int doctor_id = rs.getInt("doctor_id");
-				//Doctor doctor = searchDoctorbyId(doctor_id);
 				pat = new Patient(id, patient_name, dob, job_title, salary, days_off_work, economic_impact);
 			}
 			rs.close();
@@ -629,6 +627,26 @@ public class JDBCManager implements DBManager {
 	public void viewDoctors() {
 
 		String sql = "SELECT name FROM doctor";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+
+				String name = rs.getString("name");
+				System.out.println(name);
+			}
+			rs.close();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+	}
+
+	@Override
+	public void viewPatientsName() {
+
+		String sql = "SELECT name FROM patient";
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
 			ResultSet rs = prep.executeQuery();

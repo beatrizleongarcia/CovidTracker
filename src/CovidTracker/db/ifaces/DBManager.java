@@ -22,12 +22,13 @@ public interface DBManager {
 	public void viewDoctors();// print the names of the doctors
 	public void quarantine_patient(Patient p, Quarantine s);
 	public void dropTables(); // Drop all the tables of the data base 
-	void viewPatient(int id);
+	public void viewPatient(int id);
 	public Integer searchDoctorId(String name);
 	public List<Integer> searchSymptomsId(Integer id);
 	public String searchSymptomstype(Integer id);
 	public List<Integer> searchQuarantineId(Integer id);
 	public String searchQuarantinereason(Integer id);
+	public void viewPatientsName();
 
 	
 }
