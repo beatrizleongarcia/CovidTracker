@@ -7,6 +7,8 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.List;
 
 import CovidTracker.db.ifaces.DBManager;
 import CovidTracker.db.pojos.Covid_Test;
@@ -173,9 +175,9 @@ public class JDBCManager implements DBManager {
 				float salary = rs.getFloat("salary");
 				float economic_impact = rs.getFloat("economic_impact");
 				int days_off_work = rs.getInt("days_off_work");
-				int doctor_id = rs.getInt("doctor_id");
-				Doctor doctor = searchDoctorbyId(doctor_id);
-				pat = new Patient(id, patient_name, dob, job_title, salary, days_off_work, economic_impact, doctor);
+				//int doctor_id = rs.getInt("doctor_id");
+				//Doctor doctor = searchDoctorbyId(doctor_id);
+				pat = new Patient(id, patient_name, dob, job_title, salary, days_off_work, economic_impact);
 			}
 			rs.close();
 			prep.close();
@@ -321,6 +323,110 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 		return doc;
+	}
+	
+	@Override
+	public Integer searchDoctorId(String name) {
+		String sql = "SELECT doctor_id FROM patient WHERE name LIKE ?";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setString(1, name);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				int id_doctor = rs.getInt("doctor_id");
+				return id_doctor;
+			}
+			rs.close();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+
+	@Override
+	public List <Integer> searchSymptomsId(Integer id) {
+		List <Integer> id_symp =new ArrayList<Integer>();
+		String sql = "SELECT symptoms_id FROM patient_symptoms WHERE patient_id = ?";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setInt(1,id);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				int id_symptoms = rs.getInt("symptoms_id");
+				System.out.println(id_symptoms);
+				 id_symp.add(id_symptoms);
+			}
+			
+			rs.close();
+			prep.close();
+			return id_symp;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public String searchSymptomstype(Integer id) {
+		String sql = "SELECT type FROM symptoms WHERE id = ?";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setInt(1,id);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				String type = rs.getString("type");
+				return type;
+			}
+			rs.close();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public List <Integer> searchQuarantineId(Integer id) {
+		List <Integer> id_qua =new ArrayList<Integer>();
+		String sql = "SELECT quarantine_id FROM patient_quarantine WHERE patient_id = ?";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setInt(1,id);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				int id_quarantine = rs.getInt("quarantine_id");
+				System.out.println(id_quarantine);
+				 id_qua.add(id_quarantine);
+			}
+			
+			rs.close();
+			prep.close();
+			return id_qua;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+
+	@Override
+	public String searchQuarantinereason(Integer id) {
+		String sql = "SELECT reason FROM quarantine WHERE id = ?";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			prep.setInt(1,id);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+				String reason = rs.getString("reason");
+				return reason;
+			}
+			rs.close();
+			prep.close();
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
 	}
 
 	@Override

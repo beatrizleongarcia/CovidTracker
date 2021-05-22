@@ -114,7 +114,7 @@ public class Patient implements Serializable {
 	}
 
 	public Patient(int id, String patient_name, Date dob, String job_title, float salary, int days_off_work,
-			float economic_impact, Doctor doctor) {
+			float economic_impact) {
 		this.id = id;
 		this.name=patient_name;
         this.dob=dob;
@@ -122,7 +122,7 @@ public class Patient implements Serializable {
         this.salary=salary;
         this.days_off_work= days_off_work;
         this.economic_impact=economic_impact;
-        this.doctor=doctor;
+        //this.doctor=doctor;
 	}
 
 	public Patient(String name, Date dob, String job_title, Float salary, List<Symptoms> symptoms,
@@ -252,8 +252,7 @@ public class Patient implements Serializable {
 	@Override
 	public String toString() {
 		return "\nid=" + id + "\nName=" + name + "\nSalary=" + salary + "\nDob=" + dob + "\nJob title="
-				+ job_title + "\nEconomic_impact=" + economic_impact + "\nDays_off_work=" + days_off_work + "\nDoctor="
-				+ doctor;
+				+ job_title + "\nEconomic_impact=" + economic_impact + "\nDays_off_work=" + days_off_work ;
 	}
 	
 	public void func_daysoff(Date today,Date date2) {

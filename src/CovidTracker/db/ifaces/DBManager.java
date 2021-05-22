@@ -2,6 +2,7 @@ package CovidTracker.db.ifaces;
 
 
 import java.sql.Date;
+import java.util.List;
 
 import CovidTracker.db.pojos.*;
 
@@ -22,6 +23,11 @@ public interface DBManager {
 	public void quarantine_patient(Patient p, Quarantine s);
 	public void dropTables(); // Drop all the tables of the data base 
 	void viewPatient(int id);
+	public Integer searchDoctorId(String name);
+	public List<Integer> searchSymptomsId(Integer id);
+	public String searchSymptomstype(Integer id);
+	public List<Integer> searchQuarantineId(Integer id);
+	public String searchQuarantinereason(Integer id);
 
 	
 }

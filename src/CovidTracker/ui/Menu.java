@@ -140,10 +140,26 @@ public class Menu {
 	private static void view() throws Exception {
 		String name = inputoutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
+		Integer doctor_id = dbman.searchDoctorId(name);
+		Doctor doc = dbman.searchDoctorbyId(doctor_id);
+		List <Integer> symptoms_id = dbman.searchSymptomsId(patient.getId());
+		System.out.println(symptoms_id);
+		List <Integer> quarantine_id = dbman.searchQuarantineId(patient.getId());
+		System.out.println(quarantine_id);
+		
 		if (patient == null) {
 			System.out.println("There are no patients");
 		} else
 			System.out.println(patient);
+		    System.out.println("Doctor: " +doc.getName());
+		    System.out.println("\nSymptom's types:");
+		    for(int x=0; x< symptoms_id.size();x++) {
+		    	System.out.println(dbman.searchSymptomstype(symptoms_id.get(x)));
+		    }
+		    System.out.println("\nQuarantine's reasons:");
+		    for(int x=0; x< quarantine_id.size();x++) {
+		    	System.out.println(dbman.searchQuarantinereason(quarantine_id.get(x)));
+		    }
 	}
 
 	private static void viewXML() throws Exception {
