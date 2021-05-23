@@ -353,7 +353,6 @@ public class JDBCManager implements DBManager {
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
 				int id_symptoms = rs.getInt("symptoms_id");
-				System.out.println(id_symptoms);
 				 id_symp.add(id_symptoms);
 			}
 			
@@ -365,6 +364,7 @@ public class JDBCManager implements DBManager {
 		}
 		return null;
 	}
+	
 	
 	@Override
 	public String searchSymptomstype(Integer id) {
@@ -384,6 +384,8 @@ public class JDBCManager implements DBManager {
 		}
 		return null;
 	}
+	
+	
 
 	@Override
 	public List <Integer> searchQuarantineId(Integer id) {
@@ -458,7 +460,6 @@ public class JDBCManager implements DBManager {
 	public void addPerson(Patient p) {
 		PreparedStatement prep;
 		Doctor doc = p.getDoctor();
-		int doctor_id = doc.getId();
 
 		try {
 			String sql = "INSERT INTO patient (name, dob, job_title, salary,days_off_work,economic_impact, doctor_id) "
@@ -493,9 +494,7 @@ public class JDBCManager implements DBManager {
 	public void addCovid_Test(Covid_Test t) {
 		PreparedStatement prep;
 		Doctor doc = t.getDoctor();
-		int doctor_id = doc.getId();
 		Patient pat = t.getPatient();
-		int patient_id = pat.getId();
 		try {
 
 			String sql = "INSERT INTO covid_test (date_of_test, price, laboratory, type, pb_pv, patient_id, doctor_id) "

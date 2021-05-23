@@ -30,5 +30,6 @@ public interface DBManager {
 	public String searchQuarantinereason(Integer id);
 	public void viewPatientsName();
 
+
 	
 }

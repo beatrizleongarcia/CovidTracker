@@ -147,9 +147,7 @@ public class Menu {
 		Integer doctor_id = dbman.searchDoctorId(name);
 		Doctor doc = dbman.searchDoctorbyId(doctor_id);
 		List<Integer> symptoms_id = dbman.searchSymptomsId(patient.getId());
-		System.out.println(symptoms_id);
 		List<Integer> quarantine_id = dbman.searchQuarantineId(patient.getId());
-		System.out.println(quarantine_id);
 
 		if (patient == null) {
 			System.out.println("There are no patients");
@@ -257,12 +255,20 @@ public class Menu {
 	}
 
 	private static void viewDoc() throws Exception {
-		String name = inputoutput.getDocfromKeyboard();
+
+		System.out.println("\nDoctors:");
+		dbman.viewDoctors();
+		System.out.println("\nEnter the doctor's name: ");
+		String name = inputoutput.get_String();
 		Doctor doc = dbman.searchDoctorbyName(name);
+
 		if (doc == null) {
 			System.out.println("There are no doctors with that name");
-		} else
+		} else {
 			System.out.println(doc);
+			System.out.println("\nPatients:");
+			dbman.viewPatient(doc.getId());
+		}
 	}
 
 	private static void viewDocXML() throws Exception {
