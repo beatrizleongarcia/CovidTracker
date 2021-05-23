@@ -22,7 +22,7 @@
 	<div align="center"><img src="Covpat.png" width="700"></img> </div>
 
 	<div id="content">
-   <p><b>PATIENT INFORMATION:</b></p>
+   <p><b>PATIENT'S INFORMATION:</b></p>
    <table border="1">
       <th>Name</th>
       <th>Date of Birth</th>

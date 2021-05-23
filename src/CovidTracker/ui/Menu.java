@@ -1,6 +1,5 @@
 package CovidTracker.ui;
 
-import java.io.File;
 import java.security.MessageDigest;
 import java.sql.Date;
 import java.time.LocalDate;
