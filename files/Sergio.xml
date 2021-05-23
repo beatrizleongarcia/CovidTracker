@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Doctor>
+    <name>Sergio</name>
+    <hospital>HM Montepríncipe</hospital>
+    <patient>
+        <Patient name="Beatriz">
+            <dob>2001-09-23</dob>
+            <salary>10000.0</salary>
+            <job_title>CEO</job_title>
+            <economic_impact>7333.3335</economic_impact>
+            <days_off_work>22</days_off_work>
+        </Patient>
+        <Patient name="Juan">
+            <dob>1998-08-23</dob>
+            <salary>5000.0</salary>
+            <job_title>Marketing</job_title>
+            <economic_impact>500.0</economic_impact>
+            <days_off_work>3</days_off_work>
+        </Patient>
+        <Patient name="Roberto">
+            <dob>1997-03-09</dob>
+            <salary>6000.0</salary>
+            <job_title>HHRR</job_title>
+            <economic_impact>4200.0</economic_impact>
+            <days_off_work>21</days_off_work>
+        </Patient>
+        <Patient name="Alejandra">
+            <dob>2001-09-03</dob>
+            <salary>1000.0</salary>
+            <job_title>Cleaner</job_title>
+            <economic_impact>266.66666</economic_impact>
+            <days_off_work>8</days_off_work>
+        </Patient>
+    </patient>
+</Doctor>
