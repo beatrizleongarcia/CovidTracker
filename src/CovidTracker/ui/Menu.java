@@ -358,6 +358,7 @@ public class Menu {
 		Patient patient = dbman.searchPatientByName(name);
 		dbman.ModifyPatient(patient);
 	}
+	
 
 	private static void allpatients() throws Exception {
 		System.out.println("\nAll patients's stored in the data base:\n ");

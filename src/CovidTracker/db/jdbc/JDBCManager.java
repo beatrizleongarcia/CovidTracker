@@ -60,13 +60,13 @@ public class JDBCManager implements DBManager {
 
 			sql = "CREATE TABLE patient" + "(id INTEGER PRIMARY KEY AUTOINCREMENT," + "name TEXT NOT NULL,"
 					+ "dob DATE NOT NULL," + "job_title TEXT NOT NULL," + "salary REAL NOT NULL,"
-					+ "days_off_work INTEGER," + "economic_impact REAL,"
-					+ "doctor_id INTEGER REFERENCES doctor(id))";
+					+ "days_off_work INTEGER," + "economic_impact REAL," + "doctor_id INTEGER REFERENCES doctor(id))";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE covid_test" + "(id INTEGER PRIMARY KEY AUTOINCREMENT," + "date_of_test DATE NOT NULL,"
 					+ "price REAL NOT NULL," + "laboratory TEXT NOT NULL," + "type TEXT NOT NULL,"
-					+ "pb_pv TEXT NOT NULL," + "patient_id INTEGER REFERENCES patient(id)," + "doctor_id INTEGER REFERENCES doctor(id))";
+					+ "pb_pv TEXT NOT NULL," + "patient_id INTEGER REFERENCES patient(id),"
+					+ "doctor_id INTEGER REFERENCES doctor(id))";
 			stmt.executeUpdate(sql);
 
 			sql = "CREATE TABLE patient_symptoms" + "(patient_id INTEGER REFERENCES patient(id),"
@@ -89,7 +89,7 @@ public class JDBCManager implements DBManager {
 		}
 
 	}
-	
+
 	@Override
 	public void dropTables() {
 
@@ -101,7 +101,7 @@ public class JDBCManager implements DBManager {
 			String sql6 = "DROP TABLE patient_quarantine ";
 			stmt.executeUpdate(sql6);
 			String sql4 = "DROP TABLE covid_test ";
-			stmt.executeUpdate(sql4);	
+			stmt.executeUpdate(sql4);
 			String sql3 = "DROP TABLE patient";
 			stmt.executeUpdate(sql3);
 			String sql2 = "DROP TABLE quarantine";
@@ -110,7 +110,7 @@ public class JDBCManager implements DBManager {
 			stmt.executeUpdate(sql1);
 			String sql = "DROP TABLE doctor";
 			stmt.executeUpdate(sql);
-	
+
 			stmt.close();
 			System.out.println("Doctor info processed");
 			System.out.println("Records inserted.");
@@ -118,7 +118,6 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 	}
-	
 
 	private void symptoms_table() {
 		Statement stmt;
@@ -249,6 +248,7 @@ public class JDBCManager implements DBManager {
 
 	}
 
+
 	public void change_daysoffwork(Patient pat) {
 
 		try {
@@ -322,7 +322,7 @@ public class JDBCManager implements DBManager {
 		}
 		return doc;
 	}
-	
+
 	@Override
 	public Integer searchDoctorId(String name) {
 		String sql = "SELECT doctor_id FROM patient WHERE name LIKE ?";
@@ -341,21 +341,20 @@ public class JDBCManager implements DBManager {
 		}
 		return null;
 	}
-	
 
 	@Override
-	public List <Integer> searchSymptomsId(Integer id) {
-		List <Integer> id_symp =new ArrayList<Integer>();
+	public List<Integer> searchSymptomsId(Integer id) {
+		List<Integer> id_symp = new ArrayList<Integer>();
 		String sql = "SELECT symptoms_id FROM patient_symptoms WHERE patient_id = ?";
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
-			prep.setInt(1,id);
+			prep.setInt(1, id);
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
 				int id_symptoms = rs.getInt("symptoms_id");
-				 id_symp.add(id_symptoms);
+				id_symp.add(id_symptoms);
 			}
-			
+
 			rs.close();
 			prep.close();
 			return id_symp;
@@ -364,14 +363,13 @@ public class JDBCManager implements DBManager {
 		}
 		return null;
 	}
-	
-	
+
 	@Override
 	public String searchSymptomstype(Integer id) {
 		String sql = "SELECT type FROM symptoms WHERE id = ?";
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
-			prep.setInt(1,id);
+			prep.setInt(1, id);
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
 				String type = rs.getString("type");
@@ -384,22 +382,20 @@ public class JDBCManager implements DBManager {
 		}
 		return null;
 	}
-	
-	
 
 	@Override
-	public List <Integer> searchQuarantineId(Integer id) {
-		List <Integer> id_qua =new ArrayList<Integer>();
+	public List<Integer> searchQuarantineId(Integer id) {
+		List<Integer> id_qua = new ArrayList<Integer>();
 		String sql = "SELECT quarantine_id FROM patient_quarantine WHERE patient_id = ?";
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
-			prep.setInt(1,id);
+			prep.setInt(1, id);
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
 				int id_quarantine = rs.getInt("quarantine_id");
-				 id_qua.add(id_quarantine);
+				id_qua.add(id_quarantine);
 			}
-			
+
 			rs.close();
 			prep.close();
 			return id_qua;
@@ -414,7 +410,7 @@ public class JDBCManager implements DBManager {
 		String sql = "SELECT reason FROM quarantine WHERE id = ?";
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
-			prep.setInt(1,id);
+			prep.setInt(1, id);
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
 				String reason = rs.getString("reason");
@@ -522,7 +518,8 @@ public class JDBCManager implements DBManager {
 		Statement stmt;
 		try {
 			stmt = c.createStatement();
-			String sql = "INSERT INTO doctor (name , hospital) " + "VALUES ( '" + d.getName() + "', '" + d.getHospital() + "')";
+			String sql = "INSERT INTO doctor (name , hospital) " + "VALUES ( '" + d.getName() + "', '" + d.getHospital()
+					+ "')";
 			stmt.executeUpdate(sql);
 			stmt.close();
 			System.out.println("Doctor info processed");
@@ -573,17 +570,16 @@ public class JDBCManager implements DBManager {
 			prep.setString(1, name);
 			prep.executeUpdate();
 			prep.close();
-			System.out.println("The patient " +name+ " has been deleted successfully");
+			System.out.println("The patient " + name + " has been deleted successfully");
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
-	
-	
+
 	private void delete_covidtest(String name) {
 		try {
 			Patient pat = searchPatientByName(name);
-			Integer id =pat.getId();
+			Integer id = pat.getId();
 			String sql = "DELETE FROM covid_test WHERE patient_id = ?";
 			PreparedStatement prep = c.prepareStatement(sql);
 			prep.setInt(1, id);
@@ -593,10 +589,11 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 	}
+
 	private void delete_quarantine(String name) {
 		try {
 			Patient pat = searchPatientByName(name);
-			Integer id =pat.getId();
+			Integer id = pat.getId();
 			String sql = "DELETE FROM patient_quarantine WHERE patient_id = ?";
 			PreparedStatement prep = c.prepareStatement(sql);
 			prep.setInt(1, id);
@@ -606,10 +603,11 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 	}
+
 	private void delete_symptoms(String name) {
 		try {
 			Patient pat = searchPatientByName(name);
-			Integer id =pat.getId();
+			Integer id = pat.getId();
 			String sql = "DELETE FROM patient_symptoms WHERE patient_id = ?";
 			PreparedStatement prep = c.prepareStatement(sql);
 			prep.setInt(1, id);
@@ -619,7 +617,6 @@ public class JDBCManager implements DBManager {
 			e.printStackTrace();
 		}
 	}
-	
 
 	@Override
 	public void viewDoctors() {
@@ -660,7 +657,7 @@ public class JDBCManager implements DBManager {
 		}
 
 	}
-	
+
 	@Override
 	public void viewPatient(int id) {
 
@@ -680,23 +677,23 @@ public class JDBCManager implements DBManager {
 		}
 
 	}
-	
+
 	@Override
 	public List<Doctor> viewAllDoctors() {
-		
-		List <Doctor> doc =new ArrayList<Doctor>();
+
+		List<Doctor> doc = new ArrayList<Doctor>();
 		String sql = "SELECT * FROM doctor";
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
-          
+
 				String name = rs.getString("name");
 				Integer id = rs.getInt("id");
 				String hospital = rs.getString("Hospital");
-                Doctor d = new Doctor(name,id,hospital);
-                doc.add(d);
-				
+				Doctor d = new Doctor(name, id, hospital);
+				doc.add(d);
+
 			}
 			rs.close();
 			prep.close();
@@ -706,17 +703,17 @@ public class JDBCManager implements DBManager {
 		}
 		return null;
 	}
-	
+
 	@Override
 	public List<Patient> viewAllPatients() {
-		
-		List <Patient> pat =new ArrayList<Patient>();
+
+		List<Patient> pat = new ArrayList<Patient>();
 		String sql = "SELECT * FROM patient";
 		try {
 			PreparedStatement prep = c.prepareStatement(sql);
 			ResultSet rs = prep.executeQuery();
 			while (rs.next()) {
-          
+
 				int id = rs.getInt("id");
 				String patient_name = rs.getString("name");
 				Date dob = rs.getDate("dob");

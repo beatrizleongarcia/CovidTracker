@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Patient name="Beatriz Ruiz">
+    <dob>2001-09-23</dob>
+    <salary>10000.0</salary>
+    <job_title>CEO</job_title>
+    <economic_impact>7333.3335</economic_impact>
+    <days_off_work>22</days_off_work>
+</Patient>

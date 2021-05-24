@@ -1,8 +1,0 @@
-<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
-<Patient name="Patricia">
-    <dob>2001-02-14</dob>
-    <salary>1200.0</salary>
-    <job_title>Informatic</job_title>
-    <economic_impact>80.0</economic_impact>
-    <days_off_work>2</days_off_work>
-</Patient>
