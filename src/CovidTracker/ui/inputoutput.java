@@ -35,7 +35,7 @@ public class inputoutput {
 		List<Quarantine> quarantines = new ArrayList<Quarantine>();
 		try {
 			System.out.println("Introduce a new patient");
-			System.out.println("Name:");
+			System.out.println("Name and surname:");
 			String name = get_String();
 			System.out.println("Date of birth (yyyy-MM-dd)");
 			String dob = get_String();
@@ -234,7 +234,7 @@ public class inputoutput {
 	public static String getNamefromKeyboard() {
 		String a = null;
 		try {
-			System.out.println("Enter the patient's name:");
+			System.out.println("Enter the patient's name and surname:");
 			a = in.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -244,7 +244,7 @@ public class inputoutput {
 	public static String getDocfromKeyboard() {
 		String a = null;
 		try {
-			System.out.println("Enter your name:");
+			System.out.println("Enter your name and surname:");
 			a = in.readLine();
 		} catch (IOException e) {
 			e.printStackTrace();

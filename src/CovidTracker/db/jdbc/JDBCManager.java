@@ -218,7 +218,7 @@ public class JDBCManager implements DBManager {
 				prep.executeUpdate();
 				break;
 			case 3:
-				sql = "UPDATE patient SET job_tittle =? WHERE id=?";
+				sql = "UPDATE patient SET job_title =? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				System.out.println("Introduce the new job tittle:");
 				String job = inputoutput.get_String();

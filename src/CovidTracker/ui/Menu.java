@@ -180,7 +180,7 @@ public class Menu {
 		Patient pat = inputoutput.addPatient(); // Introduce the patient
 
 		dbman.viewDoctors();
-		System.out.println("Write the name of the doctor that has done the test");
+		System.out.println("Write the name and surname of the doctor that has done the test");
 		String doctor_name = inputoutput.get_String();
 		Doctor doc = dbman.searchDoctorbyName(doctor_name);
 		pat.addDoctor(doc);
@@ -257,7 +257,7 @@ public class Menu {
 
 		System.out.println("\nDoctors:");
 		dbman.viewDoctors();
-		System.out.println("\nEnter the doctor's name: ");
+		System.out.println("\nEnter the doctor's name and surname: ");
 		String name = inputoutput.get_String();
 		Doctor doc = dbman.searchDoctorbyName(name);
 
