@@ -220,7 +220,7 @@ public class JDBCManager implements DBManager {
 			case 3:
 				sql = "UPDATE patient SET job_title =? WHERE id=?";
 				prep = c.prepareStatement(sql);
-				System.out.println("Introduce the new job tittle:");
+				System.out.println("Introduce the new job title:");
 				String job = inputoutput.get_String();
 				prep.setString(1, job);
 				prep.setInt(2, p.getId());
