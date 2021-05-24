@@ -191,7 +191,7 @@ public class JDBCManager implements DBManager {
 			System.out.println("What feature do you want to change: ");
 			System.out.println("1. Name");
 			System.out.println("2.Salary ");
-			System.out.println("3.Job tittle ");
+			System.out.println("3.Job title ");
 			System.out.println("4.Date of birth");
 
 			Integer feature = inputoutput.get_int();
