@@ -17,10 +17,10 @@ public interface DBManager {
 	public Doctor searchDoctorbyName(String name); //search a doctor by name using searchDoctorbyId
 	public void delete_patient(String name);// Delete a patient
 	public void symptoms_patient(Patient p, Symptoms s);//to insert into the table symptoms_patient
-	public Patient test_patient(Patient pat);//borrar
+	public Patient test_patient(Patient pat);// add a test to a patient
 	public Date last_test(Patient patnotest);// get the data of the test to generate days off work
 	public void viewDoctors();// print the names of the doctors
-	public void quarantine_patient(Patient p, Quarantine s);
+	public void quarantine_patient(Patient p, Quarantine s); // 
 	public void dropTables(); // Drop all the tables of the data base 
 	public void viewPatient(int id);
 	public Integer searchDoctorId(String name);
@@ -29,6 +29,8 @@ public interface DBManager {
 	public List<Integer> searchQuarantineId(Integer id);
 	public String searchQuarantinereason(Integer id);
 	public void viewPatientsName();
+	public List<Doctor> viewAllDoctors();
+	public List<Patient> viewAllPatients();
 
 
 	

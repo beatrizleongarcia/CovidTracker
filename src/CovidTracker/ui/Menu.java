@@ -311,6 +311,8 @@ public class Menu {
 		while (true) {
 			System.out.println("\n1.Look replacement. ");
 			System.out.println("2.Modify patient. ");
+			System.out.println("3.View all the patient's information.");
+			System.out.println("4.View all the doctor's information. ");
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
@@ -321,6 +323,12 @@ public class Menu {
 				break;
 			case 2:
 				modifypat();
+				break;
+			case 3:
+				allpatients();
+				break;
+			case 4:
+				alldoctors();
 				break;
 			case 0:
 				Menu.menuPrinicpal();
@@ -349,6 +357,23 @@ public class Menu {
 		String name = inputoutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
 		dbman.ModifyPatient(patient);
+	}
+
+	private static void allpatients() throws Exception {
+		System.out.println("\nAll patients's stored in the data base:\n ");
+		List<Patient> patients = dbman.viewAllPatients();
+        for(int x = 0 ; x< patients.size(); x++) {
+        	System.out.println(patients.get(x));
+        }
+		
+	}
+	private static void alldoctors() throws Exception {
+		System.out.println("\nAll doctor's stored in the data base:\n ");
+		List<Doctor> doctors = dbman.viewAllDoctors();
+        for(int x = 0 ; x< doctors.size(); x++) {
+        	System.out.println(doctors.get(x));
+        }
+		
 	}
 
 	private static void MenuDoc() throws Exception {

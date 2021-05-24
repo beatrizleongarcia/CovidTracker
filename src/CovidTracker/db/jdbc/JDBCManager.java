@@ -680,5 +680,60 @@ public class JDBCManager implements DBManager {
 		}
 
 	}
+	
+	@Override
+	public List<Doctor> viewAllDoctors() {
+		
+		List <Doctor> doc =new ArrayList<Doctor>();
+		String sql = "SELECT * FROM doctor";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+          
+				String name = rs.getString("name");
+				Integer id = rs.getInt("id");
+				String hospital = rs.getString("Hospital");
+                Doctor d = new Doctor(name,id,hospital);
+                doc.add(d);
+				
+			}
+			rs.close();
+			prep.close();
+			return doc;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
+	
+	@Override
+	public List<Patient> viewAllPatients() {
+		
+		List <Patient> pat =new ArrayList<Patient>();
+		String sql = "SELECT * FROM patient";
+		try {
+			PreparedStatement prep = c.prepareStatement(sql);
+			ResultSet rs = prep.executeQuery();
+			while (rs.next()) {
+          
+				int id = rs.getInt("id");
+				String patient_name = rs.getString("name");
+				Date dob = rs.getDate("dob");
+				String job_title = rs.getString("job_title");
+				float salary = rs.getFloat("salary");
+				float economic_impact = rs.getFloat("economic_impact");
+				int days_off_work = rs.getInt("days_off_work");
+				Patient p = new Patient(id, patient_name, dob, job_title, salary, days_off_work, economic_impact);
+				pat.add(p);
+			}
+			rs.close();
+			prep.close();
+			return pat;
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return null;
+	}
 
 }

@@ -64,6 +64,12 @@ public class Doctor implements Serializable {
 		this.patients= new ArrayList<Patient>();
 	}
 
+	public Doctor(String name, Integer id, String hospital) {
+		this.id= id;
+		this.name = name;
+		this.hospital= hospital;
+	}
+
 	public Integer getId() {
 		return id;
 	}
