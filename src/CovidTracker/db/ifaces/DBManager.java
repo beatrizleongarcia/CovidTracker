@@ -8,7 +8,7 @@ import CovidTracker.db.pojos.*;
 
 public interface DBManager {
 
-	public void connect(); // disconnect to the data base
+	public void connect(); // connect to the data base
 	public void disconnect();//disconnect from the data base
 	public void addPerson(Patient p); //add a person  to the data base 
 	public Patient searchPatientByName(String name); // search a patient by name 
