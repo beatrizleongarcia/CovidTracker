@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Patient name="Beatriz Leon">
+    <dob>1997-04-03</dob>
+    <salary>35000.0</salary>
+    <job_title>Executive</job_title>
+    <economic_impact>3500.0</economic_impact>
+    <days_off_work>3</days_off_work>
+</Patient>

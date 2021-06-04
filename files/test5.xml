@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Doctor>
+    <name>Basilio Aguirre</name>
+    <hospital>HM Monteprincipe</hospital>
+    <patient>
+        <Patient name="Manuel Lucena">
+            <dob>1995-02-06</dob>
+            <salary>25000.0</salary>
+            <job_title>Marketing</job_title>
+            <economic_impact>8333.333</economic_impact>
+            <days_off_work>10</days_off_work>
+        </Patient>
+        <Patient name="Macarena Linares">
+            <dob>1989-10-19</dob>
+            <salary>45600.0</salary>
+            <job_title>Executive</job_title>
+            <economic_impact>9120.0</economic_impact>
+            <days_off_work>6</days_off_work>
+        </Patient>
+        <Patient name="Enrique Gonzalez">
+            <dob>2000-07-06</dob>
+            <salary>3500.0</salary>
+            <job_title>Executive</job_title>
+            <economic_impact>583.3333</economic_impact>
+            <days_off_work>5</days_off_work>
+        </Patient>
+        <Patient name="Beatriz Leon">
+            <dob>1997-04-03</dob>
+            <salary>35000.0</salary>
+            <job_title>Executive</job_title>
+            <economic_impact>3500.0</economic_impact>
+            <days_off_work>3</days_off_work>
+        </Patient>
+    </patient>
+</Doctor>
