@@ -38,7 +38,7 @@ public class Menu {
 			System.out.println("2.Log in");
 			System.out.println("0.EXIT. ");
 
-			int opcion = inputoutput.get_int();
+			int opcion = InputOutput.get_int();
 
 			switch (opcion) {
 			case 1:
@@ -60,17 +60,17 @@ public class Menu {
 	private static void register() throws Exception {
 
 		System.out.println("Enter your email address:");
-		String email = inputoutput.get_String();
+		String email = InputOutput.get_String();
 
 		System.out.println("Enter your password:");
-		String password = inputoutput.get_String();
+		String password = InputOutput.get_String();
 		// List the roles
 		for (int x = 0; x < paman.getRoles().size(); x++) {
 			System.out.println(paman.getRoles().get(x));
 		}
 		// Ask the user for a role
 		System.out.println("\nPlease enter yout role ID:");
-		int id = inputoutput.get_int();
+		int id = InputOutput.get_int();
 		Role role = paman.getRole(id);
 		// Generate the hash
 		MessageDigest md = MessageDigest.getInstance("MD5");
@@ -83,10 +83,10 @@ public class Menu {
 	private static void login() throws Exception {
 		// Ask the user for an email
 		System.out.println("Enter your email address: ");
-		String email = inputoutput.get_String();
+		String email = InputOutput.get_String();
 		// Ask the user for a password
 		System.out.println("Enter your password:");
-		String password = inputoutput.get_String();
+		String password = InputOutput.get_String();
 		User user = paman.checkPassword(email, password);
 		if (user == null) {
 			System.out.println("Wrong email or password");
@@ -115,7 +115,7 @@ public class Menu {
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
-			int opcion = inputoutput.get_int();
+			int opcion = InputOutput.get_int();
 
 			switch (opcion) {
 			case 1:
@@ -141,7 +141,7 @@ public class Menu {
 	private static void view() throws Exception {
 		System.out.println("Patient's list:");
 		dbman.viewPatientsName();
-		String name = inputoutput.getNamefromKeyboard();
+		String name = InputOutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
 		Integer doctor_id = dbman.searchDoctorId(name);
 		Doctor doc = dbman.searchDoctorbyId(doctor_id);
@@ -165,23 +165,23 @@ public class Menu {
 
 	private static void viewXML() throws Exception {
 		System.out.println("Introduce the name of the file where the patient is stored: ");
-		String filename = inputoutput.get_String();
+		String filename = InputOutput.get_String();
 		dc.Checker(filename);
 		jaxb.xml2JavaPAT(filename);
 	}
 
 	private static void newpatXML() throws Exception {
 		System.out.println("Introduce the name of the new file: ");
-		String filename = inputoutput.get_String();
+		String filename = InputOutput.get_String();
 		jaxb.java2XmlPAT(filename);
 	}
 
 	private static void newpat() throws Exception {
-		Patient pat = inputoutput.addPatient(); // Introduce the patient
+		Patient pat = InputOutput.addPatient(); // Introduce the patient
 
 		dbman.viewDoctors();
 		System.out.println("Write the name and surname of the doctor that has done the test");
-		String doctor_name = inputoutput.get_String();
+		String doctor_name = InputOutput.get_String();
 		Doctor doc = dbman.searchDoctorbyName(doctor_name);
 		pat.addDoctor(doc);
 		dbman.addPerson(pat);
@@ -219,7 +219,7 @@ public class Menu {
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
-			int opcion = inputoutput.get_int();
+			int opcion = InputOutput.get_int();
 			switch (opcion) {
 			case 1:
 				view();
@@ -258,7 +258,7 @@ public class Menu {
 		System.out.println("\nDoctors:");
 		dbman.viewDoctors();
 		System.out.println("\nEnter the doctor's name and surname: ");
-		String name = inputoutput.get_String();
+		String name = InputOutput.get_String();
 		Doctor doc = dbman.searchDoctorbyName(name);
 
 		if (doc == null) {
@@ -272,7 +272,7 @@ public class Menu {
 
 	private static void viewDocXML() throws Exception {
 		System.out.println("Introduce the name of the file where the doctor is stored: ");
-		String filename = inputoutput.get_String();
+		String filename = InputOutput.get_String();
 		dc.Checker(filename);
 		jaxb.xml2JavaDOC(filename);
 	}
@@ -280,22 +280,22 @@ public class Menu {
 	private static void deletepat() throws Exception {
 		System.out.println("Patient's list:");
 		dbman.viewPatientsName();
-		String name = inputoutput.getNamefromKeyboard();
+		String name = InputOutput.getNamefromKeyboard();
 		dbman.delete_patient(name);
 	}
 
 	private static void adddoc() throws Exception {
-		Doctor doc = inputoutput.addDoctor();
+		Doctor doc = InputOutput.addDoctor();
 		dbman.addDoctor(doc);
 
 	}
 
 	private static void createHtmldoc() throws Exception {
 		System.out.println("Introduce the name of the file where the doctor is stored: ");
-		String filename = inputoutput.get_String();
+		String filename = InputOutput.get_String();
 		dc.Checker(filename);
 		System.out.println("Introduce the name of the new Html file: ");
-		String filename2 = inputoutput.get_String();
+		String filename2 = InputOutput.get_String();
 		jaxb.simpleTransform("./files/" + filename + ".xml", "./files/Doctor-Style.xslt",
 				"./files/" + filename2 + ".html");
 		;
@@ -303,7 +303,7 @@ public class Menu {
 
 	private static void adddocXML() throws Exception {
 		System.out.println("Introduce the name of the new file: ");
-		String filename = inputoutput.get_String();
+		String filename = InputOutput.get_String();
 		jaxb.java2XmlDOC(filename);
 	}
 
@@ -316,7 +316,7 @@ public class Menu {
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
-			int opcion = inputoutput.get_int();
+			int opcion = InputOutput.get_int();
 			switch (opcion) {
 			case 1:
 				replacement();
@@ -341,7 +341,7 @@ public class Menu {
 	private static void replacement() throws Exception {
 		System.out.println("Patient's list:");
 		dbman.viewPatientsName();
-		String name = inputoutput.getNamefromKeyboard();
+		String name = InputOutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
 		int days = patient.getDays_off_work();
 		if (days > 20) {
@@ -354,7 +354,7 @@ public class Menu {
 	private static void modifypat() throws Exception {
 		System.out.println("Patient's list:");
 		dbman.viewPatientsName();
-		String name = inputoutput.getNamefromKeyboard();
+		String name = InputOutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
 		dbman.ModifyPatient(patient);
 	}
@@ -387,7 +387,7 @@ public class Menu {
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
-			int opcion = inputoutput.get_int();
+			int opcion = InputOutput.get_int();
 			switch (opcion) {
 			case 1:
 				newpat();
@@ -414,17 +414,17 @@ public class Menu {
 	}
 
 	private static void addcovid() throws Exception {
-		String name = inputoutput.getNamefromKeyboard();
+		String name = InputOutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
 		dbman.test_patient(patient);
 	}
 
 	private static void createHtmlpat() throws Exception {
 		System.out.println("Introduce the name of the file where the patient is stored: ");
-		String filename = inputoutput.get_String();
+		String filename = InputOutput.get_String();
 		dc.Checker(filename);
 		System.out.println("Introduce the name of the new Html file: ");
-		String filename2 = inputoutput.get_String();
+		String filename2 = InputOutput.get_String();
 		jaxb.simpleTransform("./files/" + filename + ".xml", "./files/Patient-Style.xslt",
 				"./files/" + filename2 + ".html");
 		;
@@ -432,7 +432,7 @@ public class Menu {
 
 	private static void listpat() throws Exception {
 
-		String name = inputoutput.getDocfromKeyboard();
+		String name = InputOutput.getDocfromKeyboard();
 		Doctor doc = dbman.searchDoctorbyName(name);
 		dbman.viewPatient(doc.getId());
 	}
@@ -444,7 +444,7 @@ public class Menu {
 			System.out.println("0.EXIT. ");
 			System.out.println("\nChoose an option : ");
 
-			int opcion = inputoutput.get_int();
+			int opcion = InputOutput.get_int();
 			switch (opcion) {
 			case 1:
 				delete();
@@ -468,7 +468,7 @@ public class Menu {
 		}
 		// Ask the user for a role
 		System.out.println("\nPlease enter the role ID of the user:");
-		int id = inputoutput.get_int();
+		int id = InputOutput.get_int();
 		Role role = paman.getRole(id);
 		// List of user of the chosen role
 		for (int x = 0; x < role.getUsers().size(); x++) {
@@ -476,7 +476,7 @@ public class Menu {
 		}
 		// Ask the user for the ID of the user
 		System.out.println("\nPlease enter the ID of the user:");
-		int iduser = inputoutput.get_int();
+		int iduser = InputOutput.get_int();
 		User u = new User(iduser, role);
 		paman.changeRole(u);
 		System.out.println("The user's role has been changed correctly");
@@ -491,7 +491,7 @@ public class Menu {
 		}
 		// Ask the user for a role
 		System.out.println("\nPlease enter the role ID of the user you want to eliminate:");
-		int id = inputoutput.get_int();
+		int id = InputOutput.get_int();
 		Role role = paman.getRole(id);
 		// List of user of the chosen role
 		for (int x = 0; x < role.getUsers().size(); x++) {
@@ -499,7 +499,7 @@ public class Menu {
 		}
 		// Ask the user for the ID of the user
 		System.out.println("\nPlease enter the ID of the user:");
-		id = inputoutput.get_int();
+		id = InputOutput.get_int();
 		User u = new User(id, role);
 		paman.deleteRole(u);
 		System.out.println("The user has been removed correctly");

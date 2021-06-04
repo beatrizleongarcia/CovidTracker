@@ -16,7 +16,7 @@ import CovidTracker.db.pojos.Doctor;
 import CovidTracker.db.pojos.Patient;
 import CovidTracker.db.pojos.Quarantine;
 import CovidTracker.db.pojos.Symptoms;
-import CovidTracker.ui.inputoutput;
+import CovidTracker.ui.InputOutput;
 
 public class JDBCManager implements DBManager {
 
@@ -193,7 +193,7 @@ public class JDBCManager implements DBManager {
 			System.out.println("3.Job title ");
 			System.out.println("4.Date of birth");
 
-			Integer feature = inputoutput.get_int();
+			Integer feature = InputOutput.get_int();
 			String sql;
 			PreparedStatement prep;
 
@@ -202,7 +202,7 @@ public class JDBCManager implements DBManager {
 				sql = "UPDATE patient SET name =? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				System.out.println("Introduce the new name:");
-				String name = inputoutput.get_String();
+				String name = InputOutput.get_String();
 				prep.setString(1, name);
 				prep.setInt(2, p.getId());
 				prep.executeUpdate();
@@ -211,7 +211,7 @@ public class JDBCManager implements DBManager {
 				sql = "UPDATE patient SET salary =? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				System.out.println("Introduce the new salary:");
-				Float salary = inputoutput.get_Float();
+				Float salary = InputOutput.get_Float();
 				prep.setFloat(1, salary);
 				prep.setInt(2, p.getId());
 				prep.executeUpdate();
@@ -220,7 +220,7 @@ public class JDBCManager implements DBManager {
 				sql = "UPDATE patient SET job_title =? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				System.out.println("Introduce the new job title:");
-				String job = inputoutput.get_String();
+				String job = InputOutput.get_String();
 				prep.setString(1, job);
 				prep.setInt(2, p.getId());
 				prep.executeUpdate();
@@ -229,8 +229,8 @@ public class JDBCManager implements DBManager {
 				sql = "UPDATE patient SET dob =? WHERE id=?";
 				prep = c.prepareStatement(sql);
 				System.out.println("Introduce the new date of birth (yyyy-MM-dd):");
-				String dob = inputoutput.get_String();
-				Date d = Date.valueOf(inputoutput.createDate());
+				String dob = InputOutput.get_String();
+				Date d = Date.valueOf(InputOutput.createDate());
 				prep.setDate(1, d);
 				prep.setInt(2, p.getId());
 				prep.executeUpdate();
@@ -531,7 +531,7 @@ public class JDBCManager implements DBManager {
 
 	@Override
 	public Patient test_patient(Patient pat) {
-		Covid_Test test = inputoutput.addCovid_Test();
+		Covid_Test test = InputOutput.addCovid_Test();
 		pat.addNewTest(test);
 		test.setPatient(pat);
 		test.setDoctor(pat.getDoctor());

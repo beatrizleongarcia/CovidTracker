@@ -12,7 +12,7 @@ import javax.persistence.Query;
 import CovidTracker.db.ifaces.UserManager;
 import CovidTracker.db.pojos.users.Role;
 import CovidTracker.db.pojos.users.User;
-import CovidTracker.ui.inputoutput;
+import CovidTracker.ui.InputOutput;
 
 
 
@@ -97,7 +97,7 @@ public class JPAUserManager implements UserManager {
 			System.out.println(getRoles().get(x));
 			}
 		System.out.println("Please enter the ID of the new user's role:");
-		int id = inputoutput.get_int();
+		int id = InputOutput.get_int();
 		Role role = getRole(id);
 
 		// Begin transaction

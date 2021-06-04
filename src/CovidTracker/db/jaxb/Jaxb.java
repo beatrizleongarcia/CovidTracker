@@ -23,7 +23,7 @@ import CovidTracker.db.pojos.Doctor;
 import CovidTracker.db.pojos.Patient;
 import CovidTracker.db.pojos.Quarantine;
 import CovidTracker.db.pojos.Symptoms;
-import CovidTracker.ui.inputoutput;
+import CovidTracker.ui.InputOutput;
 
 public class Jaxb implements JaxbManager {
 	private static EntityManager em;
@@ -67,7 +67,7 @@ public class Jaxb implements JaxbManager {
 		// Choose his new department
 		printPatients();
 		System.out.print("Choose a patient's id to turn into an XML file:");
-		int pat_id = inputoutput.get_int();
+		int pat_id = InputOutput.get_int();
 		Query q2 = em.createNativeQuery("SELECT * FROM patient WHERE id = ?", Patient.class);
 		q2.setParameter(1, pat_id);
 		Patient pat = (Patient) q2.getSingleResult();
@@ -101,7 +101,7 @@ public class Jaxb implements JaxbManager {
 		// Choose his new department
 		printDoctor();
 		System.out.print("Choose the doctor's id to turn into an XML file:");
-		int doc_id = inputoutput.get_int();
+		int doc_id = InputOutput.get_int();
 		Query q2 = em.createNativeQuery("SELECT * FROM doctor WHERE id = ?", Doctor.class);
 		q2.setParameter(1, doc_id);
 		Doctor doc = (Doctor) q2.getSingleResult();

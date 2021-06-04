@@ -24,7 +24,7 @@ import CovidTracker.db.pojos.users.User;
 import CovidTracker.db.ifaces.DBManager;
 import jdk.jshell.execution.Util;
 
-public class inputoutput {
+public class InputOutput {
 
 	private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
 	Patient patient;
