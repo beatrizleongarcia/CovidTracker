@@ -122,7 +122,7 @@ public class Patient implements Serializable {
         this.salary=salary;
         this.days_off_work= days_off_work;
         this.economic_impact=economic_impact;
-        //this.doctor=doctor;
+        this.tests = new ArrayList<Covid_Test>();
 	}
 
 	public Patient(String name, Date dob, String job_title, Float salary, List<Symptoms> symptoms,
@@ -269,7 +269,7 @@ public class Patient implements Serializable {
 
 	public void addNewTest(Covid_Test test) {
 		if(test!=null){
-		tests.add(test);
+		this.tests.add(test);
 		}else {
 			System.out.println("No existe el test");
 		}

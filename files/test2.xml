@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<Patient name="Manuel Lucena">
+    <dob>1995-02-06</dob>
+    <salary>25000.0</salary>
+    <job_title>Marketing</job_title>
+    <economic_impact>8333.333</economic_impact>
+    <days_off_work>10</days_off_work>
+</Patient>

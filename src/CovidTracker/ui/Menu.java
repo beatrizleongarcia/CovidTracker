@@ -417,6 +417,9 @@ public class Menu {
 	private static void addcovid() throws Exception {
 		String name = InputOutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
+		int id_doctor = dbman.searchDoctorId(patient.getName());
+		Doctor doc = dbman.searchDoctorbyId(id_doctor);
+		patient.setDoctor(doc);
 		dbman.test_patient(patient);
 	}
 

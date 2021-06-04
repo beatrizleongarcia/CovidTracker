@@ -21,7 +21,6 @@ import CovidTracker.ui.InputOutput;
 public class JDBCManager implements DBManager {
 
 	private Connection c;
-	public Patient p;
 
 	@Override
 	public void connect() {
@@ -531,7 +530,9 @@ public class JDBCManager implements DBManager {
 	@Override
 	public Patient test_patient(Patient pat) {
 		Covid_Test test = InputOutput.addCovid_Test();
+		if(test!= null) {
 		pat.addNewTest(test);
+		}
 		test.setPatient(pat);
 		test.setDoctor(pat.getDoctor());
 		addCovid_Test(test);

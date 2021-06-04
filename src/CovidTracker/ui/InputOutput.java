@@ -27,7 +27,6 @@ import jdk.jshell.execution.Util;
 public class InputOutput {
 
 	private static BufferedReader in = new BufferedReader(new InputStreamReader(System.in));
-	Patient patient;
 	private static JDBCManager man = new JDBCManager();
 
 	public static Patient addPatient() {
