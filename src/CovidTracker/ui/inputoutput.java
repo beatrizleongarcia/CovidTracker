@@ -37,9 +37,8 @@ public class inputoutput {
 			System.out.println("Introduce a new patient");
 			System.out.println("Name and surname:");
 			String name = get_String();
-			System.out.println("Date of birth (yyyy-MM-dd)");
-			String dob = get_String();
-			LocalDate date = create_date(dob);
+			System.out.println("Date of birth");
+			LocalDate date = createDate();
 			System.out.println("Job title");
 			String job_title = get_String();
 			System.out.println("Salary");
@@ -70,6 +69,34 @@ public class inputoutput {
 		return null;
 
 	}
+	
+	 public static int getIntBetweenRange(String message, int begin, int end) {
+	        boolean fechaCorrecta = false;
+	        int num = -1;
+	        while (!fechaCorrecta) {
+	            System.out.println(message);
+	            try {
+	                num = Integer.parseInt(in.readLine());
+	                if (!(num < begin || num > end)) {
+	                    fechaCorrecta = true;
+	                } else {
+	                    System.err.println("Wrong number, try again");
+	                }
+	            } catch (NumberFormatException | IOException e) {
+	                System.err.println("It must be an integer");
+	            }
+	        }
+
+	        return num;
+	    }
+	
+	 public static LocalDate createDate() {
+	        int dia = getIntBetweenRange("Insert the day of the month", 1, 31);
+	        int mes = getIntBetweenRange("Insert  the month", 1, 12);
+	        int anyo = getIntBetweenRange("Insert the year", 1900, 2021);
+	        LocalDate fecha = LocalDate.of(anyo, mes, dia);
+	        return fecha;
+	    }
 	public static Doctor addDoctor() {
 		try {
 			System.out.println("Introduce a new doctor");
@@ -131,9 +158,8 @@ public class inputoutput {
 			String public_private = get_String();
 			System.out.println("Type of test(pcr,rapid test or antibody test)");
 			String type_test = get_String();
-			System.out.println("Date of the test (yyyy-MM-dd):");
-			String date_of_test = get_String();
-			LocalDate date = create_date(date_of_test);
+			System.out.println("Date of the test:");
+			LocalDate date = createDate();
 			System.out.println("Price of the test:");
 			Float price = get_Float();
 			System.out.println("Laboratory");
@@ -185,13 +211,6 @@ public class inputoutput {
 			e.printStackTrace();
 		}
 		return null;
-	}
-
-	private static DateTimeFormatter formatter = DateTimeFormatter.ofPattern("yyyy-MM-dd");
-
-	public static LocalDate create_date(String dob) {
-		LocalDate dobDate = LocalDate.parse(dob, formatter);
-		return dobDate;
 	}
 
 	public static int get_int() {

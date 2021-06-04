@@ -230,7 +230,7 @@ public class JDBCManager implements DBManager {
 				prep = c.prepareStatement(sql);
 				System.out.println("Introduce the new date of birth (yyyy-MM-dd):");
 				String dob = inputoutput.get_String();
-				Date d = Date.valueOf(inputoutput.create_date(dob));
+				Date d = Date.valueOf(inputoutput.createDate());
 				prep.setDate(1, d);
 				prep.setInt(2, p.getId());
 				prep.executeUpdate();
