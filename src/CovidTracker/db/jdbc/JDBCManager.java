@@ -112,8 +112,7 @@ public class JDBCManager implements DBManager {
 			stmt.executeUpdate(sql);
 
 			stmt.close();
-			System.out.println("Doctor info processed");
-			System.out.println("Records inserted.");
+			System.out.println("Tables deleted");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

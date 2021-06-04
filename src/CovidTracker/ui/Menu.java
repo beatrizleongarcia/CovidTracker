@@ -31,6 +31,7 @@ public class Menu {
 		dbman.connect();
 		paman.connect();
 
+
 		while (true) {
 			System.out.println("\nWELCOME! ");
 			System.out.println("\nChoose an option : ");
