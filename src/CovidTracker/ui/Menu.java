@@ -109,7 +109,7 @@ public class Menu {
 	private static void MenuAdm() throws Exception {
 		while (true) {
 			System.out.println("\n1.View a patient. ");
-			System.out.println("2.View a patient from a XML file");
+			System.out.println("2.Add a patient from a XML file");
 			System.out.println("3.Introduce a new a patient. ");
 			System.out.println("4.Save a patient in a XML file ");
 			System.out.println("0.EXIT. ");
@@ -178,11 +178,17 @@ public class Menu {
 
 	private static void newpat() throws Exception {
 		Patient pat = InputOutput.addPatient(); // Introduce the patient
-
+        System.out.println("\nDoctors:");
 		dbman.viewDoctors();
+		Doctor doc =null;
+		while(doc== null) {
 		System.out.println("Write the name and surname of the doctor that has done the test");
 		String doctor_name = InputOutput.get_String();
-		Doctor doc = dbman.searchDoctorbyName(doctor_name);
+		doc = dbman.searchDoctorbyName(doctor_name);
+		if(doc== null) {
+			System.out.println("That doctor isn't in the data base");
+		}
+		}
 		pat.addDoctor(doc);
 		dbman.addPerson(pat);
 		Date date = dbman.last_test(pat);
@@ -366,7 +372,11 @@ public class Menu {
 		dbman.viewPatientsName();
 		String name = InputOutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
+		if(patient == null) {
+			System.out.println("That person isn't in the data base");;
+		}else {
 		dbman.ModifyPatient(patient);
+		}
 	}
 
 	private static void allpatients() throws Exception {
