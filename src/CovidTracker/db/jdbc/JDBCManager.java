@@ -246,7 +246,6 @@ public class JDBCManager implements DBManager {
 
 	}
 
-
 	public void change_daysoffwork(Patient pat) {
 
 		try {
@@ -530,8 +529,8 @@ public class JDBCManager implements DBManager {
 	@Override
 	public Patient test_patient(Patient pat) {
 		Covid_Test test = InputOutput.addCovid_Test();
-		if(test!= null) {
-		pat.addNewTest(test);
+		if (test != null) {
+			pat.addNewTest(test);
 		}
 		test.setPatient(pat);
 		test.setDoctor(pat.getDoctor());
@@ -703,6 +702,7 @@ public class JDBCManager implements DBManager {
 		}
 		return null;
 	}
+
 
 	@Override
 	public List<Patient> viewAllPatients() {

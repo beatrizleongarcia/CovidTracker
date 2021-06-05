@@ -33,5 +33,6 @@ public interface DBManager {
 	public List<Patient> viewAllPatients();// get a list with all the patients
 
 
+
 	
 }

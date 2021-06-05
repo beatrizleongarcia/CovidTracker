@@ -31,7 +31,6 @@ public class Menu {
 		dbman.connect();
 		paman.connect();
 
-
 		while (true) {
 			System.out.println("\nWELCOME! ");
 			System.out.println("\nChoose an option : ");
@@ -144,24 +143,24 @@ public class Menu {
 		dbman.viewPatientsName();
 		String name = InputOutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
-		Integer doctor_id = dbman.searchDoctorId(name);
-		Doctor doc = dbman.searchDoctorbyId(doctor_id);
-		List<Integer> symptoms_id = dbman.searchSymptomsId(patient.getId());
-		List<Integer> quarantine_id = dbman.searchQuarantineId(patient.getId());
-
 		if (patient == null) {
-			System.out.println("There are no patients");
-		} else
-			System.out.println(patient);
-		System.out.println("Doctor: " + doc.getName());
-		System.out.println("\nSymptom's types:");
-		for (int x = 0; x < symptoms_id.size(); x++) {
-			System.out.println(dbman.searchSymptomstype(symptoms_id.get(x)));
-		}
-		System.out.println("\nQuarantine's reasons:");
-		for (int x = 0; x < quarantine_id.size(); x++) {
-			System.out.println(dbman.searchQuarantinereason(quarantine_id.get(x)));
-		}
+			System.out.println("That person is not in the data base");
+		}else {
+		       Integer doctor_id = dbman.searchDoctorId(name);
+				Doctor doc = dbman.searchDoctorbyId(doctor_id);
+				List<Integer> symptoms_id = dbman.searchSymptomsId(patient.getId());
+				List<Integer> quarantine_id = dbman.searchQuarantineId(patient.getId());
+				System.out.println(patient);
+				System.out.println("Doctor: " + doc.getName());
+				System.out.println("\nSymptom's types:");
+				for (int i = 0; i < symptoms_id.size(); i++) {
+					System.out.println(dbman.searchSymptomstype(symptoms_id.get(i)));
+				}
+				System.out.println("\nQuarantine's reasons:");
+				for (int j = 0; j < quarantine_id.size(); j++) {
+					System.out.println(dbman.searchQuarantinereason(quarantine_id.get(j)));
+				}
+			}
 	}
 
 	private static void viewXML() throws Exception {
@@ -282,7 +281,13 @@ public class Menu {
 		System.out.println("Patient's list:");
 		dbman.viewPatientsName();
 		String name = InputOutput.getNamefromKeyboard();
+		Patient patient = dbman.searchPatientByName(name);
+		if (patient == null) {
+			System.out.println("That person is not in the data base");
+		}else {
 		dbman.delete_patient(name);
+		}	
+		
 	}
 
 	private static void adddoc() throws Exception {
@@ -344,11 +349,15 @@ public class Menu {
 		dbman.viewPatientsName();
 		String name = InputOutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
+		if(patient == null) {
+			System.out.println("That person isn't in the data base");;
+		}else {
 		int days = patient.getDays_off_work();
 		if (days > 20) {
 			System.out.println("Look for a replacement");
 		} else {
 			System.out.println("It is not necesary to look for a replacemnet yet.");
+		}
 		}
 	}
 
@@ -359,23 +368,23 @@ public class Menu {
 		Patient patient = dbman.searchPatientByName(name);
 		dbman.ModifyPatient(patient);
 	}
-	
 
 	private static void allpatients() throws Exception {
 		System.out.println("\nAll patients's stored in the data base:\n ");
 		List<Patient> patients = dbman.viewAllPatients();
-        for(int x = 0 ; x< patients.size(); x++) {
-        	System.out.println(patients.get(x));
-        }
-		
+		for (int x = 0; x < patients.size(); x++) {
+			System.out.println(patients.get(x));
+		}
+
 	}
+
 	private static void alldoctors() throws Exception {
 		System.out.println("\nAll doctor's stored in the data base:\n ");
 		List<Doctor> doctors = dbman.viewAllDoctors();
-        for(int x = 0 ; x< doctors.size(); x++) {
-        	System.out.println(doctors.get(x));
-        }
-		
+		for (int x = 0; x < doctors.size(); x++) {
+			System.out.println(doctors.get(x));
+		}
+
 	}
 
 	private static void MenuDoc() throws Exception {
@@ -415,12 +424,18 @@ public class Menu {
 	}
 
 	private static void addcovid() throws Exception {
+		System.out.println("Patient's list:");
+		dbman.viewPatientsName();
 		String name = InputOutput.getNamefromKeyboard();
 		Patient patient = dbman.searchPatientByName(name);
+		if (patient == null) {
+			System.out.println("That person is not in the data base");
+		}else {
 		int id_doctor = dbman.searchDoctorId(patient.getName());
 		Doctor doc = dbman.searchDoctorbyId(id_doctor);
 		patient.setDoctor(doc);
 		dbman.test_patient(patient);
+		}
 	}
 
 	private static void createHtmlpat() throws Exception {
@@ -435,10 +450,15 @@ public class Menu {
 	}
 
 	private static void listpat() throws Exception {
-
+		System.out.println("\nDoctors:");
+		dbman.viewDoctors();
 		String name = InputOutput.getDocfromKeyboard();
 		Doctor doc = dbman.searchDoctorbyName(name);
+		if (doc == null) {
+			System.out.println("There are no doctors with that name");
+		} else {
 		dbman.viewPatient(doc.getId());
+		}
 	}
 
 	private static void MenuInformatic() throws Exception {

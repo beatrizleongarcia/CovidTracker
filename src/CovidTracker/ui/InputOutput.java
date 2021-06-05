@@ -99,7 +99,7 @@ public class InputOutput {
 	public static Doctor addDoctor() {
 		try {
 			System.out.println("Introduce a new doctor");
-			System.out.println("Name:");
+			System.out.println("Name and surname:");
 			String name = get_String();
 			System.out.println("Hospital:");
 			String hospital = get_String();
@@ -269,4 +269,6 @@ public class InputOutput {
 		}
 		return a;
 	}
+	
+
 }
