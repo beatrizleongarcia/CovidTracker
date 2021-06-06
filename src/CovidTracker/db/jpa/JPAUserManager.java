@@ -104,6 +104,7 @@ public class JPAUserManager implements UserManager {
 		entman.getTransaction().begin();
 		// Make changes
 		us.setRole(role);
+		role.addUser(us);
 		// End transaction
 		entman.getTransaction().commit();
 
@@ -117,7 +118,7 @@ public class JPAUserManager implements UserManager {
 
 		// Begin transaction
 		entman.getTransaction().begin();
-		// Store the object
+		// Remove the object
 		entman.remove(us);
 		// End transaction
 		entman.getTransaction().commit();

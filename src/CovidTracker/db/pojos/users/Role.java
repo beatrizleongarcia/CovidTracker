@@ -6,6 +6,7 @@ import java.util.List;
 
 import javax.persistence.*;
 
+
 @Entity
 @Table(name="roles")
 public class Role implements Serializable {
@@ -80,5 +81,11 @@ public class Role implements Serializable {
 		return ("\nid=" + id + "." +name);
 	}
 	
+	//Add a user to a Role
+		public void addUser(User user) {
+			if (!users.contains(user)) {
+				this.users.add(user);
+			}
+		}
 	
 }
