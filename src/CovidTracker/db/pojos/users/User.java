@@ -1,8 +1,6 @@
 package CovidTracker.db.pojos.users;
 
 import java.io.Serializable;
-import java.util.Arrays;
-
 import javax.persistence.*;
 
 @Entity

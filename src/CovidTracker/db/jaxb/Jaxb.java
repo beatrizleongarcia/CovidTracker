@@ -16,13 +16,9 @@ import javax.xml.transform.Transformer;
 import javax.xml.transform.TransformerFactory;
 import javax.xml.transform.stream.StreamResult;
 import javax.xml.transform.stream.StreamSource;
-
 import CovidTracker.db.ifaces.JaxbManager;
-import CovidTracker.db.pojos.Covid_Test;
 import CovidTracker.db.pojos.Doctor;
 import CovidTracker.db.pojos.Patient;
-import CovidTracker.db.pojos.Quarantine;
-import CovidTracker.db.pojos.Symptoms;
 import CovidTracker.ui.InputOutput;
 
 public class Jaxb implements JaxbManager {
@@ -49,7 +45,6 @@ public class Jaxb implements JaxbManager {
 	@Override
 	public void java2XmlPAT(String filename) throws Exception {
 		// Get the entity manager
-		// Note that we are using the class' entity manager
 		em = Persistence.createEntityManagerFactory("user-company").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
@@ -63,8 +58,7 @@ public class Jaxb implements JaxbManager {
 		// Pretty formatting
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-		// Choose the report to turn into an XML
-		// Choose his new department
+		// Choose the patient to turn into an XML
 		printPatients();
 		System.out.print("Choose a patient's id to turn into an XML file:");
 		int pat_id = InputOutput.get_int();
@@ -82,8 +76,8 @@ public class Jaxb implements JaxbManager {
 
 	@Override
 	public void java2XmlDOC(String filename) throws Exception {
+		
 		// Get the entity manager
-		// Note that we are using the class' entity manager
 		em = Persistence.createEntityManagerFactory("user-company").createEntityManager();
 		em.getTransaction().begin();
 		em.createNativeQuery("PRAGMA foreign_keys=ON").executeUpdate();
@@ -97,8 +91,7 @@ public class Jaxb implements JaxbManager {
 		// Pretty formatting
 		marshaller.setProperty(Marshaller.JAXB_FORMATTED_OUTPUT, Boolean.TRUE);
 
-		// Choose the report to turn into an XML
-		// Choose his new department
+		// Choose the doctor to turn into an XML
 		printDoctor();
 		System.out.print("Choose the doctor's id to turn into an XML file:");
 		int doc_id = InputOutput.get_int();
@@ -142,7 +135,7 @@ public class Jaxb implements JaxbManager {
 		File file = new File("./files/" + filename + ".xml");
 		Patient patient = (Patient) unmarshaller.unmarshal(file);
 
-		// Print the report
+		// Print the patient
 		System.out.println("\nPatient's information:");
 		System.out.println("Name: " + patient.getName());
 		System.out.println("Date of birth: " + patient.getDob());
@@ -151,7 +144,7 @@ public class Jaxb implements JaxbManager {
 		System.out.println("Days off work: " + patient.getDays_off_work());
 		System.out.println("Economic impact: " + patient.getEconomic_impact());
 
-		// Store the report in the database
+		// Store the patient in the database
 		// Create entity manager
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_PROVIDER);
 		EntityManager em = factory.createEntityManager();
@@ -182,7 +175,7 @@ public class Jaxb implements JaxbManager {
 		File file = new File("./files/" + filename + ".xml");
 		Doctor doctor = (Doctor) unmarshaller.unmarshal(file);
 
-		// Print the report
+		// Print the doctor and his patients
 		System.out.println("\nDoctor's information:");
 		System.out.println("Name: " + doctor.getName());
 		System.out.println("Hospital: " + doctor.getHospital());
@@ -199,7 +192,7 @@ public class Jaxb implements JaxbManager {
 			
 		}
 
-		// Store the report in the database
+		// Store the doctor in the database
 		// Create entity manager
 		factory = Persistence.createEntityManagerFactory(PERSISTENCE_PROVIDER);
 		EntityManager em = factory.createEntityManager();
@@ -214,15 +207,10 @@ public class Jaxb implements JaxbManager {
 		tx1.begin();
 
 		// Persist
-		// We assume the authors are not already in the database
-		// In a real world, we should check if they already exist
-		// and update them instead of inserting as new
+		// We assume the patients are not already in the database
 		for (Patient p : pat) {
 			em.persist(p);
 		}
-		/*
-		 * /List<Doctor> = for (Covid_Test covid : test) { em.persist(covid); }
-		 */
 		em.persist(doctor);
 
 		// End transaction

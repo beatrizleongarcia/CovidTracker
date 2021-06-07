@@ -226,8 +226,6 @@ public class JDBCManager implements DBManager {
 			case 4:
 				sql = "UPDATE patient SET dob =? WHERE id=?";
 				prep = c.prepareStatement(sql);
-				System.out.println("Introduce the new date of birth (yyyy-MM-dd):");
-				String dob = InputOutput.get_String();
 				Date d = Date.valueOf(InputOutput.createDate());
 				prep.setDate(1, d);
 				prep.setInt(2, p.getId());
